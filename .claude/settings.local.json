@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find '/Users/kristinruck/govbb prototypes/' -name *.js -o -name *.css -o -name *.html)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(python3 -c \":*)",
+      "Bash(for f:*)",
+      "Bash(do)",
+      "Bash(sed -i '' 's|src=\"\"/assets/|src=\"\"../assets/|g' \"$f\")",
+      "Bash(sed -i '' 's|href=\"\"/assets/|href=\"\"../assets/|g' \"$f\")",
+      "Bash(echo \"Fixed: $f\")",
+      "Bash(node --check \"/Users/kristinruck/govbb prototypes/assets/govbb-framework.js\")",
+      "Bash(node --check \"/Users/kristinruck/govbb prototypes/assets/govbb-tailwind-config.js\")",
+      "Bash(node --check \"/Users/kristinruck/govbb prototypes/prototypes/nisss-employer-registration.html\")",
+      "Bash(node --check \"/Users/kristinruck/govbb prototypes/prototypes/bla-remove-building-boat.html\")",
+      "Bash(python3:*)",
+      "Bash(cp \"/Users/kristinruck/Govtech prototypes/assets/govbb-framework.js\" \"/Users/kristinruck/govbb prototypes/assets/govbb-framework.js\")",
+      "Bash(cp \"/Users/kristinruck/Govtech prototypes/assets/govbb-base.css\" \"/Users/kristinruck/govbb prototypes/assets/govbb-base.css\")",
+      "Bash(cp \"/Users/kristinruck/Govtech prototypes/assets/govbb-tailwind-config.js\" \"/Users/kristinruck/govbb prototypes/assets/govbb-tailwind-config.js\")",
+      "mcp__Claude_Preview__preview_start"
+    ]
+  }
+}
