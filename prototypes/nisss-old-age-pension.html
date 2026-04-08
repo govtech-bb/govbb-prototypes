@@ -223,7 +223,7 @@ const PAGES = {
         ${GovBB.textField('postal-code', 'Postal code', { hint: 'Optional. For example, BB11000' })}
         ${GovBB.telField('telephone', 'Telephone number', { hint: 'Include the area code. For example, 246-431-7400', placeholder: '246-555-1234' })}
         ${GovBB.telField('cell', 'Cell number', { hint: 'Include the area code. At least one of telephone or cell is required', placeholder: '246-555-5678' })}
-        ${GovBB.emailField('contact-email', 'Email address', { hint: 'Optional. We will use this to contact you about your claim' })}
+        ${GovBB.emailField('contact-email', 'Email address', { hint: 'We will use this to contact you about your claim. For example, name@example.com' })}
         ${GovBB.continueBtn()}
       </div>
     </form>`,
@@ -323,7 +323,7 @@ const PAGES = {
         ${GovBB.textField('ap-postal-code', 'Postal code', { hint: 'Optional. For example, BB11000' })}
         ${GovBB.telField('ap-telephone', 'Telephone number', { hint: 'Include the area code', placeholder: '246-555-1234' })}
         ${GovBB.telField('ap-cell', 'Cell number', { hint: 'At least one of telephone or cell is required', placeholder: '246-555-5678' })}
-        ${GovBB.emailField('ap-email', 'Email address', { hint: 'Optional' })}
+        ${GovBB.emailField('ap-email', 'Email address', { hint: 'For example, name@example.com' })}
         ${GovBB.continueBtn()}
       </div>
     </form>`,
@@ -507,7 +507,8 @@ function validate(pageId) {
     if (!D['parish']) errors.push({ id: 'parish', msg: 'Parish – Select your parish' });
     if (D['postal-code'] && !/^BB\d{5}$/.test(D['postal-code'].trim())) errors.push({ id: 'postal-code', msg: 'Postal code – Use the format BB followed by 5 digits, for example BB11000' });
     if (!D['telephone'] && !D['cell']) errors.push({ id: 'telephone', msg: 'Telephone or cell – Enter at least one contact number' });
-    if (D['contact-email'] && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(D['contact-email'].trim())) errors.push({ id: 'contact-email', msg: 'Email address – Enter a valid email address' });
+    if (!D['contact-email']) errors.push({ id: 'contact-email', msg: 'Email address – Enter your email address' });
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(D['contact-email'].trim())) errors.push({ id: 'contact-email', msg: 'Email address – Enter a valid email address, for example name@example.com' });
   }
 
   if (pageId === 'retirement-type') {
@@ -550,6 +551,8 @@ function validate(pageId) {
     if (!D['ap-address']) errors.push({ id: 'ap-address', msg: 'Address – Enter the alternate payee\'s address' });
     if (!D['ap-parish']) errors.push({ id: 'ap-parish', msg: 'Parish – Select the alternate payee\'s parish' });
     if (!D['ap-telephone'] && !D['ap-cell']) errors.push({ id: 'ap-telephone', msg: 'Telephone or cell – Enter at least one contact number for the alternate payee' });
+    if (!D['ap-email']) errors.push({ id: 'ap-email', msg: 'Email address – Enter the alternate payee\'s email address' });
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(D['ap-email'].trim())) errors.push({ id: 'ap-email', msg: 'Email address – Enter a valid email address, for example name@example.com' });
   }
 
   if (pageId === 'banking-details') {

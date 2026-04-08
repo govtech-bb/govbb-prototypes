@@ -109,7 +109,7 @@ const PAGES = {
         ${GovBB.textField('emp-postal', 'Postal code', { hint: 'For example, BB11000' })}
         ${GovBB.telField('emp-telephone', 'Telephone number', { hint: 'Include area code. At least one of telephone or mobile is required.', placeholder: '246-555-1234' })}
         ${GovBB.telField('emp-cell', 'Mobile number', { hint: 'Include area code. At least one of telephone or mobile is required.', placeholder: '246-555-1234' })}
-        ${GovBB.emailField('emp-email', 'Email address', { hint: 'Optional' })}
+        ${GovBB.emailField('emp-email', 'Email address', { hint: 'For example, name@example.com' })}
         ${GovBB.continueBtn()}
       </div>
     </form>`,
@@ -337,6 +337,8 @@ function validate(pageId) {
     if (!D['emp-street']) errors.push({ id: 'emp-street', msg: 'Street address – Enter the employee\'s address' });
     if (!D['emp-parish']) errors.push({ id: 'emp-parish', msg: 'Parish – Select the employee\'s parish' });
     if (!D['emp-telephone'] && !D['emp-cell']) errors.push({ id: 'emp-telephone', msg: 'Telephone or mobile – Enter at least one contact number for the employee' });
+    if (!D['emp-email']) errors.push({ id: 'emp-email', msg: 'Email address – Enter the employee\'s email address' });
+    else if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(D['emp-email'].trim())) errors.push({ id: 'emp-email', msg: 'Email address – Enter a valid email address, for example name@example.com' });
   }
   if (pageId === 'employer-details') {
     if (!D['employer-name']) errors.push({ id: 'employer-name', msg: 'Employer name – Enter your business name' });
