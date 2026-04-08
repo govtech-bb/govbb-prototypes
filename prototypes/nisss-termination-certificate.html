@@ -107,8 +107,8 @@ const PAGES = {
         ${GovBB.textField('emp-district', 'District', { hint: 'Optional' })}
         ${GovBB.selectField('emp-parish', 'Parish', GovBB.PARISHES)}
         ${GovBB.textField('emp-postal', 'Postal code', { hint: 'For example, BB11000' })}
-        ${GovBB.telField('emp-telephone', 'Telephone number', { hint: 'Include area code', placeholder: '246-555-1234' })}
-        ${GovBB.telField('emp-cell', 'Mobile number', { hint: 'Optional', placeholder: '246-555-1234' })}
+        ${GovBB.telField('emp-telephone', 'Telephone number', { hint: 'Include area code. At least one of telephone or mobile is required.', placeholder: '246-555-1234' })}
+        ${GovBB.telField('emp-cell', 'Mobile number', { hint: 'Include area code. At least one of telephone or mobile is required.', placeholder: '246-555-1234' })}
         ${GovBB.emailField('emp-email', 'Email address', { hint: 'Optional' })}
         ${GovBB.continueBtn()}
       </div>
@@ -336,6 +336,7 @@ function validate(pageId) {
     else if (!/^\d{6}$/.test(D['emp-nis-number'].trim())) errors.push({ id: 'emp-nis-number', msg: 'NIS number – Enter a valid 6-digit National Insurance Number, for example 123456' });
     if (!D['emp-street']) errors.push({ id: 'emp-street', msg: 'Street address – Enter the employee\'s address' });
     if (!D['emp-parish']) errors.push({ id: 'emp-parish', msg: 'Parish – Select the employee\'s parish' });
+    if (!D['emp-telephone'] && !D['emp-cell']) errors.push({ id: 'emp-telephone', msg: 'Telephone or mobile – Enter at least one contact number for the employee' });
   }
   if (pageId === 'employer-details') {
     if (!D['employer-name']) errors.push({ id: 'employer-name', msg: 'Employer name – Enter your business name' });

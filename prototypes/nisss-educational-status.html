@@ -109,8 +109,8 @@ const PAGES = {
         ${GovBB.selectField('parish', 'Parish', GovBB.PARISHES)}
         ${GovBB.textField('postal-code', 'Postal code', { hint: 'For example, BB11000' })}
         ${GovBB.emailField('email', 'Email address', { hint: 'Optional' })}
-        ${GovBB.telField('tel', 'Telephone number', { hint: 'Optional' })}
-        ${GovBB.telField('cell', 'Mobile number', { hint: 'Optional. Include area code. For example, 246-555-1234' })}
+        ${GovBB.telField('tel', 'Telephone number', { hint: 'Include area code. For example, 246-555-1234. At least one of telephone or mobile is required.' })}
+        ${GovBB.telField('cell', 'Mobile number', { hint: 'Include area code. For example, 246-555-1234. At least one of telephone or mobile is required.' })}
         ${GovBB.dateField('dob', 'Date of birth', 'For example, 27 03 2005')}
         ${GovBB.continueBtn()}
       </div>
@@ -238,6 +238,7 @@ function validate(pageId) {
     if (!D['postal-code']) errors.push({ id: 'postal-code', msg: 'Postal code – Enter the postal code' });
     else if (!/^BB\d{5}$/.test(D['postal-code'])) errors.push({ id: 'postal-code', msg: 'Postal code – Enter in the format BB followed by 5 digits' });
     if (!D['dob-day'] || !D['dob-month'] || !D['dob-year']) errors.push({ id: 'dob-day', msg: 'Date of birth – Enter the student\'s date of birth' });
+    if (!D['tel'] && !D['cell']) errors.push({ id: 'tel', msg: 'Telephone or mobile – Enter at least one contact number for the student' });
     if (D['email'] && !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(D['email'])) errors.push({ id: 'email', msg: 'Email address – Enter a valid email address' });
   }
 
