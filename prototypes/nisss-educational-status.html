@@ -244,25 +244,19 @@ const PAGES = {
     <form novalidate>
       ${GovBB.backLink()}
       ${GovBB.caption()}
-      <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Sign and submit</h1>
+      <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Declaration</h1>
       <p class="text-[1.25rem] leading-normal mb-8">An authorised member of staff at the educational institution must complete this section. This confirms the student's details are correct.</p>
       <div class="space-y-8">
         ${GovBB.textField('signatory-name', 'Your full name (print clearly)')}
         ${GovBB.textField('signatory-title', 'Your position or title', { hint: 'For example, Registrar, Principal, Academic Officer' })}
         ${GovBB.dateField('signed-date', 'Date signed', 'For example, 15 06 2025')}
-        <div class="space-y-4">
-          <p class="text-[1.25rem] font-bold">Declaration</p>
+        <div class="bg-bb-blue-10 border-l-4 border-bb-blue-40 p-6">
           <p class="text-[1.25rem] leading-normal">By submitting this form, I confirm that the student named in this form is currently enrolled and attending full-time classes at this institution, and that all information provided is correct.</p>
-          <div class="flex items-start gap-4">
-            <button type="button" id="confirm-checkbox" role="checkbox" aria-checked="false"
-              onclick="GovBB.toggleCheckbox('confirm')"
-              class="relative inline-flex size-12 shrink-0 items-center justify-center bg-bb-white-00 border-2 border-bb-black-00 rounded-sm transition-all outline-none hover:cursor-pointer hover:shadow-form-hover focus-visible:ring-4 focus-visible:ring-bb-teal-100">
-            </button>
-            <label for="confirm-checkbox" class="text-[1.25rem] leading-normal text-bb-black-00 cursor-pointer pt-2">I confirm all the information in this form is true and correct.</label>
-          </div>
-          <p class="text-[1.25rem] leading-normal text-bb-mid-grey-00">Note: An official stamp of the educational institution is required. Please ensure the physical or digital form is stamped before submission.</p>
         </div>
-        <div class="mt-8">
+        ${GovBB.checkboxItem('declaration-agree', 'I confirm that the information I have given is true and complete to the best of my knowledge.')}
+        <p class="text-[1.25rem] leading-normal text-bb-mid-grey-00">Note: An official stamp of the educational institution is required. Please ensure the physical or digital form is stamped before submission.</p>
+        <div class="mt-8 flex gap-4">
+          <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-colors duration-200 outline-none bg-bb-grey-00 text-bb-black-00 hover:bg-[#c5ccd4] px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
           <button type="button" onclick="next()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-teal-00 text-bb-white-00 hover:bg-[#1a777d] hover:shadow-[inset_0_0_0_4px_rgba(222,245,246,0.10)] active:bg-[#0a4549] active:shadow-[inset_0_0_0_3px_rgba(0,0,0,0.20)] px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Submit form</button>
         </div>
       </div>
