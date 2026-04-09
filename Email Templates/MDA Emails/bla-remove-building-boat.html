@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Application for a Permit to Remove a Building/House or Boat – BLA Submission Email</title>
+  <title>MDA Submission Email – Application for a Permit to Remove a Building/House or Boat</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300..900&display=swap" rel="stylesheet">
@@ -13,303 +13,252 @@
     .page-topbar { background: #00267f; color: #fff; font-size: 14px; padding: 8px 128px; display: flex; align-items: center; gap: 8px; }
     .page-topbar img { height: 20px; width: auto; }
     .page-header { background: #ffc726; padding: 16px 128px; }
-    .page-header .gov-logo { width: 276px; height: 27px; }
     .page-alpha { background: #e5e9f2; padding: 8px 128px; font-size: 16px; }
     .page-alpha a { color: #0e5f64; }
-    .page-main { padding: 64px 128px; }
+    .page-main { padding: 64px 32px; }
     .page-label { font-size: 14px; font-weight: 600; color: #595959; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
     .page-title { font-size: 28px; font-weight: 700; color: #000; margin-bottom: 8px; }
-    .page-desc { font-size: 16px; color: #595959; margin-bottom: 32px; }
-    .email-wrapper { max-width: 800px; background: #fff; border: 2px solid #e0e4e9; border-radius: 6px; overflow: hidden; }
-    .email-header { background: #ffc726; padding: 24px 32px; }
-    .email-header svg { display: block; }
-    .email-content { padding: 64px 32px 32px; display: flex; flex-direction: column; gap: 32px; }
-    .email-h1 { font-size: 40px; font-weight: 700; line-height: 1.15; color: #000; }
-    .summary-table { background: #e5e9f2; border: 1px solid #fff; }
-    .summary-row { display: flex; align-items: stretch; border-bottom: 1px solid #fff; }
-    .summary-row:last-child { border-bottom: 1px solid #e5e9f2; }
-    .summary-label { width: 240px; flex-shrink: 0; padding: 8px; font-weight: 700; font-size: 16px; }
-    .summary-value { flex: 1; padding: 8px 8px 8px 16px; font-size: 16px; color: #595959; }
-    .payment-banner { background: #a5e5ce; border-radius: 4px; padding: 16px; display: flex; flex-direction: column; gap: 8px; font-size: 16px; }
-    .payment-banner-row { display: flex; gap: 8px; align-items: center; }
-    .payment-banner .label { font-weight: 700; }
-    .payment-banner .value { color: #000; }
-    .intro-text { font-size: 16px; color: #000; }
-    .data-sections { display: flex; flex-direction: column; gap: 32px; }
-    .section-heading { font-size: 28px; font-weight: 700; line-height: 1.25; color: #000; margin-bottom: 8px; }
-    .declaration-text { font-size: 16px; color: #000; margin-bottom: 0; padding: 8px 0 12px; }
-    .data-table { width: 100%; }
-    .data-row { display: flex; align-items: stretch; border-bottom: 1px solid #e0e4e9; }
-    .data-label { width: 240px; flex-shrink: 0; padding: 8px; font-weight: 700; font-size: 16px; }
-    .data-value { flex: 1; padding: 8px 8px 8px 16px; font-size: 16px; color: #595959; }
-    .data-value.placeholder { color: #595959; font-style: italic; }
-    .internal-box { background: #e5e9f2; border-radius: 4px; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
-    .internal-box p { font-size: 16px; font-weight: 700; color: #000; }
-    .internal-box .field-value { font-weight: 400; color: #595959; font-style: italic; }
-    .email-footer { background: #00267f; color: #fff; padding: 32px 128px; display: flex; align-items: flex-start; justify-content: space-between; gap: 32px; }
-    .email-footer-text { flex: 1; font-size: 16px; line-height: 1.5; }
-    .email-footer-text p { margin-bottom: 16px; }
-    .email-footer-text p:last-child { margin-bottom: 0; }
-    .email-footer-crest { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; flex-shrink: 0; }
-    .email-footer-crest img { width: 80px; height: auto; }
-    .email-footer-copyright { font-size: 16px; color: #fff; white-space: nowrap; }
+    .page-desc { font-size: 16px; color: #595959; margin-bottom: 24px; }
+    .preview-badge { display: inline-flex; align-items: center; gap: 6px; background: #fff9e9; border: 1.5px solid #ffc726; border-radius: 4px; padding: 6px 14px; font-size: 14px; font-weight: 600; color: #000; margin-bottom: 24px; }
+    .view-toggle { display: flex; gap: 8px; margin-bottom: 24px; align-items: center; }
+    .toggle-btn { display: inline-flex; align-items: center; gap: 6px; border: 2px solid #e0e4e9; border-radius: 4px; padding: 8px 16px; font-size: 14px; font-weight: 600; background: #fff; cursor: pointer; color: #595959; transition: all 0.15s; }
+    .toggle-btn.active { background: #0e5f64; color: #fff; border-color: #0e5f64; }
+    .view-label { font-size: 14px; color: #595959; margin-right: 8px; }
+    #view-mobile { display: none; }
+    .mda-email { background: #fff; }
+    .mda-header { background: #ffc726; padding: 24px 32px; }
+    .mda-content { background: #fff; padding: 64px 32px 32px; display: flex; flex-direction: column; gap: 32px; }
+    .mda-h1 { font-size: 40px; font-weight: 700; line-height: 1.15; color: #000; }
+    .mda-summary-table { background: #e5e9f2; }
+    .mda-summary-row { display: flex; align-items: stretch; border-bottom: 1px solid #fff; }
+    .mda-summary-row:last-child { border-bottom: 1px solid #e5e9f2; }
+    .mda-summary-label { width: 304px; flex-shrink: 0; padding: 8px; font-weight: 700; font-size: 20px; }
+    .mda-summary-value { flex: 1; padding: 8px 8px 8px 16px; font-size: 20px; }
+    .mda-payment-banner { background: #a5e5ce; padding: 16px; display: flex; flex-direction: column; gap: 8px; font-size: 20px; }
+    .mda-payment-row { display: flex; gap: 8px; align-items: center; }
+    .mda-intro { font-size: 20px; color: #000; }
+    .mda-sections { display: flex; flex-direction: column; gap: 35px; }
+    .mda-section-h2 { font-size: 40px; font-weight: 700; line-height: 1.25; color: #000; margin-bottom: 8px; }
+    .mda-declaration-text { font-size: 20px; color: #000; padding: 8px 0 12px; }
+    .mda-data-table { width: 100%; }
+    .mda-data-row { display: flex; align-items: stretch; border-bottom: 1px solid #e0e4e9; }
+    .mda-data-label { width: 304px; flex-shrink: 0; padding: 8px; font-weight: 700; font-size: 20px; }
+    .mda-data-value { flex: 1; padding: 8px 8px 8px 16px; font-size: 20px; color: #595959; font-style: italic; }
+    .mda-internal-box { background: #e5e9f2; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+    .mda-internal-box p { font-size: 20px; font-weight: 700; color: #000; }
+    .mda-internal-box .fv { font-weight: 400; color: #595959; font-style: italic; }
+    .mda-footer { background: #00267f; color: #fff; padding: 32px; display: flex; align-items: flex-start; justify-content: space-between; gap: 32px; }
+    .mda-footer-text { flex: 1; font-size: 20px; line-height: 1.5; display: flex; flex-direction: column; gap: 16px; }
+    .mda-footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; flex-shrink: 0; }
+    .mda-footer-right img { width: 80px; height: auto; }
+    .mda-footer-copyright { font-size: 20px; color: #fff; white-space: nowrap; }
+    .mobile-wrap { display: flex; justify-content: center; }
+    .phone-frame { width: 390px; background: #1a1a2e; border-radius: 32px; padding: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .phone-notch { width: 120px; height: 6px; background: #333; border-radius: 3px; margin: 0 auto 12px; }
+    .phone-screen { border-radius: 20px; overflow-y: auto; max-height: 700px; background: #fff; }
+    .mda-mobile .mda-header { padding: 16px; }
+    .mda-mobile .mda-content { padding: 24px 16px; gap: 16px; }
+    .mda-mobile .mda-h1 { font-size: 28px; }
+    .mda-mobile .mda-summary-label { width: 140px; font-size: 16px; }
+    .mda-mobile .mda-summary-value { font-size: 16px; }
+    .mda-mobile .mda-section-h2 { font-size: 24px; }
+    .mda-mobile .mda-payment-banner { font-size: 16px; }
+    .mda-mobile .mda-intro { font-size: 16px; }
+    .mda-mobile .mda-data-label { width: 140px; font-size: 16px; }
+    .mda-mobile .mda-data-value { font-size: 16px; }
+    .mda-mobile .mda-declaration-text { font-size: 16px; }
+    .mda-mobile .mda-internal-box p { font-size: 16px; }
+    .mda-mobile .mda-footer { padding: 16px; flex-direction: column; gap: 16px; }
+    .mda-mobile .mda-footer-text { font-size: 16px; }
+    .mda-mobile .mda-footer-right { width: 100%; flex-direction: row; align-items: center; justify-content: space-between; }
+    .mda-mobile .mda-footer-right img { width: 44px; }
+    .mda-mobile .mda-footer-copyright { font-size: 13px; }
     .page-footer { background: #00267f; color: #fff; }
     .page-footer-inner { padding: 64px 128px; display: flex; align-items: flex-start; }
-    .page-footer-links { flex: 1; display: flex; flex-direction: column; gap: 0; font-size: 20px; line-height: 1.5; }
+    .page-footer-links { flex: 1; display: flex; flex-direction: column; font-size: 20px; line-height: 1.5; }
     .page-footer-links a { color: #fff; text-decoration: underline; }
     .page-footer-links a:hover { text-decoration: none; }
-    .page-footer-right { flex: 1; display: flex; flex-direction: column; align-items: flex-end; padding-top: 16px; }
-    .page-footer-right img { width: 104px; height: 112px; margin-bottom: 16px; }
-    .page-footer-right p { font-size: 20px; line-height: 1.5; }
-    .preview-badge { display: inline-flex; align-items: center; gap: 6px; background: #fff9e9; border: 1.5px solid #ffc726; border-radius: 4px; padding: 6px 14px; font-size: 14px; font-weight: 600; color: #000; margin-bottom: 24px; }
+    .page-footer-right2 { flex: 1; display: flex; flex-direction: column; align-items: flex-end; padding-top: 16px; }
+    .page-footer-right2 img { width: 104px; height: 112px; margin-bottom: 16px; }
+    .page-footer-right2 p { font-size: 20px; }
   </style>
 </head>
 <body>
 
-<!-- Page top bar -->
 <div class="page-topbar">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Coat_of_arms_of_Barbados_%282%29.svg/1280px-Coat_of_arms_of_Barbados_%282%29.svg.png" alt="Coat of arms of Barbados">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Coat_of_arms_of_Barbados_%282%29.svg/1280px-Coat_of_arms_of_Barbados_%282%29.svg.png" alt="Coat of arms">
   Official website of the Government of Barbados
 </div>
-
-<!-- Page header -->
 <div class="page-header">
-  <div style="width:276px;height:27px;">
-    <svg width="276" height="27" viewBox="0 0 276 27" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Government of Barbados"><g><path d="M39.079 21.527C37.5026 21.527 36.103 21.1903 34.8802 20.5168C33.6721 19.8286 32.7219 18.8916 32.0294 17.7057C31.337 16.5051 30.9908 15.1288 30.9908 13.5769C30.9908 12.0249 31.337 10.6559 32.0294 9.47001C32.7219 8.26943 33.6721 7.3324 34.8802 6.65891C36.103 5.97077 37.5026 5.6267 39.079 5.6267C40.0219 5.6267 40.8911 5.7658 41.6867 6.04398C42.4823 6.32216 43.1821 6.71015 43.7861 7.20795C44.4049 7.69111 44.9205 8.24747 45.3331 8.87704L42.858 10.4144C42.6075 10.0191 42.276 9.66767 41.8635 9.3602C41.4657 9.05274 41.0237 8.81116 40.5376 8.63547C40.0514 8.45977 39.5652 8.37192 39.079 8.37192C38.1067 8.37192 37.2448 8.59886 36.4934 9.05274C35.7421 9.49197 35.1527 10.0996 34.7255 10.8756C34.2982 11.6515 34.0846 12.552 34.0846 13.5769C34.0846 14.5871 34.2909 15.4875 34.7034 16.2782C35.1307 17.0688 35.7273 17.691 36.4934 18.1449C37.2595 18.5841 38.1435 18.8038 39.1453 18.8038C39.8967 18.8038 40.567 18.6647 41.1563 18.3865C41.7456 18.0937 42.2171 17.691 42.5707 17.1786C42.9243 16.6661 43.1231 16.0659 43.1673 15.3777H39.5873V13.0278H46.0844V14.8946C46.055 16.3001 45.7382 17.5007 45.1342 18.4963C44.5301 19.4773 43.7051 20.2313 42.6591 20.7584C41.613 21.2708 40.4197 21.527 39.079 21.527Z"/><path d="M52.8353 21.527C51.7156 21.527 50.7138 21.2854 49.8298 20.8023C48.9606 20.3045 48.2755 19.6237 47.7746 18.7598C47.2884 17.896 47.0453 16.9004 47.0453 15.773C47.0453 14.6457 47.2884 13.6501 47.7746 12.7862C48.2608 11.9224 48.9385 11.2489 49.8077 10.7658C50.677 10.268 51.6714 10.0191 52.7911 10.0191C53.9255 10.0191 54.9273 10.268 55.7966 10.7658C56.6658 11.2489 57.3435 11.9224 57.8297 12.7862C58.3159 13.6501 58.559 14.6457 58.559 15.773C58.559 16.9004 58.3159 17.896 57.8297 18.7598C57.3435 19.6237 56.6658 20.3045 55.7966 20.8023C54.9421 21.2854 53.955 21.527 52.8353 21.527ZM52.8353 18.8477C53.3804 18.8477 53.8592 18.7159 54.2717 18.4524C54.6843 18.1888 55.001 17.8301 55.222 17.3763C55.4577 16.9077 55.5756 16.3733 55.5756 15.773C55.5756 15.1728 55.4577 14.6457 55.222 14.1918C54.9863 13.7233 54.6548 13.3572 54.2275 13.0937C53.815 12.8302 53.3362 12.6984 52.7911 12.6984C52.2607 12.6984 51.7819 12.8302 51.3547 13.0937C50.9421 13.3572 50.618 13.7233 50.3823 14.1918C50.1466 14.6457 50.0287 15.1728 50.0287 15.773C50.0287 16.3733 50.1466 16.9077 50.3823 17.3763C50.618 17.8301 50.9495 18.1888 51.3768 18.4524C51.804 18.7159 52.2902 18.8477 52.8353 18.8477Z"/><path d="M62.8109 21.2635L58.2806 10.2826H61.2861L64.2694 17.9472L67.2528 10.2826H70.2583L65.728 21.2635H62.8109Z"/><path d="M75.7678 21.527C74.6776 21.527 73.7126 21.2854 72.8729 20.8023C72.0331 20.3045 71.3701 19.6237 70.884 18.7598C70.4125 17.896 70.1768 16.9004 70.1768 15.773C70.1768 14.6457 70.4199 13.6501 70.906 12.7862C71.407 11.9224 72.0847 11.2489 72.9392 10.7658C73.8084 10.268 74.8029 10.0191 75.9225 10.0191C76.8949 10.0191 77.7862 10.2753 78.5965 10.7877C79.4216 11.2855 80.0772 12.0249 80.5633 13.0059C81.0643 13.9722 81.3147 15.1508 81.3147 16.5417H73.2265C73.3001 17.2738 73.6169 17.8594 74.1767 18.2986C74.7366 18.7232 75.3701 18.9355 76.0772 18.9355C76.6813 18.9355 77.1748 18.8111 77.5579 18.5622C77.9409 18.2986 78.2356 17.9619 78.4418 17.5519L81.0495 18.5622C80.7401 19.1771 80.335 19.7115 79.8341 20.1654C79.3479 20.6046 78.766 20.9414 78.0883 21.1756C77.4106 21.4099 76.6371 21.527 75.7678 21.527ZM73.3811 14.3894H78.1545C78.1103 13.9356 77.963 13.5695 77.7126 13.2914C77.4621 13.0132 77.1675 12.8082 76.8286 12.6764C76.4898 12.5447 76.1583 12.4788 75.8341 12.4788C75.5247 12.4788 75.1859 12.5447 74.8176 12.6764C74.464 12.7936 74.1472 12.9912 73.8673 13.2694C73.6021 13.5476 73.4401 13.9209 73.3811 14.3894Z"/><path d="M82.4937 21.2635V10.2826H85.4107V12.3031C85.8675 11.6149 86.442 11.1025 87.1345 10.7658C87.8416 10.4144 88.5709 10.2387 89.3223 10.2387V13.0498C88.6446 13.0498 88.0037 13.1303 87.3997 13.2914C86.8103 13.4524 86.3315 13.716 85.9632 14.082C85.5949 14.448 85.4107 14.9165 85.4107 15.4875V21.2635H82.4937Z"/><path d="M90.8937 21.2635V10.2826H93.634L93.7666 11.776C94.1202 11.205 94.5695 10.7731 95.1146 10.4803C95.6744 10.1728 96.308 10.0191 97.0151 10.0191C97.8844 10.0191 98.6284 10.1947 99.2471 10.5461C99.8659 10.8975 100.337 11.4466 100.661 12.1933C100.986 12.9253 101.14 13.877 101.126 15.0483V21.2635H98.2085V15.6413C98.2085 14.8946 98.1201 14.3162 97.9433 13.9063C97.7812 13.4963 97.5455 13.2035 97.2361 13.0278C96.9267 12.8375 96.5658 12.7423 96.1533 12.7423C95.4019 12.7277 94.82 12.9546 94.4074 13.4231C94.0097 13.8916 93.8108 14.5871 93.8108 15.5095V21.2635H90.8937Z"/><path d="M186.422 21.2635V5.89025H191.66C192.72 5.89025 193.649 6.0513 194.444 6.37341C195.24 6.69551 195.859 7.18599 196.3 7.84485C196.742 8.48906 196.963 9.29432 196.963 10.2606C196.963 10.8609 196.809 11.4173 196.499 11.9297C196.205 12.4275 195.785 12.8594 195.24 13.2255C195.962 13.5915 196.514 14.082 196.897 14.6969C197.295 15.2972 197.494 16.8711 197.494 16.8711C197.494 16.8711 197.28 18.6061 196.853 19.265C196.426 19.9238 195.829 20.4216 195.063 20.7584C194.297 21.0951 193.398 21.2635 192.367 21.2635H186.422ZM189.383 18.6061H192.08C192.801 18.6061 193.369 18.4304 193.781 18.079C194.194 17.713 194.4 17.2298 194.4 16.6296C194.4 16 194.172 15.5095 193.715 15.1581C193.258 14.7921 192.632 14.6091 191.836 14.6091H189.383V18.6061ZM189.383 12.1494H191.726C192.389 12.1494 192.912 11.981 193.295 11.6442C193.678 11.3075 193.87 10.8316 193.87 10.2167C193.87 9.60179 193.656 9.12595 193.229 8.7892C192.801 8.45245 192.22 8.28408 191.483 8.28408H189.383V12.1494Z"/><path d="M12.5786 0C11.6253 2.46943 10.6536 5.03986 8.57466 7.00774C9.21998 6.80573 10.3493 6.62461 11.0753 6.64203V17.0283L7.988 17.4636C7.878 17.4532 7.84133 17.2895 7.84133 17.0666C7.54434 13.8413 6.74135 11.1316 5.81736 8.32779C5.75136 7.94466 4.58171 6.48181 5.4837 6.73955C5.5937 6.75348 6.80002 7.2202 6.60935 6.99729C4.96671 5.38119 2.56508 4.21788 0.233112 3.87306C0.0277812 3.8243 -0.0932171 3.92183 0.0901136 4.14822C3.18474 8.6726 5.77336 14.012 5.75136 20.3475C6.95401 20.3475 9.86897 19.6718 11.0753 19.6718V27H12.5969L12.9453 6.53406L12.5786 0Z"/><path d="M12.5786 0C13.5319 2.46943 14.5036 5.03986 16.5825 7.00774C15.9372 6.80573 14.8079 6.62461 14.0819 6.64203V17.0283L17.1692 17.4636C17.2792 17.4532 17.3159 17.2895 17.3159 17.0666C17.6129 13.8413 18.4158 11.1316 19.3398 8.32779C19.4058 7.94466 20.5755 6.48181 19.6735 6.73955C19.5635 6.75348 18.3572 7.2202 18.5478 6.99729C20.1905 5.38119 22.5921 4.21788 24.9241 3.87306C25.1294 3.8243 25.2504 3.92183 25.0671 4.14822C21.9725 8.6726 19.3838 14.012 19.4058 20.3475C18.2032 20.3475 15.2882 19.6718 14.0819 19.6718V27H12.5603L12.2119 6.53406L12.5786 0Z"/></g></svg>
-  </div>
+  <div style="width:276px;height:27px;"><svg width="276" height="27" viewBox="0 0 276 27" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g><path d="M39.079 21.527C37.5026 21.527 36.103 21.1903 34.8802 20.5168C33.6721 19.8286 32.7219 18.8916 32.0294 17.7057C31.337 16.5051 30.9908 15.1288 30.9908 13.5769C30.9908 12.0249 31.337 10.6559 32.0294 9.47001C32.7219 8.26943 33.6721 7.3324 34.8802 6.65891C36.103 5.97077 37.5026 5.6267 39.079 5.6267C40.0219 5.6267 40.8911 5.7658 41.6867 6.04398C42.4823 6.32216 43.1821 6.71015 43.7861 7.20795C44.4049 7.69111 44.9205 8.24747 45.3331 8.87704L42.858 10.4144C42.6075 10.0191 42.276 9.66767 41.8635 9.3602C41.4657 9.05274 41.0237 8.81116 40.5376 8.63547C40.0514 8.45977 39.5652 8.37192 39.079 8.37192C38.1067 8.37192 37.2448 8.59886 36.4934 9.05274C35.7421 9.49197 35.1527 10.0996 34.7255 10.8756C34.2982 11.6515 34.0846 12.552 34.0846 13.5769C34.0846 14.5871 34.2909 15.4875 34.7034 16.2782C35.1307 17.0688 35.7273 17.691 36.4934 18.1449C37.2595 18.5841 38.1435 18.8038 39.1453 18.8038C39.8967 18.8038 40.567 18.6647 41.1563 18.3865C41.7456 18.0937 42.2171 17.691 42.5707 17.1786C42.9243 16.6661 43.1231 16.0659 43.1673 15.3777H39.5873V13.0278H46.0844V14.8946C46.055 16.3001 45.7382 17.5007 45.1342 18.4963C44.5301 19.4773 43.7051 20.2313 42.6591 20.7584C41.613 21.2708 40.4197 21.527 39.079 21.527Z"/><path d="M12.5786 0C11.6253 2.46943 10.6536 5.03986 8.57466 7.00774C9.21998 6.80573 10.3493 6.62461 11.0753 6.64203V17.0283L7.988 17.4636C7.878 17.4532 7.84133 17.2895 7.84133 17.0666C7.54434 13.8413 6.74135 11.1316 5.81736 8.32779C5.75136 7.94466 4.58171 6.48181 5.4837 6.73955C5.5937 6.75348 6.80002 7.2202 6.60935 6.99729C4.96671 5.38119 2.56508 4.21788 0.233112 3.87306C0.0277812 3.8243 -0.0932171 3.92183 0.0901136 4.14822C3.18474 8.6726 5.77336 14.012 5.75136 20.3475C6.95401 20.3475 9.86897 19.6718 11.0753 19.6718V27H12.5969L12.9453 6.53406L12.5786 0Z"/><path d="M12.5786 0C13.5319 2.46943 14.5036 5.03986 16.5825 7.00774C15.9372 6.80573 14.8079 6.62461 14.0819 6.64203V17.0283L17.1692 17.4636C17.2792 17.4532 17.3159 17.2895 17.3159 17.0666C17.6129 13.8413 18.4158 11.1316 19.3398 8.32779C19.4058 7.94466 20.5755 6.48181 19.6735 6.73955C19.5635 6.75348 18.3572 7.2202 18.5478 6.99729C20.1905 5.38119 22.5921 4.21788 24.9241 3.87306C25.1294 3.8243 25.2504 3.92183 25.0671 4.14822C21.9725 8.6726 19.3838 14.012 19.4058 20.3475C18.2032 20.3475 15.2882 19.6718 14.0819 19.6718V27H12.5603L12.2119 6.53406L12.5786 0Z"/></g></svg></div>
 </div>
+<div class="page-alpha">This page is in <a href="#">Alpha</a>. Your feedback helps us improve.</div>
 
-<!-- Alpha banner -->
-<div class="page-alpha">
-  This page is in <a href="#">Alpha</a>. Your feedback helps us improve.
-</div>
-
-<!-- Main content -->
 <main class="page-main">
-  <div style="max-width: 800px;">
-
+  <div style="padding: 0 0 24px 0;">
     <div class="preview-badge">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
-      Email template preview — With payment
+      MDA email template — BLA Remove Building/Boat — With payment
     </div>
-
     <p class="page-label">Email Templates / MDA Emails</p>
     <h1 class="page-title">Application for a Permit to Remove a Building/House or Boat — MDA Submission Email</h1>
     <p class="page-desc">This email is sent to the Barbados Licensing Authority (BLA) when a citizen submits a permit application to move a building, house, or boat. It includes submission details, payment confirmation, and the full application data.</p>
+    <div class="view-toggle">
+      <span class="view-label">Preview:</span>
+      <button class="toggle-btn active" onclick="setView('desktop')" id="btn-desktop">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Desktop
+      </button>
+      <button class="toggle-btn" onclick="setView('mobile')" id="btn-mobile">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+        Mobile
+      </button>
+    </div>
+  </div>
 
-    <!-- Email preview -->
-    <div class="email-wrapper">
-
-      <!-- Email header -->
-      <div class="email-header">
-        <svg width="276" height="27" viewBox="0 0 276 27" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Government of Barbados"><g><path d="M39.079 21.527C37.5026 21.527 36.103 21.1903 34.8802 20.5168C33.6721 19.8286 32.7219 18.8916 32.0294 17.7057C31.337 16.5051 30.9908 15.1288 30.9908 13.5769C30.9908 12.0249 31.337 10.6559 32.0294 9.47001C32.7219 8.26943 33.6721 7.3324 34.8802 6.65891C36.103 5.97077 37.5026 5.6267 39.079 5.6267C40.0219 5.6267 40.8911 5.7658 41.6867 6.04398C42.4823 6.32216 43.1821 6.71015 43.7861 7.20795C44.4049 7.69111 44.9205 8.24747 45.3331 8.87704L42.858 10.4144C42.6075 10.0191 42.276 9.66767 41.8635 9.3602C41.4657 9.05274 41.0237 8.81116 40.5376 8.63547C40.0514 8.45977 39.5652 8.37192 39.079 8.37192C38.1067 8.37192 37.2448 8.59886 36.4934 9.05274C35.7421 9.49197 35.1527 10.0996 34.7255 10.8756C34.2982 11.6515 34.0846 12.552 34.0846 13.5769C34.0846 14.5871 34.2909 15.4875 34.7034 16.2782C35.1307 17.0688 35.7273 17.691 36.4934 18.1449C37.2595 18.5841 38.1435 18.8038 39.1453 18.8038C39.8967 18.8038 40.567 18.6647 41.1563 18.3865C41.7456 18.0937 42.2171 17.691 42.5707 17.1786C42.9243 16.6661 43.1231 16.0659 43.1673 15.3777H39.5873V13.0278H46.0844V14.8946C46.055 16.3001 45.7382 17.5007 45.1342 18.4963C44.5301 19.4773 43.7051 20.2313 42.6591 20.7584C41.613 21.2708 40.4197 21.527 39.079 21.527Z"/><path d="M52.8353 21.527C51.7156 21.527 50.7138 21.2854 49.8298 20.8023C48.9606 20.3045 48.2755 19.6237 47.7746 18.7598C47.2884 17.896 47.0453 16.9004 47.0453 15.773C47.0453 14.6457 47.2884 13.6501 47.7746 12.7862C48.2608 11.9224 48.9385 11.2489 49.8077 10.7658C50.677 10.268 51.6714 10.0191 52.7911 10.0191C53.9255 10.0191 54.9273 10.268 55.7966 10.7658C56.6658 11.2489 57.3435 11.9224 57.8297 12.7862C58.3159 13.6501 58.559 14.6457 58.559 15.773C58.559 16.9004 58.3159 17.896 57.8297 18.7598C57.3435 19.6237 56.6658 20.3045 55.7966 20.8023C54.9421 21.2854 53.955 21.527 52.8353 21.527ZM52.8353 18.8477C53.3804 18.8477 53.8592 18.7159 54.2717 18.4524C54.6843 18.1888 55.001 17.8301 55.222 17.3763C55.4577 16.9077 55.5756 16.3733 55.5756 15.773C55.5756 15.1728 55.4577 14.6457 55.222 14.1918C54.9863 13.7233 54.6548 13.3572 54.2275 13.0937C53.815 12.8302 53.3362 12.6984 52.7911 12.6984C52.2607 12.6984 51.7819 12.8302 51.3547 13.0937C50.9421 13.3572 50.618 13.7233 50.3823 14.1918C50.1466 14.6457 50.0287 15.1728 50.0287 15.773C50.0287 16.3733 50.1466 16.9077 50.3823 17.3763C50.618 17.8301 50.9495 18.1888 51.3768 18.4524C51.804 18.7159 52.2902 18.8477 52.8353 18.8477Z"/><path d="M62.8109 21.2635L58.2806 10.2826H61.2861L64.2694 17.9472L67.2528 10.2826H70.2583L65.728 21.2635H62.8109Z"/><path d="M75.7678 21.527C74.6776 21.527 73.7126 21.2854 72.8729 20.8023C72.0331 20.3045 71.3701 19.6237 70.884 18.7598C70.4125 17.896 70.1768 16.9004 70.1768 15.773C70.1768 14.6457 70.4199 13.6501 70.906 12.7862C71.407 11.9224 72.0847 11.2489 72.9392 10.7658C73.8084 10.268 74.8029 10.0191 75.9225 10.0191C76.8949 10.0191 77.7862 10.2753 78.5965 10.7877C79.4216 11.2855 80.0772 12.0249 80.5633 13.0059C81.0643 13.9722 81.3147 15.1508 81.3147 16.5417H73.2265C73.3001 17.2738 73.6169 17.8594 74.1767 18.2986C74.7366 18.7232 75.3701 18.9355 76.0772 18.9355C76.6813 18.9355 77.1748 18.8111 77.5579 18.5622C77.9409 18.2986 78.2356 17.9619 78.4418 17.5519L81.0495 18.5622C80.7401 19.1771 80.335 19.7115 79.8341 20.1654C79.3479 20.6046 78.766 20.9414 78.0883 21.1756C77.4106 21.4099 76.6371 21.527 75.7678 21.527ZM73.3811 14.3894H78.1545C78.1103 13.9356 77.963 13.5695 77.7126 13.2914C77.4621 13.0132 77.1675 12.8082 76.8286 12.6764C76.4898 12.5447 76.1583 12.4788 75.8341 12.4788C75.5247 12.4788 75.1859 12.5447 74.8176 12.6764C74.464 12.7936 74.1472 12.9912 73.8673 13.2694C73.6021 13.5476 73.4401 13.9209 73.3811 14.3894Z"/><path d="M82.4937 21.2635V10.2826H85.4107V12.3031C85.8675 11.6149 86.442 11.1025 87.1345 10.7658C87.8416 10.4144 88.5709 10.2387 89.3223 10.2387V13.0498C88.6446 13.0498 88.0037 13.1303 87.3997 13.2914C86.8103 13.4524 86.3315 13.716 85.9632 14.082C85.5949 14.448 85.4107 14.9165 85.4107 15.4875V21.2635H82.4937Z"/><path d="M12.5786 0C11.6253 2.46943 10.6536 5.03986 8.57466 7.00774C9.21998 6.80573 10.3493 6.62461 11.0753 6.64203V17.0283L7.988 17.4636C7.878 17.4532 7.84133 17.2895 7.84133 17.0666C7.54434 13.8413 6.74135 11.1316 5.81736 8.32779C5.75136 7.94466 4.58171 6.48181 5.4837 6.73955C5.5937 6.75348 6.80002 7.2202 6.60935 6.99729C4.96671 5.38119 2.56508 4.21788 0.233112 3.87306C0.0277812 3.8243 -0.0932171 3.92183 0.0901136 4.14822C3.18474 8.6726 5.77336 14.012 5.75136 20.3475C6.95401 20.3475 9.86897 19.6718 11.0753 19.6718V27H12.5969L12.9453 6.53406L12.5786 0Z"/><path d="M12.5786 0C13.5319 2.46943 14.5036 5.03986 16.5825 7.00774C15.9372 6.80573 14.8079 6.62461 14.0819 6.64203V17.0283L17.1692 17.4636C17.2792 17.4532 17.3159 17.2895 17.3159 17.0666C17.6129 13.8413 18.4158 11.1316 19.3398 8.32779C19.4058 7.94466 20.5755 6.48181 19.6735 6.73955C19.5635 6.75348 18.3572 7.2202 18.5478 6.99729C20.1905 5.38119 22.5921 4.21788 24.9241 3.87306C25.1294 3.8243 25.2504 3.92183 25.0671 4.14822C21.9725 8.6726 19.3838 14.012 19.4058 20.3475C18.2032 20.3475 15.2882 19.6718 14.0819 19.6718V27H12.5603L12.2119 6.53406L12.5786 0Z"/></g></svg>
-      </div>
-
-      <!-- Email body content -->
-      <div class="email-content">
-
-        <!-- Top content block -->
-        <div style="display:flex;flex-direction:column;gap:16px;">
-
-          <h1 class="email-h1">You have received a permit application to remove a building/house or boat</h1>
-
-          <!-- Summary table -->
-          <div class="summary-table">
-            <div class="summary-row">
-              <div class="summary-label">Service:</div>
-              <div class="summary-value">Application for a Permit to Remove a Building/House or Boat</div>
-            </div>
-            <div class="summary-row">
-              <div class="summary-label">Submission ID:</div>
-              <div class="summary-value">[Reference ID]</div>
-            </div>
-            <div class="summary-row">
-              <div class="summary-label">Submission date:</div>
-              <div class="summary-value">[Submission Date — dd/mm/yyyy]</div>
-            </div>
-            <div class="summary-row">
-              <div class="summary-label">Submission time:</div>
-              <div class="summary-value">[Submission Time — hh:mm]</div>
-            </div>
-            <div class="summary-row">
-              <div class="summary-label">Applicant phone number:</div>
-              <div class="summary-value">[Applicant Phone Number — 246-xxx-xxxx]</div>
-            </div>
-            <div class="summary-row">
-              <div class="summary-label">Applicant email:</div>
-              <div class="summary-value">[Applicant Email]</div>
-            </div>
-            <div class="summary-row">
-              <div class="summary-label">Cost of permit:</div>
-              <div class="summary-value">[Cost of Permit — $xx]</div>
-            </div>
-            <div class="summary-row" style="border-bottom:none;">
-              <div class="summary-label">Copies:</div>
-              <div class="summary-value">[Number of Copies]</div>
-            </div>
-          </div>
-
-          <!-- Payment confirmation banner -->
-          <div class="payment-banner">
-            <div class="payment-banner-row">
-              <span class="label">Payment amount received:</span>
-              <span class="value">[Payment Amount]</span>
-            </div>
-            <div class="payment-banner-row">
-              <span class="label">EZPay transaction ID:</span>
-              <span class="value">[EZPay Transaction ID]</span>
-            </div>
-          </div>
-
-          <p class="intro-text">Here is the data from this application:</p>
+  <!-- Desktop preview -->
+  <div id="view-desktop">
+    <div class="mda-email">
+      <div class="mda-header"><svg width="276" height="27" viewBox="0 0 276 27" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g><path d="M39.079 21.527C37.5026 21.527 36.103 21.1903 34.8802 20.5168C33.6721 19.8286 32.7219 18.8916 32.0294 17.7057C31.337 16.5051 30.9908 15.1288 30.9908 13.5769C30.9908 12.0249 31.337 10.6559 32.0294 9.47001C32.7219 8.26943 33.6721 7.3324 34.8802 6.65891C36.103 5.97077 37.5026 5.6267 39.079 5.6267C40.0219 5.6267 40.8911 5.7658 41.6867 6.04398C42.4823 6.32216 43.1821 6.71015 43.7861 7.20795C44.4049 7.69111 44.9205 8.24747 45.3331 8.87704L42.858 10.4144C42.6075 10.0191 42.276 9.66767 41.8635 9.3602C41.4657 9.05274 41.0237 8.81116 40.5376 8.63547C40.0514 8.45977 39.5652 8.37192 39.079 8.37192C38.1067 8.37192 37.2448 8.59886 36.4934 9.05274C35.7421 9.49197 35.1527 10.0996 34.7255 10.8756C34.2982 11.6515 34.0846 12.552 34.0846 13.5769C34.0846 14.5871 34.2909 15.4875 34.7034 16.2782C35.1307 17.0688 35.7273 17.691 36.4934 18.1449C37.2595 18.5841 38.1435 18.8038 39.1453 18.8038C39.8967 18.8038 40.567 18.6647 41.1563 18.3865C41.7456 18.0937 42.2171 17.691 42.5707 17.1786C42.9243 16.6661 43.1231 16.0659 43.1673 15.3777H39.5873V13.0278H46.0844V14.8946C46.055 16.3001 45.7382 17.5007 45.1342 18.4963C44.5301 19.4773 43.7051 20.2313 42.6591 20.7584C41.613 21.2708 40.4197 21.527 39.079 21.527Z"/><path d="M12.5786 0C11.6253 2.46943 10.6536 5.03986 8.57466 7.00774C9.21998 6.80573 10.3493 6.62461 11.0753 6.64203V17.0283L7.988 17.4636C7.878 17.4532 7.84133 17.2895 7.84133 17.0666C7.54434 13.8413 6.74135 11.1316 5.81736 8.32779C5.75136 7.94466 4.58171 6.48181 5.4837 6.73955C5.5937 6.75348 6.80002 7.2202 6.60935 6.99729C4.96671 5.38119 2.56508 4.21788 0.233112 3.87306C0.0277812 3.8243 -0.0932171 3.92183 0.0901136 4.14822C3.18474 8.6726 5.77336 14.012 5.75136 20.3475C6.95401 20.3475 9.86897 19.6718 11.0753 19.6718V27H12.5969L12.9453 6.53406L12.5786 0Z"/><path d="M12.5786 0C13.5319 2.46943 14.5036 5.03986 16.5825 7.00774C15.9372 6.80573 14.8079 6.62461 14.0819 6.64203V17.0283L17.1692 17.4636C17.2792 17.4532 17.3159 17.2895 17.3159 17.0666C17.6129 13.8413 18.4158 11.1316 19.3398 8.32779C19.4058 7.94466 20.5755 6.48181 19.6735 6.73955C19.5635 6.75348 18.3572 7.2202 18.5478 6.99729C20.1905 5.38119 22.5921 4.21788 24.9241 3.87306C25.1294 3.8243 25.2504 3.92183 25.0671 4.14822C21.9725 8.6726 19.3838 14.012 19.4058 20.3475C18.2032 20.3475 15.2882 19.6718 14.0819 19.6718V27H12.5603L12.2119 6.53406L12.5786 0Z"/></g></svg></div>
+      <div class="mda-content">
+        <h1 class="mda-h1">You have received a permit application to remove a building/house or boat</h1>
+        <div class="mda-summary-table">
+          <div class="mda-summary-row"><div class="mda-summary-label">Service:</div><div class="mda-summary-value">Application for a Permit to Remove a Building/House or Boat</div></div>
+          <div class="mda-summary-row"><div class="mda-summary-label">Submission ID:</div><div class="mda-summary-value">[Reference ID]</div></div>
+          <div class="mda-summary-row"><div class="mda-summary-label">Submission date:</div><div class="mda-summary-value">[dd/mm/yyyy]</div></div>
+          <div class="mda-summary-row"><div class="mda-summary-label">Submission time:</div><div class="mda-summary-value">[hh:mm]</div></div>
+          <div class="mda-summary-row"><div class="mda-summary-label">Applicant phone number:</div><div class="mda-summary-value">[246-xxx-xxxx]</div></div>
+          <div class="mda-summary-row"><div class="mda-summary-label">Applicant email:</div><div class="mda-summary-value">[email]</div></div>
+          <div class="mda-summary-row"><div class="mda-summary-label">Cost of service:</div><div class="mda-summary-value">[Cost — $xx]</div></div>
+          <div class="mda-summary-row" style="border-bottom:1px solid #e5e9f2;"><div class="mda-summary-label">Copies:</div><div class="mda-summary-value">[Number]</div></div>
         </div>
-
-        <!-- Data sections -->
-        <div class="data-sections">
-
-          <!-- Declaration -->
+        <div class="mda-payment-banner">
+          <div class="mda-payment-row"><strong>Payment amount received:</strong>&nbsp;<span>[Payment Amount]</span></div>
+          <div class="mda-payment-row"><strong>EZPay transaction ID:</strong>&nbsp;<span>[EZPay Transaction ID]</span></div>
+        </div>
+        <p class="mda-intro">Here is the data from this request:</p>
+        <div class="mda-sections">
           <div>
-            <h2 class="section-heading">Declaration</h2>
-            <p class="declaration-text">I confirm that the information I have given is true and complete to the best of my knowledge.</p>
-            <div class="data-row">
-              <div class="data-label">Applicant's name</div>
-              <div class="data-value placeholder">[Applicant's full name]</div>
-            </div>
-            <div class="data-row">
-              <div class="data-label">Date</div>
-              <div class="data-value placeholder">[dd/mm/yyyy]</div>
+            <h2 class="mda-section-h2">Declaration</h2>
+            <p class="mda-declaration-text">I [Applicant's name] confirm that my information is true and correct. I understand that false details may lead to my application being rejected or legal action and that the Government of Barbados will keep my information confidential.</p>
+            <div class="mda-data-table">
+              <div class="mda-data-row"><div class="mda-data-label">Applicant's name</div><div class="mda-data-value">[Applicant's full name]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Date</div><div class="mda-data-value">[dd/mm/yyyy]</div></div>
             </div>
           </div>
-
-          <!-- What you are moving -->
           <div>
-            <h2 class="section-heading">What you are moving</h2>
-            <div class="data-row">
-              <div class="data-label">What are you moving?</div>
-              <div class="data-value placeholder">[Building or House / Boat]</div>
+            <h2 class="mda-section-h2">What you are moving</h2>
+            <div class="mda-data-table">
+              <div class="mda-data-row"><div class="mda-data-label">What are you moving?</div><div class="mda-data-value">[Building or House / Boat]</div></div>
             </div>
           </div>
-
-          <!-- Applicant details -->
           <div>
-            <h2 class="section-heading">Applicant details</h2>
-            <div class="data-row">
-              <div class="data-label">First name</div>
-              <div class="data-value placeholder">[First name]</div>
-            </div>
-            <div class="data-row">
-              <div class="data-label">Middle name(s)</div>
-              <div class="data-value placeholder">[Middle name(s)]</div>
-            </div>
-            <div class="data-row">
-              <div class="data-label">Last name</div>
-              <div class="data-value placeholder">[Last name]</div>
+            <h2 class="mda-section-h2">Applicant details</h2>
+            <div class="mda-data-table">
+              <div class="mda-data-row"><div class="mda-data-label">First name</div><div class="mda-data-value">[First name]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Middle name(s)</div><div class="mda-data-value">[Middle name(s)]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Last name</div><div class="mda-data-value">[Last name]</div></div>
             </div>
           </div>
-
-          <!-- Address -->
           <div>
-            <h2 class="section-heading">Address</h2>
-            <div class="data-row">
-              <div class="data-label">Street address</div>
-              <div class="data-value placeholder">[Street address]</div>
-            </div>
-            <div class="data-row">
-              <div class="data-label">District</div>
-              <div class="data-value placeholder">[District]</div>
-            </div>
-            <div class="data-row">
-              <div class="data-label">Parish</div>
-              <div class="data-value placeholder">[Parish]</div>
-            </div>
-            <div class="data-row">
-              <div class="data-label">Postal code</div>
-              <div class="data-value placeholder">[Postal code — BB12345]</div>
+            <h2 class="mda-section-h2">Address</h2>
+            <div class="mda-data-table">
+              <div class="mda-data-row"><div class="mda-data-label">Street address</div><div class="mda-data-value">[Street address]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">District</div><div class="mda-data-value">[District]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Parish</div><div class="mda-data-value">[Parish]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Postal code</div><div class="mda-data-value">[Postal code — BB12345]</div></div>
             </div>
           </div>
-
-          <!-- Contact details -->
           <div>
-            <h2 class="section-heading">Contact details</h2>
-            <div class="data-row">
-              <div class="data-label">Contact number</div>
-              <div class="data-value placeholder">[Contact number — 246-xxx-xxxx]</div>
-            </div>
-            <div class="data-row">
-              <div class="data-label">Second contact number</div>
-              <div class="data-value placeholder">[Second contact number]</div>
-            </div>
-            <div class="data-row">
-              <div class="data-label">Email address</div>
-              <div class="data-value placeholder">[Email address]</div>
+            <h2 class="mda-section-h2">Contact details</h2>
+            <div class="mda-data-table">
+              <div class="mda-data-row"><div class="mda-data-label">Contact number</div><div class="mda-data-value">[Contact number — 246-xxx-xxxx]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Second contact number</div><div class="mda-data-value">[Second contact number]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Email address</div><div class="mda-data-value">[Email address]</div></div>
             </div>
           </div>
-
-          <!-- Journey details -->
           <div>
-            <h2 class="section-heading">Journey details</h2>
-            <div class="data-row">
-              <div class="data-label">Description of item being moved</div>
-              <div class="data-value placeholder">[Description of item]</div>
-            </div>
-            <div class="data-row">
-              <div class="data-label">Vehicle registration number</div>
-              <div class="data-value placeholder">[Vehicle registration number]</div>
-            </div>
-            <div class="data-row">
-              <div class="data-label">Moving from — street address</div>
-              <div class="data-value placeholder">[From street address]</div>
-            </div>
-            <div class="data-row">
-              <div class="data-label">Moving from — parish</div>
-              <div class="data-value placeholder">[From parish]</div>
-            </div>
-            <div class="data-row">
-              <div class="data-label">Moving to — street address</div>
-              <div class="data-value placeholder">[To street address]</div>
-            </div>
-            <div class="data-row">
-              <div class="data-label">Moving to — parish</div>
-              <div class="data-value placeholder">[To parish]</div>
-            </div>
-            <div class="data-row">
-              <div class="data-label">Planned route</div>
-              <div class="data-value placeholder">[Planned route description]</div>
-            </div>
-            <div class="data-row">
-              <div class="data-label">Date of move</div>
-              <div class="data-value placeholder">[Date of move — dd/mm/yyyy]</div>
+            <h2 class="mda-section-h2">Journey details</h2>
+            <div class="mda-data-table">
+              <div class="mda-data-row"><div class="mda-data-label">Description of item being moved</div><div class="mda-data-value">[Description of item]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Vehicle registration number</div><div class="mda-data-value">[Vehicle registration number]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Moving from — street address</div><div class="mda-data-value">[From street address]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Moving from — parish</div><div class="mda-data-value">[From parish]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Moving to — street address</div><div class="mda-data-value">[To street address]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Moving to — parish</div><div class="mda-data-value">[To parish]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Planned route</div><div class="mda-data-value">[Planned route description]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Date of move</div><div class="mda-data-value">[Date of move — dd/mm/yyyy]</div></div>
             </div>
           </div>
-
-          <!-- Internal use only -->
-          <div class="internal-box">
-            <p>Due date: <span class="field-value">[To be filled by officer]</span></p>
-            <p>Officer assigned: <span class="field-value">[To be filled by officer]</span></p>
-            <p>Reference: <span class="field-value">[To be filled by officer]</span></p>
+          <div class="mda-internal-box">
+            <p>Due date: <span class="fv">[To be filled by officer]</span></p>
+            <p>Officer assigned: <span class="fv">[To be filled by officer]</span></p>
+            <p>Reference: <span class="fv">[To be filled by officer]</span></p>
           </div>
-
         </div>
       </div>
-
-      <!-- Email footer -->
-      <div class="email-footer">
-        <div class="email-footer-text">
+      <div class="mda-footer">
+        <div class="mda-footer-text">
           <p>This is an automated confirmation email from the Government of Barbados.</p>
           <p>Please <strong>do not reply</strong> to this email.</p>
         </div>
-        <div class="email-footer-crest">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Coat_of_arms_of_Barbados_%282%29.svg/1280px-Coat_of_arms_of_Barbados_%282%29.svg.png" alt="Coat of arms of Barbados">
-          <p class="email-footer-copyright">&copy; 2025 Government of Barbados</p>
+        <div class="mda-footer-right">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Coat_of_arms_of_Barbados_%282%29.svg/1280px-Coat_of_arms_of_Barbados_%282%29.svg.png" alt="Coat of arms">
+          <p class="mda-footer-copyright">&copy; 2025 Government of Barbados</p>
         </div>
       </div>
+    </div>
+  </div>
 
-    </div><!-- end email-wrapper -->
-
+  <!-- Mobile preview -->
+  <div id="view-mobile">
+    <div class="mobile-wrap">
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="mda-email mda-mobile">
+            <div class="mda-header"><svg width="180" height="18" viewBox="0 0 276 27" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g><path d="M39.079 21.527C37.5026 21.527 36.103 21.1903 34.8802 20.5168C33.6721 19.8286 32.7219 18.8916 32.0294 17.7057C31.337 16.5051 30.9908 15.1288 30.9908 13.5769C30.9908 12.0249 31.337 10.6559 32.0294 9.47001C32.7219 8.26943 33.6721 7.3324 34.8802 6.65891C36.103 5.97077 37.5026 5.6267 39.079 5.6267C40.0219 5.6267 40.8911 5.7658 41.6867 6.04398C42.4823 6.32216 43.1821 6.71015 43.7861 7.20795C44.4049 7.69111 44.9205 8.24747 45.3331 8.87704L42.858 10.4144C42.6075 10.0191 42.276 9.66767 41.8635 9.3602C41.4657 9.05274 41.0237 8.81116 40.5376 8.63547C40.0514 8.45977 39.5652 8.37192 39.079 8.37192C38.1067 8.37192 37.2448 8.59886 36.4934 9.05274C35.7421 9.49197 35.1527 10.0996 34.7255 10.8756C34.2982 11.6515 34.0846 12.552 34.0846 13.5769C34.0846 14.5871 34.2909 15.4875 34.7034 16.2782C35.1307 17.0688 35.7273 17.691 36.4934 18.1449C37.2595 18.5841 38.1435 18.8038 39.1453 18.8038C39.8967 18.8038 40.567 18.6647 41.1563 18.3865C41.7456 18.0937 42.2171 17.691 42.5707 17.1786C42.9243 16.6661 43.1231 16.0659 43.1673 15.3777H39.5873V13.0278H46.0844V14.8946C46.055 16.3001 45.7382 17.5007 45.1342 18.4963C44.5301 19.4773 43.7051 20.2313 42.6591 20.7584C41.613 21.2708 40.4197 21.527 39.079 21.527Z"/><path d="M12.5786 0C11.6253 2.46943 10.6536 5.03986 8.57466 7.00774C9.21998 6.80573 10.3493 6.62461 11.0753 6.64203V17.0283L7.988 17.4636C7.878 17.4532 7.84133 17.2895 7.84133 17.0666C7.54434 13.8413 6.74135 11.1316 5.81736 8.32779C5.75136 7.94466 4.58171 6.48181 5.4837 6.73955C5.5937 6.75348 6.80002 7.2202 6.60935 6.99729C4.96671 5.38119 2.56508 4.21788 0.233112 3.87306C0.0277812 3.8243 -0.0932171 3.92183 0.0901136 4.14822C3.18474 8.6726 5.77336 14.012 5.75136 20.3475C6.95401 20.3475 9.86897 19.6718 11.0753 19.6718V27H12.5969L12.9453 6.53406L12.5786 0Z"/><path d="M12.5786 0C13.5319 2.46943 14.5036 5.03986 16.5825 7.00774C15.9372 6.80573 14.8079 6.62461 14.0819 6.64203V17.0283L17.1692 17.4636C17.2792 17.4532 17.3159 17.2895 17.3159 17.0666C17.6129 13.8413 18.4158 11.1316 19.3398 8.32779C19.4058 7.94466 20.5755 6.48181 19.6735 6.73955C19.5635 6.75348 18.3572 7.2202 18.5478 6.99729C20.1905 5.38119 22.5921 4.21788 24.9241 3.87306C25.1294 3.8243 25.2504 3.92183 25.0671 4.14822C21.9725 8.6726 19.3838 14.012 19.4058 20.3475C18.2032 20.3475 15.2882 19.6718 14.0819 19.6718V27H12.5603L12.2119 6.53406L12.5786 0Z"/></g></svg></div>
+            <div class="mda-content">
+              <h1 class="mda-h1">You have received a permit application to remove a building/house or boat</h1>
+              <div class="mda-summary-table">
+                <div class="mda-summary-row"><div class="mda-summary-label">Service:</div><div class="mda-summary-value">Application for a Permit to Remove a Building/House or Boat</div></div>
+                <div class="mda-summary-row"><div class="mda-summary-label">ID:</div><div class="mda-summary-value">[Reference ID]</div></div>
+                <div class="mda-summary-row"><div class="mda-summary-label">Date:</div><div class="mda-summary-value">[dd/mm/yyyy]</div></div>
+                <div class="mda-summary-row"><div class="mda-summary-label">Phone:</div><div class="mda-summary-value">[246-xxx-xxxx]</div></div>
+                <div class="mda-summary-row" style="border-bottom:1px solid #e5e9f2;"><div class="mda-summary-label">Email:</div><div class="mda-summary-value">[email]</div></div>
+              </div>
+              <p class="mda-intro">Here is the data from this request:</p>
+              <div class="mda-sections">
+                <div>
+                  <h2 class="mda-section-h2">Declaration</h2>
+                  <div class="mda-data-table">
+                    <div class="mda-data-row"><div class="mda-data-label">Name</div><div class="mda-data-value">[Full name]</div></div>
+                    <div class="mda-data-row"><div class="mda-data-label">Date</div><div class="mda-data-value">[dd/mm/yyyy]</div></div>
+                  </div>
+                </div>
+                <div class="mda-internal-box">
+                  <p>Due date: <span class="fv">[Officer]</span></p>
+                  <p>Officer assigned: <span class="fv">[Officer]</span></p>
+                </div>
+              </div>
+            </div>
+            <div class="mda-footer">
+              <div class="mda-footer-text">
+                <p>This is an automated email from the Government of Barbados.</p>
+                <p>Please <strong>do not reply</strong>.</p>
+              </div>
+              <div class="mda-footer-right">
+                <p class="mda-footer-copyright">&copy; 2025 Government of Barbados</p>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Coat_of_arms_of_Barbados_%282%29.svg/1280px-Coat_of_arms_of_Barbados_%282%29.svg.png" alt="Coat of arms">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </main>
 
-<!-- Page footer -->
 <footer class="page-footer">
   <div class="page-footer-inner">
     <div class="page-footer-links">
@@ -318,12 +267,27 @@
       <a href="https://www.gov.bb/terms-conditions" target="_blank">Terms &amp; Conditions</a>
       <a href="https://www.gov.bb/sitemap" target="_blank">Sitemap</a>
     </div>
-    <div class="page-footer-right">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Coat_of_arms_of_Barbados_%282%29.svg/1280px-Coat_of_arms_of_Barbados_%282%29.svg.png" alt="Coat of arms of Barbados">
+    <div class="page-footer-right2">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Coat_of_arms_of_Barbados_%282%29.svg/1280px-Coat_of_arms_of_Barbados_%282%29.svg.png" alt="Coat of arms">
       <p>&copy; 2025 Government of Barbados</p>
     </div>
   </div>
 </footer>
 
+<script>
+function setView(view) {
+  var d = document.getElementById('view-desktop');
+  var m = document.getElementById('view-mobile');
+  var bd = document.getElementById('btn-desktop');
+  var bm = document.getElementById('btn-mobile');
+  if (view === 'desktop') {
+    d.style.display = ''; m.style.display = 'none';
+    bd.classList.add('active'); bm.classList.remove('active');
+  } else {
+    d.style.display = 'none'; m.style.display = '';
+    bd.classList.remove('active'); bm.classList.add('active');
+  }
+}
+</script>
 </body>
 </html>
