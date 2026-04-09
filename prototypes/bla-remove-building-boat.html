@@ -196,7 +196,7 @@ const PAGES = {
       <div class="space-y-8">
         <div id="error-summary-container"></div>
         ${GovBB.textField('item-description', 'Describe what you are moving', { hint: getItemDescriptionHint() })}
-        ${GovBB.textField('vehicle-reg', 'Vehicle registration number', { hint: 'The registration number of the vehicle(s) being used to move the item' })}
+        ${GovBB.textField('vehicle-reg', 'Vehicle registration number', { hint: 'For example, M 1234 or Z 567', placeholder: 'M 1234' })}
         <fieldset class="space-y-4">
           <legend class="font-bold text-[1.5rem] leading-normal text-bb-black-00">Moving from</legend>
           ${GovBB.textField('from-street', 'Street address')}
@@ -364,8 +364,8 @@ function validate(pageId) {
     }
     if (!D['vehicle-reg'] || !D['vehicle-reg'].trim()) {
       errors.push({ id: 'vehicle-reg', msg: 'Vehicle registration number – enter the vehicle registration number' });
-    } else if (!/^[A-Z]{1,2}\d{1,4}$/i.test(D['vehicle-reg'].trim())) {
-      errors.push({ id: 'vehicle-reg', msg: 'Vehicle registration number – enter a valid registration number, for example AB1234' });
+    } else if (!/^[A-Z]{1,2}\s?\d{1,4}$/i.test(D['vehicle-reg'].trim())) {
+      errors.push({ id: 'vehicle-reg', msg: 'Vehicle registration number – enter a valid Barbados registration number, for example M 1234 or Z 567' });
     }
     if (!D['from-street'] || !D['from-street'].trim()) {
       errors.push({ id: 'from-street', msg: 'Moving from street address – enter the street address you are moving from' });
