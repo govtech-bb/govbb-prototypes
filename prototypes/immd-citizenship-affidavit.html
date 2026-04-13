@@ -161,7 +161,7 @@ const PAGES = {
       
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Residence in Barbados</h1>
       <div class="space-y-8">
-        ${GovBB.textareaField('residence-statement', 'Describe what you know about this person's residence in Barbados', {hint: 'Include dates, addresses, and how you know this information', rows: 5})}
+        ${GovBB.textareaField('residence-statement', 'Describe what you know about this person\'s residence in Barbados', {hint: 'Include dates, addresses, and how you know this information', rows: 5})}
         ${GovBB.continueBtn()}
       </div>
     </form>`,
@@ -383,7 +383,7 @@ function validate(pageId) {
     if (!D['relationship']) errors.push({id:'relationship', msg:'Relationship – Select your relationship to that person'});
   }
   if (pageId === 'residence-statement') {
-    if (!D['residence-statement']) errors.push({id:'residence-statement', msg:'Residence – Describe what you know about this person's residence'});
+    if (!D['residence-statement']) errors.push({id:'residence-statement', msg:'Residence – Describe what you know about this person\'s residence'});
   }
   if (pageId === 'oath-contact') {
     if (!D['contact-email']) errors.push({id:'contact-email', msg:'Email – Enter your email address'});
