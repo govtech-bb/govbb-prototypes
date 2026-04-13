@@ -201,7 +201,7 @@ const PAGES = {
       
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Details of your claim</h1>
       <div class="space-y-8">
-        ${GovBB.textareaField('claim-details', 'Provide details to support your application', {hint: 'For example, your Barbadian parent's details, your marriage details, or your Crown Service history', rows: 5})}
+        ${GovBB.textareaField('claim-details', 'Provide details to support your application', {hint: 'For example, your Barbadian parent\'s details, your marriage details, or your Crown Service history', rows: 5})}
         ${GovBB.continueBtn()}
       </div>
     </form>`,
@@ -258,7 +258,7 @@ const PAGES = {
       <div class="bg-bb-teal-00 text-bb-white-00 p-8 rounded-sm space-y-4">
         <h1 class="font-bold text-[3.5rem] leading-[1.15]">Application submitted</h1>
         <p class="text-[1.5rem]">Your reference number</p>
-        <p class="text-[2rem] font-bold">${window.__refNumber || ''CRA-' + Math.random().toString(36).substring(2,8).toUpperCase()'}</p>
+        <p class="text-[2rem] font-bold">${window.__refNumber || 'CRA-' + Math.random().toString(36).substring(2,8).toUpperCase()}</p>
       </div>
             <div class="space-y-4">
         <h2 class="font-bold text-[2rem]">What happens next</h2>

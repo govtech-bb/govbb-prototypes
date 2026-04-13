@@ -134,7 +134,7 @@ const PAGES = {
                 e.target.value === 'Extension of Existing Work Permit' ? 'block' : 'none';
             }
           });
-        </script>
+        <\/script>
         ${GovBB.continueBtn()}
       </div>
     </form>`,
@@ -165,7 +165,7 @@ const PAGES = {
         ${GovBB.telField('employer-telephone', 'Employer telephone number')}
         ${GovBB.textareaField('employer-mailing-address', 'Employer mailing address', {rows: 3})}
         ${GovBB.textareaField('employer-work-address', 'Address where non-immigrant will work', {hint: 'Leave blank if same as mailing address', rows: 3})}
-        ${GovBB.textareaField('business-description', 'Description of the organisation's business', {rows: 3})}
+        ${GovBB.textareaField('business-description', 'Description of the organisation\'s business', {rows: 3})}
         ${GovBB.textField('org-total-employees', 'Total number of employees in organisation', {inputmode: 'numeric'})}
         ${GovBB.continueBtn()}
       </div>
@@ -221,7 +221,7 @@ const PAGES = {
       
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Supervision</h1>
       <div class="space-y-8">
-        ${GovBB.textField('supervisor-title', 'Occupational title of the non-immigrant's supervisor')}
+        ${GovBB.textField('supervisor-title', 'Occupational title of the non-immigrant\'s supervisor')}
         ${GovBB.textareaField('supervision-type', 'Type and degree of supervision the non-immigrant will receive', {hint: 'For example, daily direct supervision, general direction only', rows: 3})}
         ${GovBB.textField('employees-supervised', 'Number of employees the non-immigrant will supervise', {hint: 'Enter 0 if none', inputmode: 'numeric', width: '8rem'})}
         ${GovBB.radioGroup('ni-fully-informed', 'Have you fully informed the non-immigrant of all duties, conditions of employment, and terms of pay?', ['Yes', 'No'])}
@@ -287,7 +287,7 @@ const PAGES = {
       <div class="bg-bb-teal-00 text-bb-white-00 p-8 rounded-sm space-y-4">
         <h1 class="font-bold text-[3.5rem] leading-[1.15]">Application submitted</h1>
         <p class="text-[1.5rem]">Your reference number</p>
-        <p class="text-[2rem] font-bold">${window.__refNumber || ''WPE-' + Math.random().toString(36).substring(2,8).toUpperCase()'}</p>
+        <p class="text-[2rem] font-bold">${window.__refNumber || 'WPE-' + Math.random().toString(36).substring(2,8).toUpperCase()}</p>
       </div>
             <div class="space-y-4">
         <h2 class="font-bold text-[2rem]">What happens next</h2>
@@ -445,8 +445,8 @@ function validate(pageId) {
     if (!D['application-type']) errors.push({id:'application-type', msg:'Application type – Select the type of application'});
   }
   if (pageId === 'non-immigrant-details') {
-    if (!D['ni-family-name']) errors.push({id:'ni-family-name', msg:'Family name – Enter the non-immigrant's family name'});
-    if (!D['ni-first-name']) errors.push({id:'ni-first-name', msg:'First name – Enter the non-immigrant's first name'});
+    if (!D['ni-family-name']) errors.push({id:'ni-family-name', msg:'Family name – Enter the non-immigrant\'s family name'});
+    if (!D['ni-first-name']) errors.push({id:'ni-first-name', msg:'First name – Enter the non-immigrant\'s first name'});
     if (!D['ni-present-address']) errors.push({id:'ni-present-address', msg:'Present address – Enter the present address'});
   }
   if (pageId === 'employer-details') {
