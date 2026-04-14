@@ -31,6 +31,65 @@
       outline-offset: 2px;
       border-color: var(--color-teal-00);
     }
+    /* Restructured card: div wrapper, inner preview link, action row */
+    div.form-card {
+      cursor: default;
+      text-decoration: none;
+    }
+    .form-card-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      text-decoration: none;
+      color: inherit;
+    }
+    .form-card-body:hover ~ .form-card-actions,
+    .form-card:hover .form-card-actions {
+      border-color: var(--color-teal-00);
+    }
+    .form-card-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--color-grey-00);
+    }
+    .card-action-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      padding: 0.375rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 2px solid transparent;
+      transition: background 0.1s, border-color 0.1s, color 0.1s;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .card-action-preview {
+      background: var(--color-teal-10);
+      color: var(--color-teal-00);
+      border-color: var(--color-teal-10);
+    }
+    .card-action-preview:hover {
+      background: var(--color-teal-00);
+      color: #fff;
+      border-color: var(--color-teal-00);
+    }
+    .card-action-edit {
+      background: var(--color-white-00);
+      color: var(--color-mid-grey-00);
+      border-color: var(--color-grey-00);
+    }
+    .card-action-edit:hover {
+      background: var(--color-blue-10);
+      color: var(--color-blue-00);
+      border-color: var(--color-blue-40);
+    }
     .tag {
       display: inline-block;
       font-size: 0.875rem;
@@ -83,6 +142,7 @@
       <button onclick="filterForms('individual')" data-filter="individual" class="filter-btn tag bg-bb-white-00 text-bb-black-00 cursor-pointer border-2 border-bb-grey-00 hover:border-bb-teal-00 text-[1rem] py-1 px-4">For individuals</button>
       <button onclick="filterForms('employer')" data-filter="employer" class="filter-btn tag bg-bb-white-00 text-bb-black-00 cursor-pointer border-2 border-bb-grey-00 hover:border-bb-teal-00 text-[1rem] py-1 px-4">For employers</button>
       <button onclick="filterForms('self-employed')" data-filter="self-employed" class="filter-btn tag bg-bb-white-00 text-bb-black-00 cursor-pointer border-2 border-bb-grey-00 hover:border-bb-teal-00 text-[1rem] py-1 px-4">For self-employed</button>
+      <button onclick="filterForms('email-templates')" data-filter="email-templates" class="filter-btn tag bg-bb-white-00 text-bb-black-00 cursor-pointer border-2 border-bb-grey-00 hover:border-bb-teal-00 text-[1rem] py-1 px-4">All email templates</button>
     </div>
 
     <!-- ─── NIS section ─── -->
@@ -99,7 +159,7 @@
 
         <a href="prototypes/nisss-self-employment-registration.html" class="form-card" data-audience="individual self-employed">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">SE</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Self-Employment Registration</p>
@@ -112,7 +172,7 @@
 
         <a href="prototypes/nisss-employee-registration.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">OSS</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">NIS Online Social Security Service Registration</p>
@@ -124,7 +184,7 @@
 
         <a href="prototypes/nisss-direct-deposit.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">DD</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Direct Deposit Form</p>
@@ -136,7 +196,7 @@
 
         <a href="prototypes/nisss-unemployment-benefit.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">UB</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Claim for Unemployment Benefit</p>
@@ -148,7 +208,7 @@
 
         <a href="prototypes/nisss-pensioner-declaration.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-yellow-10 text-bb-yellow-00" style="color:#e8a833">PD</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Pensioner Declaration Form</p>
@@ -161,7 +221,7 @@
 
         <a href="prototypes/nisss-self-employed-contributions.html" class="form-card" data-audience="self-employed">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">SECP</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Self-employed Contributions Certificate</p>
@@ -173,7 +233,7 @@
 
         <a href="prototypes/nisss-employer-registration.html" class="form-card" data-audience="employer">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">EREG</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Register as an Employer for NIS Online Services</p>
@@ -185,7 +245,7 @@
 
         <a href="prototypes/nisss-dp10.html" class="form-card" data-audience="employer">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">DP10</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">National Insurance Contributions Certificate (D.P. 10)</p>
@@ -197,7 +257,7 @@
 
         <a href="prototypes/nisss-termination-certificate.html" class="form-card" data-audience="employer">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">TC</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Termination of Services / Layoff Certificate</p>
@@ -209,7 +269,7 @@
 
         <a href="prototypes/nisss-life-certificate.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">LC</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">NIS Life Certificate</p>
@@ -221,7 +281,7 @@
 
         <a href="prototypes/nisss-educational-status.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">ESF</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">NIS Educational Status Form</p>
@@ -233,7 +293,7 @@
 
         <a href="prototypes/nisss-old-age-pension.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">OAP</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Claim for Old Age Contributory Pension</p>
@@ -260,7 +320,7 @@
 
         <a href="prototypes/bla-remove-building-boat.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-red-10 text-bb-red-00">VEP</span>
+            <span class="tag bg-bb-red-10 text-bb-red-00">BLA</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Apply for a Permit to Move a Building, House or Boat on Public Roads</p>
@@ -268,6 +328,33 @@
           <div class="flex flex-wrap gap-2 mt-4">
             <span class="tag bg-bb-teal-10 text-bb-teal-00 text-[0.8rem]">Individual</span>
             <span class="tag text-[0.8rem]" style="background:#fff0f0;color:#a42c2c">Permit required</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ─── SEA section ─── -->
+    <section class="mb-l" data-section="sea">
+      <div class="flex items-center gap-4 mb-m pb-s border-b-2 border-bb-grey-00">
+        <div class="flex-1">
+          <p class="text-[0.875rem] font-semibold text-bb-mid-grey-00 uppercase tracking-wide mb-1">Ministry / Department / Agency</p>
+          <h2 class="font-bold text-[1.5rem]">Social Empowerment Agency (SEA)</h2>
+        </div>
+        <span class="tag bg-bb-blue-10 text-bb-blue-00" style="white-space:nowrap">1 form</span>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+
+        <a href="prototypes/nab-seniors-recreational-activities.html" class="form-card" data-audience="individual">
+          <div class="flex items-start justify-between gap-2 mb-3">
+            <span class="tag bg-bb-red-10 text-bb-red-00">NAB</span>
+            <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+          <p class="font-bold text-[1.1rem] leading-snug mb-2">Seniors' Recreational Activities Programme Application</p>
+          <p class="text-[1rem] text-bb-mid-grey-00 flex-1">Apply to join the National Assistance Board's Seniors' Recreational Activities Programme at a location near you.</p>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="tag bg-bb-teal-10 text-bb-teal-00 text-[0.8rem]">Individual</span>
           </div>
         </a>
 
@@ -288,7 +375,7 @@
 
         <a href="prototypes/caipo-company-name-search.html" class="form-card" data-audience="individual employer">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-red-10 text-bb-red-00">CNS</span>
+            <span class="tag bg-bb-red-10 text-bb-red-00">CAIPO</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Request a Company Name Search and Reservation (Form 33)</p>
@@ -300,7 +387,7 @@
 
         <a href="prototypes/caipo-srl-name-search.html" class="form-card" data-audience="individual employer">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-red-10 text-bb-red-00">SRL</span>
+            <span class="tag bg-bb-red-10 text-bb-red-00">CAIPO</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Request a Name Search and Reservation for a Society with Restricted Liability (Form 15)</p>
@@ -312,7 +399,7 @@
 
         <a href="prototypes/caipo-business-names.html" class="form-card" data-audience="individual self-employed employer">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-red-10 text-bb-red-00">BNR</span>
+            <span class="tag bg-bb-red-10 text-bb-red-00">CAIPO</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Register a Business Name (Form I)</p>
@@ -324,7 +411,7 @@
 
         <a href="prototypes/caipo-financial-statements-exemption.html" class="form-card" data-audience="employer">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-red-10 text-bb-red-00">FSE</span>
+            <span class="tag bg-bb-red-10 text-bb-red-00">CAIPO</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Apply for Exemption from Filing Financial Statements</p>
@@ -336,7 +423,7 @@
 
         <a href="prototypes/caipo-articles-reincorporation.html" class="form-card" data-audience="employer">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-red-10 text-bb-red-00">ARI</span>
+            <span class="tag bg-bb-red-10 text-bb-red-00">CAIPO</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">File Articles of Reincorporation</p>
@@ -349,7 +436,7 @@
 
         <a href="prototypes/caipo-declaration-cap308.html" class="form-card" data-audience="employer">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-red-10 text-bb-red-00">DEC</span>
+            <span class="tag bg-bb-red-10 text-bb-red-00">CAIPO</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Declaration of Compliance (Companies Act Cap. 308)</p>
@@ -362,7 +449,7 @@
 
         <a href="prototypes/caipo-declaration-nonprofit.html" class="form-card" data-audience="employer">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-red-10 text-bb-red-00">DNP</span>
+            <span class="tag bg-bb-red-10 text-bb-red-00">CAIPO</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Declaration of Compliance (Non-Profit Company)</p>
@@ -375,7 +462,7 @@
 
         <a href="prototypes/caipo-url-domain-declaration.html" class="form-card" data-audience="individual employer">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-red-10 text-bb-red-00">URL</span>
+            <span class="tag bg-bb-red-10 text-bb-red-00">CAIPO</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Declaration of URL / Domain Name Ownership for Company Incorporation</p>
@@ -387,7 +474,7 @@
 
         <a href="prototypes/caipo-registered-agent.html" class="form-card" data-audience="individual employer">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-red-10 text-bb-red-00">RAG</span>
+            <span class="tag bg-bb-red-10 text-bb-red-00">CAIPO</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Apply to Become a Registered Agent with CAIPO</p>
@@ -399,7 +486,7 @@
 
         <a href="prototypes/caipo-geographical-agent-authorisation.html" class="form-card" data-audience="individual employer">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-red-10 text-bb-red-00">GAA</span>
+            <span class="tag bg-bb-red-10 text-bb-red-00">CAIPO</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Authorise an Agent for a Geographical Indications Matter (Cap. 320)</p>
@@ -411,7 +498,7 @@
 
         <a href="prototypes/caipo-caricom-complaints.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-red-10 text-bb-red-00">CCF</span>
+            <span class="tag bg-bb-red-10 text-bb-red-00">CAIPO</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Submit a CARICOM Complaint About an Incident in Barbados</p>
@@ -423,7 +510,7 @@
 
         <a href="prototypes/caipo-ibc-licence-application.html" class="form-card" data-audience="employer">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-red-10 text-bb-red-00">IBC</span>
+            <span class="tag bg-bb-red-10 text-bb-red-00">CAIPO</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Apply for an International Business Company (IBC) Licence</p>
@@ -451,7 +538,7 @@
 
         <a href="prototypes/immd-caricom-indefinite-stay.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-blue-10 text-bb-blue-00">CIS</span>
+            <span class="tag bg-bb-blue-10 text-bb-blue-00">CIPD</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">CARICOM Indefinite Stay Application</p>
@@ -464,7 +551,7 @@
 
         <a href="prototypes/immd-student-certificate-h2.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-blue-10 text-bb-blue-00">CSH</span>
+            <span class="tag bg-bb-blue-10 text-bb-blue-00">CIPD</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Certificate by Non-Immigrant Student (Form H-2)</p>
@@ -477,7 +564,7 @@
 
         <a href="prototypes/immd-student-eligibility-h1.html" class="form-card" data-audience="institution">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-blue-10 text-bb-blue-00">SEL</span>
+            <span class="tag bg-bb-blue-10 text-bb-blue-00">CIPD</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Certificate of Eligibility for Non-Immigrant Student Status (H-1)</p>
@@ -490,7 +577,7 @@
 
         <a href="prototypes/immd-citizenship-affidavit.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-blue-10 text-bb-blue-00">CAF</span>
+            <span class="tag bg-bb-blue-10 text-bb-blue-00">CIPD</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Citizenship Affidavit</p>
@@ -503,7 +590,7 @@
 
         <a href="prototypes/immd-commonwealth-citizenship.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-blue-10 text-bb-blue-00">CCR</span>
+            <span class="tag bg-bb-blue-10 text-bb-blue-00">CIPD</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Commonwealth Citizenship Registration</p>
@@ -516,7 +603,7 @@
 
         <a href="prototypes/immd-immigrant-status.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-blue-10 text-bb-blue-00">IMM</span>
+            <span class="tag bg-bb-blue-10 text-bb-blue-00">CIPD</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Immigrant Status and Non-National Registration (Form A)</p>
@@ -529,7 +616,7 @@
 
         <a href="prototypes/immd-permanent-resident.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-blue-10 text-bb-blue-00">PRR</span>
+            <span class="tag bg-bb-blue-10 text-bb-blue-00">CIPD</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Permanent Resident Registration (Form A1)</p>
@@ -542,7 +629,7 @@
 
         <a href="prototypes/immd-citizen-adult.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-blue-10 text-bb-blue-00">CRA</span>
+            <span class="tag bg-bb-blue-10 text-bb-blue-00">CIPD</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Registration as a Citizen of Barbados — Adult (Form R.4)</p>
@@ -555,7 +642,7 @@
 
         <a href="prototypes/immd-citizen-marriage.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-blue-10 text-bb-blue-00">CRM</span>
+            <span class="tag bg-bb-blue-10 text-bb-blue-00">CIPD</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Registration as a Citizen of Barbados by Marriage</p>
@@ -568,7 +655,7 @@
 
         <a href="prototypes/immd-citizen-under18.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-blue-10 text-bb-blue-00">CRU</span>
+            <span class="tag bg-bb-blue-10 text-bb-blue-00">CIPD</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Registration as a Citizen of Barbados — Under 18</p>
@@ -581,7 +668,7 @@
 
         <a href="prototypes/immd-citizenship-descent.html" class="form-card" data-audience="individual">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-blue-10 text-bb-blue-00">CCD</span>
+            <span class="tag bg-bb-blue-10 text-bb-blue-00">CIPD</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Certificate of Citizenship by Descent</p>
@@ -594,7 +681,7 @@
 
         <a href="prototypes/immd-short-term-work-permit.html" class="form-card" data-audience="employer">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-blue-10 text-bb-blue-00">SWP</span>
+            <span class="tag bg-bb-blue-10 text-bb-blue-00">CIPD</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Short Term Work Permit or Training Attachment (Form C-3)</p>
@@ -607,7 +694,7 @@
 
         <a href="prototypes/immd-work-permit.html" class="form-card" data-audience="employer">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-blue-10 text-bb-blue-00">WPE</span>
+            <span class="tag bg-bb-blue-10 text-bb-blue-00">CIPD</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Work Permit / Extension / Job Offer for Non-Immigrant Employment (Form C-2)</p>
@@ -663,7 +750,7 @@
 
         <a href="Email Templates/MDA Emails/nisss-self-employment-registration.html" class="form-card">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">SE</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Self-Employment Registration — MDA Email</p>
@@ -675,7 +762,7 @@
 
         <a href="Email Templates/MDA Emails/nisss-employee-registration.html" class="form-card">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">OSS</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">NIS OSS Registration — MDA Email</p>
@@ -687,7 +774,7 @@
 
         <a href="Email Templates/MDA Emails/nisss-direct-deposit.html" class="form-card">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">DD</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Direct Deposit — MDA Email</p>
@@ -699,7 +786,7 @@
 
         <a href="Email Templates/MDA Emails/nisss-unemployment-benefit.html" class="form-card">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">UB</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Unemployment Benefit — MDA Email</p>
@@ -711,7 +798,7 @@
 
         <a href="Email Templates/MDA Emails/nisss-employer-registration.html" class="form-card">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">ER</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Employer Registration — MDA Email</p>
@@ -723,7 +810,7 @@
 
         <a href="Email Templates/MDA Emails/nisss-self-employed-contributions.html" class="form-card">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">SC</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Self-Employed Contributions — MDA Email</p>
@@ -735,7 +822,7 @@
 
         <a href="Email Templates/MDA Emails/nisss-dp10.html" class="form-card">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">DP10</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">DP10 Form — MDA Email</p>
@@ -747,7 +834,7 @@
 
         <a href="Email Templates/MDA Emails/nisss-pensioner-declaration.html" class="form-card">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">PD</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Pensioner Declaration — MDA Email</p>
@@ -759,7 +846,7 @@
 
         <a href="Email Templates/MDA Emails/nisss-termination-certificate.html" class="form-card">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">TC</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Termination Certificate — MDA Email</p>
@@ -771,7 +858,7 @@
 
         <a href="Email Templates/MDA Emails/nisss-life-certificate.html" class="form-card">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">LC</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Life Certificate — MDA Email</p>
@@ -783,7 +870,7 @@
 
         <a href="Email Templates/MDA Emails/nisss-educational-status.html" class="form-card">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">ESF</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Educational Status Form — MDA Email</p>
@@ -795,7 +882,7 @@
 
         <a href="Email Templates/MDA Emails/nisss-old-age-pension.html" class="form-card">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-green-10 text-bb-green-00">OAP</span>
+            <span class="tag bg-bb-green-10 text-bb-green-00">NIS</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Old Age Contributory Pension — MDA Email</p>
@@ -805,9 +892,21 @@
           </div>
         </a>
 
+        <a href="Email Templates/MDA Emails/nab-seniors-recreational-activities.html" class="form-card">
+          <div class="flex items-start justify-between gap-2 mb-3">
+            <span class="tag text-[0.8rem]" style="background:#fff0f0;color:#a42c2c;">NAB</span>
+            <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+          <p class="font-bold text-[1.1rem] leading-snug mb-2">Seniors' Recreational Activities Programme — MDA Email</p>
+          <p class="text-[1rem] text-bb-mid-grey-00 flex-1">MDA notification email for SRAP application submissions.</p>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="tag text-[0.8rem]" style="background:#e5e9f2;color:#00164a;">No payment</span>
+          </div>
+        </a>
+
         <a href="Email Templates/MDA Emails/bla-remove-building-boat.html" class="form-card">
           <div class="flex items-start justify-between gap-2 mb-3">
-            <span class="tag bg-bb-red-10 text-bb-red-00">VEP</span>
+            <span class="tag bg-bb-red-10 text-bb-red-00">BLA</span>
             <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
           <p class="font-bold text-[1.1rem] leading-snug mb-2">Permit to Move Building/Boat — MDA Email</p>
@@ -1313,6 +1412,19 @@
           </div>
         </a>
 
+        <a href="Email Templates/Applicant Emails/nab-seniors-recreational-activities.html" class="form-card">
+          <div class="flex items-start justify-between gap-2 mb-3">
+            <span class="tag text-[0.8rem]" style="background:#fff0f0;color:#a42c2c;">NAB</span>
+            <svg class="mt-1 shrink-0 text-bb-teal-00" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+          <p class="font-bold text-[1.1rem] leading-snug mb-2">Seniors' Recreational Activities Programme — Applicant Email</p>
+          <p class="text-[1rem] text-bb-mid-grey-00 flex-1">Applicant confirmation email for SRAP application submissions.</p>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="tag text-[0.8rem]" style="background:#e5e9f2;color:#00164a;">No payment</span>
+            <span class="tag text-[0.8rem]" style="background:#f5eef9;color:#4a235a;">Mobile + Desktop</span>
+          </div>
+        </a>
+
         <a href="Email Templates/Applicant Emails/bla-remove-building-boat.html" class="form-card">
           <div class="flex items-start justify-between gap-2 mb-3">
             <span class="tag text-[0.8rem]" style="background:#fff0f0;color:#a42c2c;">BLA</span>
@@ -1664,7 +1776,7 @@ function updateStats() {
   var prototypeSections = document.querySelectorAll('section[data-section]:not([data-section="email-templates"])');
   var protoCards = [];
   prototypeSections.forEach(function(section) {
-    section.querySelectorAll('a.form-card').forEach(function(card) { protoCards.push(card); });
+    section.querySelectorAll('.form-card').forEach(function(card) { protoCards.push(card); });
   });
   var agencies = new Set();
   prototypeSections.forEach(function(s) { agencies.add(s.getAttribute('data-section')); });
@@ -1675,7 +1787,7 @@ function updateStats() {
   document.getElementById('stat-individuals').textContent = individuals;
   document.getElementById('stat-employers').textContent = employers;
 }
-document.addEventListener('DOMContentLoaded', updateStats);
+// Stats are updated by the card upgrade script after it completes
 
 function filterForms(audience) {
   document.querySelectorAll('.filter-btn').forEach(function(btn) {
@@ -1697,6 +1809,52 @@ function filterForms(audience) {
     section.style.display = visibleCards.length === 0 ? 'none' : '';
   });
 }
+</script>
+<script src="assets/govbb-dashboard.js?v=2"></script>
+<script>
+/* ── Upgrade prototype cards: add Preview + Edit actions ── */
+(function () {
+  document.querySelectorAll('a.form-card').forEach(function (a) {
+    var protoUrl = a.getAttribute('href'); // e.g. prototypes/nisss-dp10.html
+    var slug = protoUrl.replace('prototypes/', '').replace('.html', '');
+    var schemaUrl = 'schemas/' + slug + '.json';
+    var formTitle = (a.querySelector('p.font-bold') || a.querySelector('p') || {}).textContent || slug;
+
+    // Turn the <a> into a <div> keeping all attributes except href
+    var div = document.createElement('div');
+    div.className = a.className;
+    Array.from(a.attributes).forEach(function (attr) {
+      if (attr.name !== 'href' && attr.name !== 'class') {
+        div.setAttribute(attr.name, attr.value);
+      }
+    });
+
+    // Wrap existing inner HTML in a clickable preview link
+    var bodyLink = document.createElement('a');
+    bodyLink.href = protoUrl;
+    bodyLink.className = 'form-card-body';
+    bodyLink.innerHTML = a.innerHTML;
+
+    // Action row
+    var actions = document.createElement('div');
+    actions.className = 'form-card-actions';
+    actions.innerHTML =
+      '<a href="' + protoUrl + '" class="card-action-btn card-action-preview" target="_blank">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' +
+        'Preview' +
+      '</a>' +
+      '<a href="generator.html?ai=1&name=' + encodeURIComponent(formTitle) + '&slug=' + encodeURIComponent(slug) + '" class="card-action-btn card-action-edit">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+        'Edit' +
+      '</a>';
+
+    div.appendChild(bodyLink);
+    div.appendChild(actions);
+    a.parentNode.replaceChild(div, a);
+  });
+  // Re-run stats after cards have been upgraded from <a> to <div>
+  if (typeof updateStats === 'function') updateStats();
+}());
 </script>
 </body>
 </html>

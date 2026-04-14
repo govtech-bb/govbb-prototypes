@@ -120,6 +120,7 @@
 </footer>
 
 <script src="../assets/govbb-framework.js"></script>
+<script src="../assets/govbb-validation-toggle.js"></script>
 <script>
 const FORM_NAME = 'NIS Educational Status Form';
 
@@ -297,7 +298,7 @@ const PAGES = {
       <p class="eml-page-desc">Sent to the applicant after they submit the NIS Educational Status Form.</p>
       <div style="background:#f2f4f6;padding:32px 0;">
         <div class="email-wrapper">
-          <div class="email-header-bar">${_LOGO}</div>
+          <div class="email-header-bar"><div style="width:276px;height:27px;color:#000;">${_LOGO}</div></div>
           <div class="email-content">
             <h1 class="email-h1">NIS Educational Status Form Submission</h1>
             <p class="email-greeting">Dear ${D['first-name'] || '[First Name]'},</p>
@@ -358,7 +359,7 @@ const PAGES = {
       <p class="eml-page-desc">Sent to the NIS when an educational institution submits a student's NIS Educational Status Form. Shows the submission details and the full form data.</p>
       <div style="background:#f2f4f6;padding:32px 0;">
         <div class="mda-email">
-          <div class="mda-header">${_LOGO}</div>
+          <div class="mda-header"><div style="width:276px;height:27px;color:#000;">${_LOGO}</div></div>
           <div class="mda-content">
             <h1 class="mda-h1">You have received a NIS Educational Status Form submission</h1>
             <div class="mda-summary-table">

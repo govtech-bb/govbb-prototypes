@@ -1,0 +1,183 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "form-schema.v1.json",
+  "title": "GovBB Form Schema v1",
+  "description": "Schema definition for GovTech Barbados form prototypes",
+  "type": "object",
+  "required": ["id", "version", "meta", "validation", "flow", "pages"],
+
+  "properties": {
+
+    "$schema": { "type": "string" },
+
+    "id": {
+      "type": "string",
+      "description": "Unique slug. Must match the prototype filename (without .html). Example: nisss-employee-registration",
+      "pattern": "^[a-z0-9-]+$"
+    },
+
+    "version": {
+      "type": "string",
+      "description": "Semantic version of this schema document. Increment when fields or flow change.",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+
+    "meta": {
+      "type": "object",
+      "required": ["title", "mda", "status", "referencePrefix"],
+      "properties": {
+        "title":           { "type": "string", "description": "Full form title shown on the start page" },
+        "mda":             { "type": "string", "description": "Ministry, Department, or Agency responsible for this form" },
+        "serviceType":     { "type": "string", "enum": ["registration", "application", "declaration", "certificate", "permit", "renewal", "search", "claim", "other"] },
+        "status":          { "type": "string", "enum": ["alpha", "beta", "live", "retired"] },
+        "referencePrefix": { "type": "string", "description": "2–5 character prefix used when generating reference numbers. Must match lib/reference.js." },
+        "estimatedTime":   { "type": "string", "description": "Plain-language time estimate shown on start page. Example: 10 minutes" },
+        "lastUpdated":     { "type": "string", "format": "date" },
+        "prototypeFile":   { "type": "string", "description": "Relative path to the corresponding HTML prototype file" }
+      }
+    },
+
+    "validation": {
+      "type": "object",
+      "required": ["enabled"],
+      "description": "Global validation settings. Set enabled: false to turn off all client-side validation (useful for demo walkthroughs).",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Master switch. false disables all field validation and allows free navigation through the form."
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["onContinue", "onBlur", "onSubmitOnly"],
+          "description": "When validation runs. onContinue (default): validate when the user clicks Continue."
+        }
+      }
+    },
+
+    "flow": {
+      "type": "array",
+      "description": "Default page order. Conditional logic may insert or skip pages at runtime.",
+      "items": { "type": "string" },
+      "minItems": 2
+    },
+
+    "pages": {
+      "type": "object",
+      "description": "Page definitions keyed by page ID (must appear in flow or be referenced by conditionalLogic).",
+      "additionalProperties": { "$ref": "#/definitions/page" }
+    },
+
+    "conditionalLogic": {
+      "type": "array",
+      "description": "Rules that modify the flow or field visibility based on user answers.",
+      "items": { "$ref": "#/definitions/conditionalRule" }
+    }
+
+  },
+
+  "definitions": {
+
+    "page": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["start", "question", "declaration", "check", "confirmation"]
+        },
+        "title":   { "type": "string" },
+        "caption": { "type": "boolean", "description": "Show the form name as a caption above the h1" },
+        "fields":  { "type": "array", "items": { "$ref": "#/definitions/fieldOrRef" } }
+      }
+    },
+
+    "fieldOrRef": {
+      "oneOf": [
+        { "$ref": "#/definitions/field" },
+        {
+          "type": "object",
+          "required": ["$ref"],
+          "properties": {
+            "$ref": { "type": "string", "description": "Relative path to a shared section JSON file. Example: shared/name-block.json" }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+
+    "field": {
+      "type": "object",
+      "required": ["id", "type", "label"],
+      "properties": {
+        "id":         { "type": "string", "description": "Unique field ID. Used as the HTML input id/name and as the key in GovBB.D." },
+        "type":       { "type": "string", "enum": ["text", "email", "tel", "date", "select", "radio", "checkbox", "textarea", "file", "static"] },
+        "label":      { "type": "string" },
+        "hint":       { "type": "string" },
+        "required":   { "type": "boolean" },
+        "inputmode":  { "type": "string", "enum": ["text", "numeric", "decimal", "email", "tel", "url"] },
+        "width":      { "type": "string", "enum": ["full", "three-quarters", "half", "one-third", "quarter"] },
+        "rows":       { "type": "integer", "description": "For textarea only" },
+        "options": {
+          "type": "array",
+          "description": "For radio and select fields",
+          "items": {
+            "oneOf": [
+              { "type": "string" },
+              {
+                "type": "object",
+                "required": ["value", "label"],
+                "properties": {
+                  "value": { "type": "string" },
+                  "label": { "type": "string" }
+                }
+              }
+            ]
+          }
+        },
+        "validation": {
+          "type": "object",
+          "properties": {
+            "maxLength":      { "type": "integer" },
+            "minLength":      { "type": "integer" },
+            "pattern":        { "type": "string", "description": "Regex pattern (as a JSON string)" },
+            "patternMessage": { "type": "string", "description": "Error message shown when pattern validation fails" },
+            "notFuture":      { "type": "boolean", "description": "For date fields — date must not be in the future" },
+            "notPast":        { "type": "boolean", "description": "For date fields — date must not be in the past" }
+          }
+        }
+      }
+    },
+
+    "conditionalRule": {
+      "type": "object",
+      "required": ["id", "when", "then"],
+      "properties": {
+        "id":          { "type": "string" },
+        "description": { "type": "string" },
+        "when": {
+          "type": "object",
+          "required": ["field", "operator", "value"],
+          "properties": {
+            "field":    { "type": "string" },
+            "operator": { "type": "string", "enum": ["equals", "not_equals", "contains", "in", "not_in", "empty", "not_empty"] },
+            "value":    {}
+          }
+        },
+        "then": {
+          "type": "object",
+          "required": ["action"],
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["insert_page", "skip_page", "show_field", "hide_field", "require_field"]
+            },
+            "page":   { "type": "string", "description": "For insert_page / skip_page — the target page ID" },
+            "after":  { "type": "string", "description": "For insert_page — insert after this page ID" },
+            "field":  { "type": "string", "description": "For field-level actions — the target field ID" }
+          }
+        }
+      }
+    }
+
+  }
+}

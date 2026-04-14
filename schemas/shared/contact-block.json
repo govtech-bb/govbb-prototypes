@@ -1,0 +1,42 @@
+{
+  "$id": "shared/contact-block",
+  "description": "Standard contact block — landline, mobile, email. At least one phone number required.",
+  "type": "fieldset",
+  "legend": "Contact details",
+  "crossFieldValidation": [
+    {
+      "rule": "at-least-one",
+      "fields": ["landline", "mobile"],
+      "message": "Enter at least one phone number — landline or mobile"
+    }
+  ],
+  "fields": [
+    {
+      "id": "landline",
+      "type": "tel",
+      "label": "Landline",
+      "required": false,
+      "hint": "For example, 246-555-1234",
+      "validation": {
+        "maxLength": 20
+      }
+    },
+    {
+      "id": "mobile",
+      "type": "tel",
+      "label": "Mobile number",
+      "required": false,
+      "hint": "For example, 246-555-1234",
+      "validation": {
+        "maxLength": 20
+      }
+    },
+    {
+      "id": "contact-email",
+      "type": "email",
+      "label": "Email address",
+      "required": true,
+      "hint": "We will send your confirmation to this address"
+    }
+  ]
+}

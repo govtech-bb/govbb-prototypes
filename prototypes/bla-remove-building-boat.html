@@ -120,6 +120,7 @@
 </footer>
 
 <script src="../assets/govbb-framework.js"></script>
+<script src="../assets/govbb-validation-toggle.js"></script>
 <script>
 /* ───────── Form-specific configuration ───────── */
 const FORM_NAME = 'Application for a Permit to Remove a Building/House or Boat';
@@ -403,7 +404,7 @@ const PAGES = {
       <p class="eml-page-desc">Sent to the applicant after they submit the Permit to Move a Building, House or Boat application.</p>
       <div style="background:#f2f4f6;padding:32px 0;">
         <div class="email-wrapper">
-          <div class="email-header-bar">${_LOGO}</div>
+          <div class="email-header-bar"><div style="width:276px;height:27px;color:#000;">${_LOGO}</div></div>
           <div class="email-content">
             <h1 class="email-h1">Permit to Move a Building, House or Boat Submission</h1>
             <p class="email-greeting">Dear ${D['first-name'] || '[First Name]'},</p>
@@ -470,7 +471,7 @@ const PAGES = {
       <p class="eml-page-desc">Sent to the Barbados Licensing Authority (BLA) when a citizen submits a permit application to move a building, house, or boat. Includes submission details, payment confirmation, and full application data.</p>
       <div style="background:#f2f4f6;padding:32px 0;">
         <div class="mda-email">
-          <div class="mda-header">${_LOGO}</div>
+          <div class="mda-header"><div style="width:276px;height:27px;color:#000;">${_LOGO}</div></div>
           <div class="mda-content">
             <h1 class="mda-h1">You have received a permit application to remove a building/house or boat</h1>
             <div class="mda-summary-table">

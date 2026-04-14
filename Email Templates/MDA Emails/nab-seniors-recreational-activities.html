@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MDA Submission Email – Seniors' Recreational Activities Programme</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300..900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Figtree, -apple-system, "system-ui", "Segoe UI", Roboto, sans-serif; font-size: 20px; line-height: 1.5; background: #f2f4f6; color: #000; -webkit-font-smoothing: antialiased; }
+    .page-topbar { background: #00267f; color: #fff; font-size: 14px; padding: 8px 128px; display: flex; align-items: center; gap: 8px; }
+    .page-header { background: #ffc726; padding: 16px 128px; }
+    .page-alpha { background: #e5e9f2; padding: 8px 128px; font-size: 16px; }
+    .page-alpha a { color: #0e5f64; }
+    .page-main { padding: 64px 32px; }
+    .page-label { font-size: 14px; font-weight: 600; color: #595959; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .page-title { font-size: 28px; font-weight: 700; color: #000; margin-bottom: 8px; }
+    .page-desc { font-size: 16px; color: #595959; margin-bottom: 24px; }
+    .preview-badge { display: inline-flex; align-items: center; gap: 6px; background: #fff9e9; border: 1.5px solid #ffc726; border-radius: 4px; padding: 6px 14px; font-size: 14px; font-weight: 600; color: #000; margin-bottom: 24px; }
+    .view-toggle { display: flex; gap: 8px; margin-bottom: 24px; align-items: center; }
+    .toggle-btn { display: inline-flex; align-items: center; gap: 6px; border: 2px solid #e0e4e9; border-radius: 4px; padding: 8px 16px; font-size: 14px; font-weight: 600; background: #fff; cursor: pointer; color: #595959; transition: all 0.15s; }
+    .toggle-btn.active { background: #0e5f64; color: #fff; border-color: #0e5f64; }
+    .view-label { font-size: 14px; color: #595959; margin-right: 8px; }
+    #view-mobile { display: none; }
+    /* MDA email styles */
+    .mda-email { background: #fff; }
+    .mda-header { background: #ffc726; padding: 24px 32px; }
+    .mda-content { background: #fff; padding: 64px 32px 32px; display: flex; flex-direction: column; gap: 32px; }
+    .mda-h1 { font-size: 40px; font-weight: 700; line-height: 1.15; color: #000; }
+    .mda-intro { font-size: 20px; color: #000; }
+    .mda-summary-table { background: #e5e9f2; }
+    .mda-summary-row { display: flex; align-items: stretch; border-bottom: 1px solid #fff; }
+    .mda-summary-row:last-child { border-bottom: 1px solid #e5e9f2; }
+    .mda-summary-label { width: 304px; flex-shrink: 0; padding: 8px; font-weight: 700; font-size: 20px; }
+    .mda-summary-value { flex: 1; padding: 8px 8px 8px 16px; font-size: 20px; }
+    .mda-sections { display: flex; flex-direction: column; gap: 35px; }
+    .mda-section-h2 { font-size: 32px; font-weight: 700; line-height: 1.25; color: #000; margin-bottom: 8px; }
+    .mda-data-table { width: 100%; }
+    .mda-data-row { display: flex; align-items: stretch; border-bottom: 1px solid #e0e4e9; }
+    .mda-data-label { width: 304px; flex-shrink: 0; padding: 8px; font-weight: 700; font-size: 20px; }
+    .mda-data-value { flex: 1; padding: 8px 8px 8px 16px; font-size: 20px; color: #595959; font-style: italic; }
+    .mda-internal-box { background: #e5e9f2; padding: 16px; display: flex; flex-direction: column; gap: 8px; font-size: 20px; }
+    .mda-internal-box .fv { font-style: italic; color: #595959; }
+    .mda-footer { background: #00267f; color: #fff; padding: 32px; display: flex; align-items: flex-start; gap: 32px; }
+    .mda-footer-text { flex: 1; font-size: 20px; line-height: 1.5; display: flex; flex-direction: column; gap: 16px; }
+    .mda-footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; flex-shrink: 0; }
+    .mda-footer-right img { width: 80px; height: auto; }
+    .mda-footer-copyright { font-size: 20px; color: #fff; white-space: nowrap; }
+    /* Page footer */
+    .page-footer { background: #00267f; color: #fff; }
+    .page-footer-inner { padding: 64px 128px; display: flex; align-items: flex-start; }
+    .page-footer-links { flex: 1; display: flex; flex-direction: column; font-size: 20px; line-height: 1.5; gap: 8px; }
+    .page-footer-links a { color: #fff; text-decoration: underline; }
+    .page-footer-links a:hover { text-decoration: none; }
+    .page-footer-right2 { flex: 1; display: flex; flex-direction: column; align-items: flex-end; padding-top: 16px; gap: 12px; }
+    .page-footer-right2 img { width: 104px; height: 112px; }
+    .page-footer-right2 p { font-size: 20px; }
+  </style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="page-topbar">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+  Official website of the Government of Barbados
+</div>
+
+<!-- Header -->
+<div class="page-header">
+  <div style="width:276px;height:27px;color:#000;">
+    <svg width="100%" viewBox="0 0 276 27" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img"><g><path d="M39.079 21.527C37.5026 21.527 36.103 21.1903 34.8802 20.5168C33.6721 19.8286 32.7219 18.8916 32.0294 17.7057C31.337 16.5051 30.9908 15.1288 30.9908 13.5769C30.9908 12.0249 31.337 10.6559 32.0294 9.47001C32.7219 8.26943 33.6721 7.3324 34.8802 6.65891C36.103 5.97077 37.5026 5.6267 39.079 5.6267C40.0219 5.6267 40.8911 5.7658 41.6867 6.04398C42.4823 6.32216 43.1821 6.71015 43.7861 7.20795C44.4049 7.69111 44.9205 8.24747 45.3331 8.87704L42.858 10.4144C42.6075 10.0191 42.276 9.66767 41.8635 9.3602C41.4657 9.05274 41.0237 8.81116 40.5376 8.63547C40.0514 8.45977 39.5652 8.37192 39.079 8.37192C38.1067 8.37192 37.2448 8.59886 36.4934 9.05274C35.7421 9.49197 35.1527 10.0996 34.7255 10.8756C34.2982 11.6515 34.0846 12.552 34.0846 13.5769C34.0846 14.5871 34.2909 15.4875 34.7034 16.2782C35.1307 17.0688 35.7273 17.691 36.4934 18.1449C37.2595 18.5841 38.1435 18.8038 39.1453 18.8038C39.8967 18.8038 40.567 18.6647 41.1563 18.3865C41.7456 18.0937 42.2171 17.691 42.5707 17.1786C42.9243 16.6661 43.1231 16.0659 43.1673 15.3777H39.5873V13.0278H46.0844V14.8946C46.055 16.3001 45.7382 17.5007 45.1342 18.4963C44.5301 19.4773 43.7051 20.2313 42.6591 20.7584C41.613 21.2708 40.4197 21.527 39.079 21.527Z"/><path d="M12.5786 0C11.6253 2.46943 10.6536 5.03986 8.57466 7.00774C9.21998 6.80573 10.3493 6.62461 11.0753 6.64203V17.0283L7.988 17.4636C7.878 17.4532 7.84133 17.2895 7.84133 17.0666C7.54434 13.8413 6.74135 11.1316 5.81736 8.32779C5.75136 7.94466 4.58171 6.48181 5.4837 6.73955C5.5937 6.75348 6.80002 7.2202 6.60935 6.99729C4.96671 5.38119 2.56508 4.21788 0.233112 3.87306C0.0277812 3.8243 -0.0932171 3.92183 0.0901136 4.14822C3.18474 8.6726 5.77336 14.012 5.75136 20.3475C6.95401 20.3475 9.86897 19.6718 11.0753 19.6718V27H12.5969L12.9453 6.53406L12.5786 0Z"/><path d="M12.5786 0C13.5319 2.46943 14.5036 5.03986 16.5825 7.00774C15.9372 6.80573 14.8079 6.62461 14.0819 6.64203V17.0283L17.1692 17.4636C17.2792 17.4532 17.3159 17.2895 17.3159 17.0666C17.6129 13.8413 18.4158 11.1316 19.3398 8.32779C19.4058 7.94466 20.5755 6.48181 19.6735 6.73955C19.5635 6.75348 18.3572 7.2202 18.5478 6.99729C20.1905 5.38119 22.5921 4.21788 24.9241 3.87306C25.1294 3.8243 25.2504 3.92183 25.0671 4.14822C21.9725 8.6726 19.3838 14.012 19.4058 20.3475C18.2032 20.3475 15.2882 19.6718 14.0819 19.6718V27H12.5603L12.2119 6.53406L12.5786 0Z"/></g></svg>
+  </div>
+</div>
+
+<!-- Alpha banner -->
+<div class="page-alpha">
+  This page is in <a href="#">Alpha</a>. Your feedback helps us improve.
+</div>
+
+<!-- Main -->
+<main class="page-main">
+
+  <div class="preview-badge">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+    MDA email — Seniors' Recreational Activities Programme
+  </div>
+
+  <p class="page-label">Email Templates / MDA Emails</p>
+  <h1 class="page-title">Seniors' Recreational Activities Programme — MDA Submission Email</h1>
+  <p class="page-desc">Sent to the National Assistance Board when an applicant submits the SRAP application form.</p>
+
+  <!-- View toggle -->
+  <div class="view-toggle">
+    <span class="view-label">Preview:</span>
+    <button class="toggle-btn active" onclick="setView('desktop')" id="btn-desktop">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      Desktop
+    </button>
+    <button class="toggle-btn" onclick="setView('mobile')" id="btn-mobile">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+      Mobile
+    </button>
+  </div>
+
+  <!-- Desktop preview -->
+  <div id="view-desktop">
+    <div class="mda-email">
+
+      <div class="mda-header">
+        <div style="width:276px;height:27px;color:#000;">
+          <svg width="100%" viewBox="0 0 276 27" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img"><g><path d="M12.5786 0C11.6253 2.46943 10.6536 5.03986 8.57466 7.00774C9.21998 6.80573 10.3493 6.62461 11.0753 6.64203V17.0283L7.988 17.4636C7.878 17.4532 7.84133 17.2895 7.84133 17.0666C7.54434 13.8413 6.74135 11.1316 5.81736 8.32779C5.75136 7.94466 4.58171 6.48181 5.4837 6.73955C5.5937 6.75348 6.80002 7.2202 6.60935 6.99729C4.96671 5.38119 2.56508 4.21788 0.233112 3.87306C0.0277812 3.8243 -0.0932171 3.92183 0.0901136 4.14822C3.18474 8.6726 5.77336 14.012 5.75136 20.3475C6.95401 20.3475 9.86897 19.6718 11.0753 19.6718V27H12.5969L12.9453 6.53406L12.5786 0Z"/><path d="M12.5786 0C13.5319 2.46943 14.5036 5.03986 16.5825 7.00774C15.9372 6.80573 14.8079 6.62461 14.0819 6.64203V17.0283L17.1692 17.4636C17.2792 17.4532 17.3159 17.2895 17.3159 17.0666C17.6129 13.8413 18.4158 11.1316 19.3398 8.32779C19.4058 7.94466 20.5755 6.48181 19.6735 6.73955C19.5635 6.75348 18.3572 7.2202 18.5478 6.99729C20.1905 5.38119 22.5921 4.21788 24.9241 3.87306C25.1294 3.8243 25.2504 3.92183 25.0671 4.14822C21.9725 8.6726 19.3838 14.012 19.4058 20.3475C18.2032 20.3475 15.2882 19.6718 14.0819 19.6718V27H12.5603L12.2119 6.53406L12.5786 0Z"/></g></svg>
+        </div>
+      </div>
+
+      <div class="mda-content">
+        <h1 class="mda-h1">New SRAP application received</h1>
+
+        <div class="mda-summary-table">
+          <div class="mda-summary-row"><div class="mda-summary-label">Service</div><div class="mda-summary-value">Seniors' Recreational Activities Programme</div></div>
+          <div class="mda-summary-row"><div class="mda-summary-label">Reference number</div><div class="mda-summary-value">SRAP-XXXXXX</div></div>
+          <div class="mda-summary-row"><div class="mda-summary-label">Submission date</div><div class="mda-summary-value">[dd/mm/yyyy]</div></div>
+          <div class="mda-summary-row"><div class="mda-summary-label">Submission time</div><div class="mda-summary-value">[hh:mm]</div></div>
+          <div class="mda-summary-row"><div class="mda-summary-label">Applicant contact</div><div class="mda-summary-value">[Contact number]</div></div>
+        </div>
+
+        <p class="mda-intro">Here is the data submitted with this application:</p>
+
+        <div class="mda-sections">
+
+          <div>
+            <h2 class="mda-section-h2">Programme</h2>
+            <div class="mda-data-table">
+              <div class="mda-data-row"><div class="mda-data-label">Programme location</div><div class="mda-data-value">[Selected location and day]</div></div>
+            </div>
+          </div>
+
+          <div>
+            <h2 class="mda-section-h2">Applicant details</h2>
+            <div class="mda-data-table">
+              <div class="mda-data-row"><div class="mda-data-label">Surname</div><div class="mda-data-value">[Surname]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">First name</div><div class="mda-data-value">[First name]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Middle name</div><div class="mda-data-value">[Middle name — if provided]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">National Registration Number</div><div class="mda-data-value">[NRN]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Nationality</div><div class="mda-data-value">[Nationality]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Age</div><div class="mda-data-value">[Age]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Gender</div><div class="mda-data-value">[Male / Female]</div></div>
+            </div>
+          </div>
+
+          <div>
+            <h2 class="mda-section-h2">Contact and address</h2>
+            <div class="mda-data-table">
+              <div class="mda-data-row"><div class="mda-data-label">Contact number</div><div class="mda-data-value">[Contact number]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Street address</div><div class="mda-data-value">[Street address]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">District</div><div class="mda-data-value">[District]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Parish</div><div class="mda-data-value">[Parish]</div></div>
+            </div>
+          </div>
+
+          <div>
+            <h2 class="mda-section-h2">Health status</h2>
+            <div class="mda-data-table">
+              <div class="mda-data-row"><div class="mda-data-label">Health conditions</div><div class="mda-data-value">[Selected conditions]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Type of disability</div><div class="mda-data-value">[If disability selected]</div></div>
+            </div>
+          </div>
+
+          <div>
+            <h2 class="mda-section-h2">Emergency contact</h2>
+            <div class="mda-data-table">
+              <div class="mda-data-row"><div class="mda-data-label">Full name</div><div class="mda-data-value">[Emergency contact name]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Phone number</div><div class="mda-data-value">[Emergency contact number]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Address</div><div class="mda-data-value">[Emergency contact address]</div></div>
+            </div>
+          </div>
+
+          <div>
+            <h2 class="mda-section-h2">Application info</h2>
+            <div class="mda-data-table">
+              <div class="mda-data-row"><div class="mda-data-label">Completed by</div><div class="mda-data-value">[Name of person completing form — if not applicant]</div></div>
+              <div class="mda-data-row"><div class="mda-data-label">Date of application</div><div class="mda-data-value">[dd/mm/yyyy]</div></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mda-internal-box">
+          <p>Due date: <span class="fv">[To be filled by officer]</span></p>
+          <p>Officer assigned: <span class="fv">[To be filled by officer]</span></p>
+          <p>Reference: <span class="fv">[To be filled by officer]</span></p>
+        </div>
+
+      </div>
+
+      <div class="mda-footer">
+        <div class="mda-footer-text">
+          <p>This is an automated confirmation email from the Government of Barbados.</p>
+          <p>Please <strong>do not reply</strong> to this email.</p>
+        </div>
+        <div class="mda-footer-right">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Coat_of_arms_of_Barbados_%282%29.svg/1280px-Coat_of_arms_of_Barbados_%282%29.svg.png" alt="Coat of arms of Barbados">
+          <p class="mda-footer-copyright">&copy; 2025 Government of Barbados</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile preview (simplified) -->
+  <div id="view-mobile" style="max-width:390px;">
+    <div style="background:#1a1a2e;border-radius:32px;padding:16px;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+      <div style="width:120px;height:6px;background:#333;border-radius:3px;margin:0 auto 12px;"></div>
+      <div style="border-radius:20px;overflow:hidden;background:#fff;">
+        <div style="background:#ffc726;padding:16px;">
+          <div style="width:140px;height:14px;color:#000;"><svg width="100%" viewBox="0 0 276 27" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.5786 0C11.6253 2.46943 10.6536 5.03986 8.57466 7.00774C9.21998 6.80573 10.3493 6.62461 11.0753 6.64203V17.0283L7.988 17.4636C7.878 17.4532 7.84133 17.2895 7.84133 17.0666C7.54434 13.8413 6.74135 11.1316 5.81736 8.32779C5.75136 7.94466 4.58171 6.48181 5.4837 6.73955C5.5937 6.75348 6.80002 7.2202 6.60935 6.99729C4.96671 5.38119 2.56508 4.21788 0.233112 3.87306C0.0277812 3.8243 -0.0932171 3.92183 0.0901136 4.14822C3.18474 8.6726 5.77336 14.012 5.75136 20.3475C6.95401 20.3475 9.86897 19.6718 11.0753 19.6718V27H12.5969L12.9453 6.53406L12.5786 0Z"/><path d="M12.5786 0C13.5319 2.46943 14.5036 5.03986 16.5825 7.00774C15.9372 6.80573 14.8079 6.62461 14.0819 6.64203V17.0283L17.1692 17.4636C17.2792 17.4532 17.3159 17.2895 17.3159 17.0666C17.6129 13.8413 18.4158 11.1316 19.3398 8.32779C19.4058 7.94466 20.5755 6.48181 19.6735 6.73955C19.5635 6.75348 18.3572 7.2202 18.5478 6.99729C20.1905 5.38119 22.5921 4.21788 24.9241 3.87306C25.1294 3.8243 25.2504 3.92183 25.0671 4.14822C21.9725 8.6726 19.3838 14.012 19.4058 20.3475C18.2032 20.3475 15.2882 19.6718 14.0819 19.6718V27H12.5603L12.2119 6.53406L12.5786 0Z"/></svg></div>
+        </div>
+        <div style="padding:20px 16px;display:flex;flex-direction:column;gap:12px;">
+          <h1 style="font-size:24px;font-weight:700;line-height:1.2;color:#000;">New SRAP application received</h1>
+          <div style="background:#e5e9f2;padding:12px;font-size:14px;">
+            <p><strong>Ref:</strong> SRAP-XXXXXX</p>
+            <p><strong>Date:</strong> [dd/mm/yyyy]</p>
+            <p><strong>Contact:</strong> [Phone number]</p>
+          </div>
+          <p style="font-size:14px;color:#000;">Full submission details are available in the desktop view.</p>
+        </div>
+        <div style="background:#00267f;color:#fff;padding:16px;font-size:13px;">
+          <p>Automated email — do not reply.</p>
+          <p>&copy; 2025 Government of Barbados</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="page-footer">
+  <div class="page-footer-inner">
+    <div class="page-footer-links">
+      <a href="../../index.html">Home</a>
+      <a href="https://www.gov.bb/cookie-policy" target="_blank">Cookie Policy</a>
+      <a href="https://www.gov.bb/terms-conditions" target="_blank">Terms &amp; Conditions</a>
+      <a href="https://www.gov.bb/sitemap" target="_blank">Sitemap</a>
+    </div>
+    <div class="page-footer-right2">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Coat_of_arms_of_Barbados_%282%29.svg/1280px-Coat_of_arms_of_Barbados_%282%29.svg.png" alt="Coat of arms">
+      <p>&copy; 2025 Government of Barbados</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function setView(view) {
+  var desktop = document.getElementById('view-desktop');
+  var mobile = document.getElementById('view-mobile');
+  var btnDesktop = document.getElementById('btn-desktop');
+  var btnMobile = document.getElementById('btn-mobile');
+  if (view === 'desktop') {
+    desktop.style.display = '';
+    mobile.style.display = 'none';
+    btnDesktop.classList.add('active');
+    btnMobile.classList.remove('active');
+  } else {
+    desktop.style.display = 'none';
+    mobile.style.display = 'block';
+    btnDesktop.classList.remove('active');
+    btnMobile.classList.add('active');
+  }
+}
+</script>
+</body>
+</html>

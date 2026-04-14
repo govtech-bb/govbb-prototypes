@@ -1,0 +1,13 @@
+{
+  "name": "govbb-prototypes",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "GovTech Barbados form prototype generator and API server",
+  "scripts": {
+    "api": "node api-server.js",
+    "generate": "node generate.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  }
+}

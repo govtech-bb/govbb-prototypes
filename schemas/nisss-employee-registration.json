@@ -1,0 +1,233 @@
+{
+  "$schema": "./form-schema.v1.json",
+  "id": "nisss-employee-registration",
+  "version": "1.0.0",
+
+  "meta": {
+    "title": "Register for the NIS Online Social Security Service",
+    "mda": "National Insurance Scheme (NIS)",
+    "serviceType": "registration",
+    "status": "alpha",
+    "referencePrefix": "NREG",
+    "estimatedTime": "10 minutes",
+    "lastUpdated": "2026-03-24",
+    "prototypeFile": "prototypes/nisss-employee-registration.html"
+  },
+
+  "validation": {
+    "enabled": true,
+    "mode": "onContinue"
+  },
+
+  "flow": [
+    "start",
+    "residency-gate",
+    "applicant-details",
+    "check",
+    "declaration",
+    "confirmation"
+  ],
+
+  "pages": {
+
+    "start": {
+      "type": "start",
+      "title": "Register for the NIS Online Social Security Service",
+      "intro": [
+        "Use this form to register for online access to your NIS account. Once registered, you can check your contributions, apply for benefits, and manage your details online — without visiting an NIS office.",
+        "You must already have an NIS number to register. If you do not have one, you will need to visit an NIS office first."
+      ],
+      "eligibility": {
+        "heading": "Who can use this form",
+        "items": [
+          "Barbados residents with a valid NIS number",
+          "Overseas applicants with a valid NIS number (your form must be witnessed by a Notary Public)"
+        ]
+      },
+      "whatYouNeed": {
+        "heading": "What you will need",
+        "items": [
+          "Your NIS number (6 digits — found on your NIS card or correspondence)",
+          "Your Barbados National ID Card or valid passport",
+          "Your home address",
+          "Your email address (we will send your login details here)",
+          "If you live overseas: details of a Notary Public who will witness your application"
+        ]
+      },
+      "startButton": "Complete the online form"
+    },
+
+    "residency-gate": {
+      "type": "question",
+      "title": "Before you start",
+      "caption": true,
+      "fields": [
+        {
+          "id": "residency",
+          "type": "radio",
+          "label": "Where do you currently live?",
+          "required": true,
+          "options": [
+            { "value": "In Barbados", "label": "In Barbados" },
+            { "value": "Overseas", "label": "Overseas" }
+          ]
+        },
+        {
+          "id": "id-type",
+          "type": "radio",
+          "label": "What type of ID do you have?",
+          "required": true,
+          "options": [
+            { "value": "Barbados National ID Card", "label": "Barbados National ID Card" },
+            { "value": "Passport", "label": "Passport" }
+          ]
+        }
+      ]
+    },
+
+    "applicant-details": {
+      "type": "question",
+      "title": "Your details",
+      "caption": true,
+      "fields": [
+        { "$ref": "shared/name-block.json" },
+        {
+          "id": "nis-number",
+          "type": "text",
+          "label": "NIS number",
+          "required": true,
+          "hint": "Your 6-digit National Insurance Number. For example, 123456",
+          "inputmode": "numeric",
+          "validation": {
+            "pattern": "^\\d{6}$",
+            "patternMessage": "NIS number must be exactly 6 digits",
+            "maxLength": 6
+          }
+        },
+        {
+          "id": "dob",
+          "type": "date",
+          "label": "Date of birth",
+          "required": true,
+          "hint": "For example, 27 03 1985",
+          "validation": {
+            "notFuture": true
+          }
+        },
+        { "$ref": "shared/address-block.json" },
+        { "$ref": "shared/contact-block.json" }
+      ]
+    },
+
+    "overseas-notarial": {
+      "type": "question",
+      "title": "Notary Public details",
+      "caption": true,
+      "fields": [
+        {
+          "id": "notary-name",
+          "type": "text",
+          "label": "Full name of Notary Public",
+          "required": true,
+          "validation": { "maxLength": 200 }
+        },
+        {
+          "id": "notary-address",
+          "type": "textarea",
+          "label": "Notary Public's address",
+          "required": true,
+          "rows": 4
+        },
+        {
+          "id": "notary-email",
+          "type": "email",
+          "label": "Notary Public's email address",
+          "required": false
+        }
+      ]
+    },
+
+    "declaration": {
+      "type": "declaration",
+      "title": "Declaration",
+      "caption": true,
+      "body": "I declare that the information I have given in this form is correct and complete to the best of my knowledge and belief. I understand that giving false information may result in prosecution.",
+      "fields": [
+        {
+          "id": "consent-declaration",
+          "type": "checkbox",
+          "label": "I confirm this declaration is true",
+          "required": true
+        },
+        {
+          "id": "consent-data",
+          "type": "checkbox",
+          "label": "I agree that the NIS may use my information to administer my account",
+          "required": true
+        }
+      ]
+    },
+
+    "check": {
+      "type": "check",
+      "title": "Check your answers before sending your application",
+      "sections": [
+        {
+          "heading": "Residency",
+          "fields": ["residency", "id-type"]
+        },
+        {
+          "heading": "Your details",
+          "fields": ["last-name", "first-name", "middle-name", "nis-number", "dob"]
+        },
+        {
+          "heading": "Address",
+          "fields": ["street-address", "parish", "postal-code"]
+        },
+        {
+          "heading": "Contact details",
+          "fields": ["landline", "mobile", "contact-email"]
+        },
+        {
+          "heading": "Notary Public",
+          "condition": { "field": "residency", "operator": "equals", "value": "Overseas" },
+          "fields": ["notary-name", "notary-address", "notary-email"]
+        }
+      ],
+      "submitButton": "Submit application"
+    },
+
+    "confirmation": {
+      "type": "confirmation",
+      "heading": "Application submitted",
+      "panel": {
+        "referenceLabel": "Your reference number",
+        "referenceSource": "window.__refNumber"
+      },
+      "nextSteps": [
+        "We have received your application.",
+        "We will send your NIS online login details to the email address you gave us.",
+        "If you applied from overseas, we will contact you to arrange witnessing by a Notary Public.",
+        "If you have any questions, call the NIS on 246-431-7400."
+      ]
+    }
+
+  },
+
+  "conditionalLogic": [
+    {
+      "id": "rule-overseas-notary",
+      "description": "If the applicant lives overseas, add the Notary Public page after applicant-details",
+      "when": {
+        "field": "residency",
+        "operator": "equals",
+        "value": "Overseas"
+      },
+      "then": {
+        "action": "insert_page",
+        "page": "overseas-notarial",
+        "after": "applicant-details"
+      }
+    }
+  ]
+}

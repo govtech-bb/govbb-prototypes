@@ -1,0 +1,48 @@
+{
+  "$id": "shared/address-block",
+  "description": "Standard Barbados address block — street, parish, postal code",
+  "type": "fieldset",
+  "legend": "Your address",
+  "fields": [
+    {
+      "id": "street-address",
+      "type": "text",
+      "label": "Street address",
+      "required": true,
+      "hint": "Include house number or name, street name, and district",
+      "validation": {
+        "maxLength": 200
+      }
+    },
+    {
+      "id": "parish",
+      "type": "select",
+      "label": "Parish",
+      "required": true,
+      "options": [
+        "Christ Church",
+        "St. Andrew",
+        "St. George",
+        "St. James",
+        "St. John",
+        "St. Joseph",
+        "St. Lucy",
+        "St. Michael",
+        "St. Peter",
+        "St. Philip",
+        "St. Thomas"
+      ]
+    },
+    {
+      "id": "postal-code",
+      "type": "text",
+      "label": "Postal code",
+      "required": false,
+      "hint": "For example, BB11000",
+      "validation": {
+        "pattern": "^BB\\d{5}$",
+        "patternMessage": "Enter a valid Barbados postal code — for example, BB11000"
+      }
+    }
+  ]
+}
