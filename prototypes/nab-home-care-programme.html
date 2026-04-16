@@ -199,7 +199,7 @@ const PAGES = {
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">What is the recipient's name?</h1>
       <div class="space-y-8">
         ${GovBB.textField('first-name', 'First name')}
-        ${GovBB.textField('initial', 'Initial', { hint: 'Optional — for example, J' })}
+        ${GovBB.textField('initial', 'Initial', { hint: 'For example, J' })}
         ${GovBB.textField('last-name', 'Last name')}
         ${GovBB.continueBtn()}
       </div>
@@ -213,7 +213,7 @@ const PAGES = {
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">What is the recipient's address?</h1>
       <div class="space-y-8">
         ${GovBB.textareaField('address', 'Home address', { hint: 'Street address, village or district' })}
-        ${GovBB.textField('location-of-house', 'Location of house', { hint: 'Optional — describe how to find the house if needed' })}
+        ${GovBB.textField('location-of-house', 'Location of house', { hint: 'Describe how to find the house' })}
         ${GovBB.continueBtn()}
       </div>
     </form>`,
@@ -227,10 +227,10 @@ const PAGES = {
       <div class="space-y-8">
         ${GovBB.dateField('dob', 'Date of birth', 'For example, 27 03 1950')}
         ${GovBB.radioGroup('gender', 'Gender', ['Male', 'Female'])}
-        ${GovBB.textField('nrn', 'National Registration Number', { hint: 'Optional — you can find this on your national ID card. For example, 870315-1234' })}
-        ${GovBB.textField('place-of-birth', 'Place of birth', { hint: 'Optional' })}
-        ${GovBB.textField('religion', 'Religion', { hint: 'Optional' })}
-        ${GovBB.textField('church-social-group', 'Church or social group', { hint: 'Optional' })}
+        ${GovBB.textField('nrn', 'National Registration Number', { hint: 'You can find this on your national ID card. For example, 870315-1234' })}
+        ${GovBB.textField('place-of-birth', 'Place of birth')}
+        ${GovBB.textField('religion', 'Religion')}
+        ${GovBB.textField('church-social-group', 'Church or social group')}
         ${GovBB.continueBtn()}
       </div>
     </form>`,
@@ -244,7 +244,7 @@ const PAGES = {
       <p class="text-[1.25rem] text-bb-mid-grey-00 mb-8">Tell us who to contact about this application.</p>
       <div class="space-y-8">
         ${GovBB.textField('contact-name', 'Name of contact person')}
-        ${GovBB.textareaField('contact-address', "Contact person's address", { hint: "Optional — only if different from the recipient's address" })}
+        ${GovBB.textareaField('contact-address', "Contact person's address")}
         ${GovBB.continueBtn()}
       </div>
     </form>`,
@@ -256,11 +256,11 @@ const PAGES = {
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Contact information</h1>
       <div class="space-y-8">
-        ${GovBB.telField('home-tel', 'Home telephone', { hint: 'Optional — for example, 246-555-1234', placeholder: '246-555-1234' })}
-        ${GovBB.telField('office-tel', 'Office telephone', { hint: 'Optional', placeholder: '246-555-1234' })}
-        ${GovBB.telField('mobile-tel', 'Mobile telephone', { hint: 'Optional', placeholder: '246-555-1234' })}
-        ${GovBB.emailField('contact-email', 'Email address', { hint: 'Optional — we will use this to send you a confirmation' })}
-        ${GovBB.selectField('marital-status', 'Marital status', ['Single', 'Married', 'Divorced', 'Widowed', 'Separated'], { hint: 'Optional' })}
+        ${GovBB.telField('home-tel', 'Home telephone', { hint: 'For example, 246-555-1234', placeholder: '246-555-1234' })}
+        ${GovBB.telField('office-tel', 'Office telephone', { placeholder: '246-555-1234' })}
+        ${GovBB.telField('mobile-tel', 'Mobile telephone', { placeholder: '246-555-1234' })}
+        ${GovBB.emailField('contact-email', 'Email address', { hint: 'We will use this to send you a confirmation' })}
+        ${GovBB.selectField('marital-status', 'Marital status', ['Single', 'Married', 'Divorced', 'Widowed', 'Separated'])}
         ${GovBB.continueBtn()}
       </div>
     </form>`,
@@ -271,16 +271,16 @@ const PAGES = {
       ${GovBB.backLink()}
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Source of income</h1>
-      <p class="text-[1.25rem] text-bb-mid-grey-00 mb-8">All fields are optional. Enter amounts in Barbadian dollars (BDS$).</p>
+      <p class="text-[1.25rem] text-bb-mid-grey-00 mb-8">Enter amounts in Barbadian dollars (BDS$).</p>
       <div class="space-y-8">
         ${GovBB.textField('income-welfare', 'Welfare grant', { placeholder: 'Amount' })}
         ${GovBB.textField('income-nis', 'National Insurance', { placeholder: 'Amount' })}
         ${GovBB.textField('income-oap', 'Old Age Pension (O.A.P.)', { placeholder: 'Amount' })}
         ${GovBB.textField('income-overseas', 'Overseas pension', { placeholder: 'Amount' })}
         ${GovBB.textField('income-other', 'Other sources of income', { placeholder: 'Source — Amount' })}
-        ${GovBB.textField('former-occupation', 'Former occupation', { hint: 'Optional' })}
-        ${GovBB.textField('social-interests', 'Social interests', { hint: 'Optional' })}
-        ${GovBB.textField('referred-by', 'Referred by', { hint: 'Optional' })}
+        ${GovBB.textField('former-occupation', 'Former occupation')}
+        ${GovBB.textField('social-interests', 'Social interests')}
+        ${GovBB.textField('referred-by', 'Referred by')}
         ${GovBB.dateField('application-date', 'Date of application', 'For example, 14 04 2026')}
         ${GovBB.continueBtn()}
       </div>
@@ -293,7 +293,7 @@ const PAGES = {
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Household members</h1>
       <div class="space-y-8">
-        ${GovBB.textareaField('household-members', 'Who else lives in the household?', { hint: 'Optional — enter each person on a new line. Include: Name, Date of Birth, Age, Relationship', rows: 6 })}
+        ${GovBB.textareaField('household-members', 'Who else lives in the household?', { hint: 'Enter each person on a new line. Include: Name, Date of Birth, Age, Relationship', rows: 6 })}
         ${GovBB.continueBtn()}
       </div>
     </form>`,
@@ -327,7 +327,7 @@ const PAGES = {
             ${checkboxItem('hearing-speech', 'Speech impairment')}
           </div>
         </div>
-        ${GovBB.textareaField('physical-description', 'Physical condition description', { hint: 'Optional — describe any other physical conditions', rows: 4 })}
+        ${GovBB.textareaField('physical-description', 'Physical condition description', { hint: 'Describe any other physical conditions', rows: 4 })}
         ${GovBB.continueBtn()}
       </div>
     </form>`,
@@ -349,7 +349,7 @@ const PAGES = {
             ${checkboxItem('behaviour-other', 'Other')}
           </div>
         </div>
-        ${GovBB.textareaField('behaviour-description', 'Behaviour description', { hint: 'Optional — describe any unusual behaviours', rows: 4 })}
+        ${GovBB.textareaField('behaviour-description', 'Behaviour description', { hint: 'Describe any unusual behaviours', rows: 4 })}
         <div class="space-y-4">
           <p class="text-[1.25rem] leading-normal font-bold text-bb-black-00">Memory</p>
           <p class="text-[1.25rem] leading-normal text-bb-mid-grey-00">Select all that apply</p>
@@ -360,7 +360,7 @@ const PAGES = {
             ${checkboxItem('memory-poor', 'Poor')}
           </div>
         </div>
-        ${GovBB.textareaField('memory-description', 'Memory description', { hint: 'Optional — describe any memory concerns', rows: 4 })}
+        ${GovBB.textareaField('memory-description', 'Memory description', { hint: 'Describe any memory concerns', rows: 4 })}
         ${GovBB.continueBtn()}
       </div>
     </form>`,
@@ -389,7 +389,7 @@ const PAGES = {
             ${checkboxItem('illness-other', 'Other')}
           </div>
         </div>
-        ${GovBB.textareaField('disability-details', 'Details of disabilities', { hint: 'Optional — describe any disabilities or conditions not listed above', rows: 4 })}
+        ${GovBB.textareaField('disability-details', 'Details of disabilities', { hint: 'Describe any disabilities or conditions not listed above', rows: 4 })}
         ${GovBB.continueBtn()}
       </div>
     </form>`,
@@ -414,7 +414,7 @@ const PAGES = {
           </div>
         </div>
         ${GovBB.D['assist-other'] ? GovBB.textField('assist-other-spec', 'Please describe the other assistance needed') : ''}
-        ${GovBB.textareaField('care-plan', 'Care plan notes', { hint: 'Optional — any additional notes about the care plan', rows: 4 })}
+        ${GovBB.textareaField('care-plan', 'Care plan notes', { hint: 'Any additional notes about the care plan', rows: 4 })}
         ${GovBB.continueBtn()}
       </div>
     </form>`,
@@ -753,11 +753,13 @@ function validate(pageId) {
 
   if (pageId === 'recipient-name') {
     if (!D['first-name'] || !D['first-name'].trim()) errors.push({ id: 'first-name', msg: "First name – Enter the recipient's first name" });
+    if (!D['initial'] || !D['initial'].trim()) errors.push({ id: 'initial', msg: 'Initial – Enter the initial' });
     if (!D['last-name'] || !D['last-name'].trim()) errors.push({ id: 'last-name', msg: "Last name – Enter the recipient's last name" });
   }
 
   if (pageId === 'recipient-address') {
     if (!D['address'] || !D['address'].trim()) errors.push({ id: 'address', msg: "Home address – Enter the recipient's address" });
+    if (!D['location-of-house'] || !D['location-of-house'].trim()) errors.push({ id: 'location-of-house', msg: 'Location of house – Describe how to find the house' });
   }
 
   if (pageId === 'personal-details') {
@@ -765,16 +767,41 @@ function validate(pageId) {
       errors.push({ id: 'dob-day', msg: "Date of birth – Enter the recipient's date of birth" });
     }
     if (!D['gender']) errors.push({ id: 'gender', msg: 'Gender – Select a gender' });
+    if (!D['nrn'] || !D['nrn'].trim()) errors.push({ id: 'nrn', msg: 'National Registration Number – Enter the National Registration Number' });
+    if (!D['place-of-birth'] || !D['place-of-birth'].trim()) errors.push({ id: 'place-of-birth', msg: 'Place of birth – Enter the place of birth' });
+    if (!D['religion'] || !D['religion'].trim()) errors.push({ id: 'religion', msg: 'Religion – Enter a religion' });
+    if (!D['church-social-group'] || !D['church-social-group'].trim()) errors.push({ id: 'church-social-group', msg: 'Church or social group – Enter a church or social group' });
   }
 
   if (pageId === 'contact-person') {
     if (!D['contact-name'] || !D['contact-name'].trim()) errors.push({ id: 'contact-name', msg: 'Contact person name – Enter the name of the contact person' });
+    if (!D['contact-address'] || !D['contact-address'].trim()) errors.push({ id: 'contact-address', msg: "Contact person's address – Enter the contact person's address" });
+  }
+
+  if (pageId === 'contact-info') {
+    if (!D['home-tel'] || !D['home-tel'].trim()) errors.push({ id: 'home-tel', msg: 'Home telephone – Enter a home telephone number' });
+    if (!D['office-tel'] || !D['office-tel'].trim()) errors.push({ id: 'office-tel', msg: 'Office telephone – Enter an office telephone number' });
+    if (!D['mobile-tel'] || !D['mobile-tel'].trim()) errors.push({ id: 'mobile-tel', msg: 'Mobile telephone – Enter a mobile telephone number' });
+    if (!D['contact-email'] || !D['contact-email'].trim()) errors.push({ id: 'contact-email', msg: 'Email address – Enter an email address' });
+    if (!D['marital-status']) errors.push({ id: 'marital-status', msg: 'Marital status – Select a marital status' });
   }
 
   if (pageId === 'income') {
+    if (!D['income-welfare'] || !D['income-welfare'].trim()) errors.push({ id: 'income-welfare', msg: 'Welfare grant – Enter an amount' });
+    if (!D['income-nis'] || !D['income-nis'].trim()) errors.push({ id: 'income-nis', msg: 'National Insurance – Enter an amount' });
+    if (!D['income-oap'] || !D['income-oap'].trim()) errors.push({ id: 'income-oap', msg: 'Old Age Pension – Enter an amount' });
+    if (!D['income-overseas'] || !D['income-overseas'].trim()) errors.push({ id: 'income-overseas', msg: 'Overseas pension – Enter an amount' });
+    if (!D['income-other'] || !D['income-other'].trim()) errors.push({ id: 'income-other', msg: 'Other sources of income – Enter a source and amount' });
+    if (!D['former-occupation'] || !D['former-occupation'].trim()) errors.push({ id: 'former-occupation', msg: 'Former occupation – Enter a former occupation' });
+    if (!D['social-interests'] || !D['social-interests'].trim()) errors.push({ id: 'social-interests', msg: 'Social interests – Enter social interests' });
+    if (!D['referred-by'] || !D['referred-by'].trim()) errors.push({ id: 'referred-by', msg: 'Referred by – Enter who referred the applicant' });
     if (!D['application-date-day'] || !D['application-date-month'] || !D['application-date-year']) {
       errors.push({ id: 'application-date-day', msg: 'Date of application – Enter the date of application' });
     }
+  }
+
+  if (pageId === 'household') {
+    if (!D['household-members'] || !D['household-members'].trim()) errors.push({ id: 'household-members', msg: 'Household members – Enter the household members' });
   }
 
   if (pageId === 'physical-condition') {
@@ -788,6 +815,7 @@ function validate(pageId) {
       errors.push({ id: 'hearing-error', msg: 'Hearing – Select at least one option' });
       setTimeout(() => { const el = document.getElementById('hearing-error'); if (el) el.classList.remove('hidden'); }, 50);
     }
+    if (!D['physical-description'] || !D['physical-description'].trim()) errors.push({ id: 'physical-description', msg: 'Physical condition description – Describe any other physical conditions' });
   }
 
   if (pageId === 'mental-status') {
@@ -796,11 +824,13 @@ function validate(pageId) {
       errors.push({ id: 'behaviour-error', msg: 'Behaviour – Select at least one option' });
       setTimeout(() => { const el = document.getElementById('behaviour-error'); if (el) el.classList.remove('hidden'); }, 50);
     }
+    if (!D['behaviour-description'] || !D['behaviour-description'].trim()) errors.push({ id: 'behaviour-description', msg: 'Behaviour description – Describe any unusual behaviours' });
     const memKeys = ['memory-normal','memory-fair','memory-poor'];
     if (!memKeys.some(k => D[k])) {
       errors.push({ id: 'memory-error', msg: 'Memory – Select at least one option' });
       setTimeout(() => { const el = document.getElementById('memory-error'); if (el) el.classList.remove('hidden'); }, 50);
     }
+    if (!D['memory-description'] || !D['memory-description'].trim()) errors.push({ id: 'memory-description', msg: 'Memory description – Describe any memory concerns' });
   }
 
   if (pageId === 'physical-attributes') {
@@ -812,6 +842,7 @@ function validate(pageId) {
       errors.push({ id: 'illness-error', msg: 'Illnesses or conditions – Select at least one option' });
       setTimeout(() => { const el = document.getElementById('illness-error'); if (el) el.classList.remove('hidden'); }, 50);
     }
+    if (!D['disability-details'] || !D['disability-details'].trim()) errors.push({ id: 'disability-details', msg: 'Details of disabilities – Describe any disabilities or conditions' });
   }
 
   if (pageId === 'assistance') {
@@ -823,6 +854,7 @@ function validate(pageId) {
     if (D['assist-other'] && (!D['assist-other-spec'] || !D['assist-other-spec'].trim())) {
       errors.push({ id: 'assist-other-spec', msg: 'Other assistance – Describe the other assistance needed' });
     }
+    if (!D['care-plan'] || !D['care-plan'].trim()) errors.push({ id: 'care-plan', msg: 'Care plan notes – Enter any care plan notes' });
   }
 
   if (pageId === 'declaration') {
