@@ -265,9 +265,9 @@ const PAGES = {
           <p class="text-[1.25rem] mt-4">I declare that the information provided is true and correct to the best of my knowledge.</p>
         </div>
         ${GovBB.checkboxItem('declaration-agree', 'I confirm that the information I have given is true and complete to the best of my knowledge.')}
-        <div class="mt-8 flex gap-4">
-          <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-colors duration-200 outline-none bg-bb-grey-00 text-bb-black-00 hover:bg-[#c5ccd4] px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
-          <button type="button" onclick="next()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-teal-00 text-bb-white-00 hover:bg-[#1a777d] hover:shadow-[inset_0_0_0_4px_rgba(222,245,246,0.10)] active:bg-[#0a4549] active:shadow-[inset_0_0_0_3px_rgba(0,0,0,0.20)] px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Submit authorisation</button>
+        <div class="mt-8 flex gap-4 flex-wrap items-center">
+          <button type="button" onclick="GovBB.nav('applicant-email')" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none border-2 border-bb-teal-00 text-bb-teal-00 hover:bg-bb-teal-10 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">← Back</button>
+          <a href="../index.html" class="inline-flex outline-none underline-offset-2 underline hover:no-underline text-bb-teal-00 hover:text-bb-black-00 hover:bg-bb-teal-10 text-[1.25rem]">Return to home</a>
         </div>
       </div>
     </form>`,
@@ -327,8 +327,11 @@ const PAGES = {
         <li>If you change your bank account, contact NIS straight away.</li>
         <li>Keep your reference number safe in case you need to contact us.</li>
       </ul>
-      <p class="text-[1.25rem]"><a href="#" onclick="GovBB.nav('start')" class="${GovBB.LINK_CLS}">Return to start</a></p>
-      ${GovBB.continueBtn('See emails sent')}
+      <div class="flex gap-4 flex-wrap items-center mt-8">
+        ${GovBB.continueBtn('See emails sent')}
+        <button type="button" onclick="GovBB.nav('start')" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none border-2 border-bb-teal-00 text-bb-teal-00 hover:bg-bb-teal-10 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Return to start</button>
+        <a href="../index.html" class="inline-flex outline-none underline-offset-2 underline hover:no-underline text-bb-teal-00 hover:text-bb-black-00 hover:bg-bb-teal-10 text-[1.25rem]">Return to home</a>
+      </div>
     </div>`,
 
   'applicant-email': () => {
@@ -341,6 +344,7 @@ const PAGES = {
     const subDate = `${dd}/${mm}/${yyyy}`;
     return `
     <div class="space-y-6">
+      <a href="#" onclick="GovBB.back(); return false;" class="inline-flex items-center gap-xs outline-none underline-offset-2 underline hover:no-underline text-bb-teal-00 hover:text-bb-black-00 hover:bg-bb-teal-10 text-[1.25rem]">← Back</a>
       ${GovBB.backLink()}
       <div class="eml-page-badge">&#9993; Applicant email &mdash; Direct Deposit Form</div>
       <p class="eml-page-label">Email Templates / Applicant Emails</p>

@@ -281,8 +281,11 @@ const PAGES = {
       <p class="text-[1.25rem] leading-normal">We have received your Life Certificate. Your benefit payments will continue as normal.</p>
       <p class="text-[1.25rem] leading-normal">You must submit your next Life Certificate in <strong>${new Date().getMonth() < 6 ? 'December' : 'June'}</strong>. We will send you a reminder before then.</p>
       <p class="text-[1.25rem] leading-normal">If you have questions, contact the National Insurance Office at <strong>246-431-7400</strong> or visit <strong>Culloden Road, St. Michael</strong>.</p>
-      <a href="../index.html" class="inline-flex outline-none underline-offset-2 underline hover:no-underline text-bb-teal-00 hover:text-bb-black-00">Return to all forms</a>
-      <div class="mt-8">${GovBB.continueBtn('See emails sent')}</div>
+      <div class="flex gap-4 flex-wrap items-center mt-8">
+        ${GovBB.continueBtn('See emails sent')}
+        <button type="button" onclick="GovBB.nav('start')" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none border-2 border-bb-teal-00 text-bb-teal-00 hover:bg-bb-teal-10 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Return to start</button>
+        <a href="../index.html" class="inline-flex outline-none underline-offset-2 underline hover:no-underline text-bb-teal-00 hover:text-bb-black-00 hover:bg-bb-teal-10 text-[1.25rem]">Return to home</a>
+      </div>
     </div>`;
   },
 
@@ -291,6 +294,7 @@ const PAGES = {
     const refNum = window.__refNumber || ('LC-' + Math.random().toString(36).substring(2,8).toUpperCase());
     return `
     <div class="space-y-6">
+      <a href="#" onclick="GovBB.back(); return false;" class="inline-flex items-center gap-xs outline-none underline-offset-2 underline hover:no-underline text-bb-teal-00 hover:text-bb-black-00 hover:bg-bb-teal-10 text-[1.25rem]">← Back</a>
       ${GovBB.backLink()}
       <p class="border-bb-blue-40 border-l-4 py-xs pl-s text-bb-mid-grey-00">Email preview — sent to applicant</p>
       <div class="email-wrapper border border-bb-grey-00">
@@ -399,8 +403,9 @@ const PAGES = {
           </div>
         </div>
       </div>
-      <div class="mt-8">
-        <a href="../index.html" class="${GovBB.BTN_CLS}">Return to all forms</a>
+      <div class="mt-8 flex gap-4 flex-wrap items-center">
+        <button type="button" onclick="GovBB.nav('applicant-email')" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none border-2 border-bb-teal-00 text-bb-teal-00 hover:bg-bb-teal-10 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">← Back</button>
+        <a href="../index.html" class="inline-flex outline-none underline-offset-2 underline hover:no-underline text-bb-teal-00 hover:text-bb-black-00 hover:bg-bb-teal-10 text-[1.25rem]">Return to home</a>
       </div>
     </div>`;
   }
