@@ -131,9 +131,16 @@
   <div class="py-l">
 
     <!-- Page header -->
-    <div class="max-w-3xl mb-l">
-      <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-m">Government of Barbados — Form Prototypes</h1>
-      <p class="text-[1.25rem] text-bb-mid-grey-00">Alpha prototypes of digital government forms. Select a form below to preview the service.</p>
+    <div class="mb-l flex flex-wrap items-start justify-between gap-6">
+      <div class="max-w-3xl">
+        <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-m">Government of Barbados — Form Prototypes</h1>
+        <p class="text-[1.25rem] text-bb-mid-grey-00">Alpha prototypes of digital government forms. Select a form below to preview the service.</p>
+      </div>
+      <a href="https://claude.ai/new" target="_blank" rel="noopener"
+        class="inline-flex items-center gap-2 px-xm py-s rounded-sm border-2 border-bb-teal-00 text-bb-teal-00 bg-bb-white-00 hover:bg-bb-teal-10 text-[1rem] font-semibold whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-bb-teal-100">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Create new prototype
+      </a>
     </div>
 
     <!-- Filter tabs -->
@@ -782,17 +789,6 @@
         <span class="tag bg-bb-purple-10 text-bb-purple-00" style="white-space:nowrap;background:#f5eef9;color:#4a235a;">87 templates</span>
       </div>
 
-      <!-- MDA filter bar -->
-      <div class="flex flex-wrap gap-2 mb-m items-center" id="email-mda-filter">
-        <span class="text-[0.875rem] font-semibold text-bb-mid-grey-00 uppercase tracking-wide mr-1">Filter by MDA:</span>
-        <button onclick="filterEmailsByMDA('all')" data-email-mda="all" class="email-mda-btn filter-btn tag bg-bb-teal-00 text-bb-white-00 cursor-pointer border-2 border-bb-teal-00 text-[1rem] py-1 px-4">All</button>
-        <button onclick="filterEmailsByMDA('nis')" data-email-mda="nis" class="email-mda-btn filter-btn tag bg-bb-white-00 text-bb-black-00 cursor-pointer border-2 border-bb-grey-00 hover:border-bb-teal-00 text-[1rem] py-1 px-4">NIS</button>
-        <button onclick="filterEmailsByMDA('nab')" data-email-mda="nab" class="email-mda-btn filter-btn tag bg-bb-white-00 text-bb-black-00 cursor-pointer border-2 border-bb-grey-00 hover:border-bb-teal-00 text-[1rem] py-1 px-4">NAB</button>
-        <button onclick="filterEmailsByMDA('nhc')" data-email-mda="nhc" class="email-mda-btn filter-btn tag bg-bb-white-00 text-bb-black-00 cursor-pointer border-2 border-bb-grey-00 hover:border-bb-teal-00 text-[1rem] py-1 px-4">NHC</button>
-        <button onclick="filterEmailsByMDA('bla')" data-email-mda="bla" class="email-mda-btn filter-btn tag bg-bb-white-00 text-bb-black-00 cursor-pointer border-2 border-bb-grey-00 hover:border-bb-teal-00 text-[1rem] py-1 px-4">BLA</button>
-        <button onclick="filterEmailsByMDA('caipo')" data-email-mda="caipo" class="email-mda-btn filter-btn tag bg-bb-white-00 text-bb-black-00 cursor-pointer border-2 border-bb-grey-00 hover:border-bb-teal-00 text-[1rem] py-1 px-4">CAIPO</button>
-        <button onclick="filterEmailsByMDA('immd')" data-email-mda="immd" class="email-mda-btn filter-btn tag bg-bb-white-00 text-bb-black-00 cursor-pointer border-2 border-bb-grey-00 hover:border-bb-teal-00 text-[1rem] py-1 px-4">Immigration</button>
-      </div>
 
       <div id="email-sub-mda" style="margin-bottom:2rem;">
         <p class="text-[0.875rem] font-semibold text-bb-mid-grey-00 uppercase tracking-wide mb-4">MDA Emails</p>
@@ -1970,72 +1966,9 @@ function updateStats() {
 }
 // Stats are updated by the card upgrade script after it completes
 
+/* filterForms is overridden by govbb-dashboard.js after it loads */
 function filterForms(audience) {
-  document.querySelectorAll('.filter-btn').forEach(function(btn) {
-    var isActive = btn.getAttribute('data-filter') === audience;
-    btn.style.background = isActive ? 'var(--color-teal-00)' : '';
-    btn.style.color = isActive ? '#fff' : '';
-    btn.style.borderColor = isActive ? 'var(--color-teal-00)' : '';
-  });
-  document.querySelectorAll('.form-card').forEach(function(card) {
-    if (audience === 'all') {
-      card.style.display = '';
-    } else {
-      var cardAudience = card.getAttribute('data-audience') || '';
-      card.style.display = cardAudience.indexOf(audience) !== -1 ? '' : 'none';
-    }
-  });
-  document.querySelectorAll('section[data-section]').forEach(function(section) {
-    var visibleCards = section.querySelectorAll('.form-card:not([style*="display: none"])');
-    section.style.display = visibleCards.length === 0 ? 'none' : '';
-  });
-  // When switching to email templates view, reset MDA filter to All
-  if (audience === 'email-templates' || audience === 'all') {
-    filterEmailsByMDA('all');
-  }
-}
-
-function filterEmailsByMDA(mda) {
-  // Update active button state
-  document.querySelectorAll('.email-mda-btn').forEach(function(btn) {
-    var isActive = btn.getAttribute('data-email-mda') === mda;
-    btn.style.background = isActive ? 'var(--color-teal-00)' : '';
-    btn.style.color = isActive ? '#fff' : '';
-    btn.style.borderColor = isActive ? 'var(--color-teal-00)' : '';
-  });
-
-  // Derive MDA from filename prefix and show/hide cards
-  var emailSection = document.querySelector('section[data-section="email-templates"]');
-  if (!emailSection) return;
-  emailSection.querySelectorAll('.form-card').forEach(function(card) {
-    var href = card.getAttribute('href') || '';
-    var filename = href.split('/').pop();
-    var cardMda;
-    if (filename.startsWith('nisss-')) cardMda = 'nis';
-    else if (filename.startsWith('nab-')) cardMda = 'nab';
-    else if (filename.startsWith('nhc-')) cardMda = 'nhc';
-    else if (filename.startsWith('bla-')) cardMda = 'bla';
-    else if (filename.startsWith('caipo-')) cardMda = 'caipo';
-    else if (filename.startsWith('immd-')) cardMda = 'immd';
-    else cardMda = 'generic';
-    card.style.display = (mda === 'all' || cardMda === mda) ? '' : 'none';
-  });
-
-  // Show/hide the subsection headings and grids based on visible cards
-  var mdaHeading = document.getElementById('email-sub-mda');
-  var applicantHeading = document.getElementById('email-sub-applicant');
-  var mdaGrid = document.getElementById('email-grid-mda');
-  var applicantGrid = document.getElementById('email-grid-applicant');
-  if (mdaGrid) {
-    var visibleMda = mdaGrid.querySelectorAll('.form-card:not([style*="display: none"])').length;
-    if (mdaHeading) mdaHeading.style.display = visibleMda > 0 ? '' : 'none';
-    mdaGrid.style.display = visibleMda > 0 ? '' : 'none';
-  }
-  if (applicantGrid) {
-    var visibleApp = applicantGrid.querySelectorAll('.form-card:not([style*="display: none"])').length;
-    if (applicantHeading) applicantHeading.style.display = visibleApp > 0 ? '' : 'none';
-    applicantGrid.style.display = visibleApp > 0 ? '' : 'none';
-  }
+  /* fallback — govbb-dashboard.js replaces this */
 }
 </script>
 <script src="assets/govbb-dashboard.js?v=2"></script>

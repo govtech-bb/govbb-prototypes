@@ -37,10 +37,10 @@
     'prototypes/nisss-old-age-pension.html':              { mda: 'nis', type: 'claim'        },
     /* BLA */
     'prototypes/bla-remove-building-boat.html':           { mda: 'bla', type: 'permit'       },
-    /* SEA */
-    'prototypes/nab-seniors-recreational-activities.html': { mda: 'sea', type: 'application' },
-    'prototypes/nab-home-care-programme.html':             { mda: 'sea', type: 'application' },
-    'prototypes/nab-community-elder-care.html':            { mda: 'sea', type: 'application' },
+    /* NAB */
+    'prototypes/nab-seniors-recreational-activities.html': { mda: 'nab', type: 'application' },
+    'prototypes/nab-home-care-programme.html':             { mda: 'nab', type: 'application' },
+    'prototypes/nab-community-elder-care.html':            { mda: 'nab', type: 'application' },
     /* CAIPO */
     'prototypes/caipo-company-name-search.html':               { mda: 'caipo', type: 'search'      },
     'prototypes/caipo-srl-name-search.html':                   { mda: 'caipo', type: 'search'      },
@@ -78,6 +78,7 @@
 
   /* ─── Apply data-* attributes to cards ──────────────────────────────── */
   function _applyMeta() {
+    /* Prototype form cards — look up in FORM_META */
     document.querySelectorAll(PROTO_SECTION_SEL + ' .form-card').forEach(function (card) {
       var bodyLink = card.querySelector('a.form-card-body');
       var href = card.getAttribute('href') || (bodyLink && bodyLink.getAttribute('href'));
@@ -88,6 +89,51 @@
         card.setAttribute('data-status', 'alpha');
       }
     });
+
+    /* Email template cards — derive data-mda from filename prefix */
+    document.querySelectorAll('section[data-section="email-templates"] .form-card').forEach(function (card) {
+      var href     = card.getAttribute('href') || '';
+      var filename = href.split('/').pop();
+      var mda;
+      if      (filename.startsWith('nisss-'))  mda = 'nis';
+      else if (filename.startsWith('nab-'))    mda = 'nab';
+      else if (filename.startsWith('nhc-'))    mda = 'nhc';
+      else if (filename.startsWith('bla-'))    mda = 'bla';
+      else if (filename.startsWith('caipo-'))  mda = 'caipo';
+      else if (filename.startsWith('immd-'))   mda = 'cipd';
+      else                                     mda = 'other';
+      card.setAttribute('data-mda', mda);
+    });
+  }
+
+  /* ─── Filter email template cards (by mda + search, no audience filter) */
+  function _filterEmailCards(mda, searchTerm) {
+    var emailSection = document.querySelector('section[data-section="email-templates"]');
+    if (!emailSection) return;
+
+    emailSection.querySelectorAll('.form-card').forEach(function (card) {
+      var cardMda  = card.getAttribute('data-mda') || '';
+      var cardText = card.textContent.toLowerCase();
+      var ok = (!mda || cardMda === mda) &&
+               (!searchTerm || cardText.indexOf(searchTerm) !== -1);
+      card.style.display = ok ? '' : 'none';
+    });
+
+    /* Show/hide the MDA and Applicant sub-sections */
+    ['mda', 'applicant'].forEach(function (sub) {
+      var heading = document.getElementById('email-sub-' + sub);
+      var grid    = document.getElementById('email-grid-' + sub);
+      if (!grid) return;
+      var anyVisible = Array.from(grid.querySelectorAll('.form-card'))
+                            .some(function (c) { return c.style.display !== 'none'; });
+      grid.style.display    = anyVisible ? '' : 'none';
+      if (heading) heading.style.display = anyVisible ? '' : 'none';
+    });
+
+    /* Hide the whole email section if nothing matches */
+    var anyCard = Array.from(emailSection.querySelectorAll('.form-card'))
+                       .some(function (c) { return c.style.display !== 'none'; });
+    emailSection.style.display = anyCard ? '' : 'none';
   }
 
   /* ─── Combined filter ────────────────────────────────────────────────── */
@@ -97,18 +143,16 @@
     var mda        = _state.mda;
     var type       = _state.type;
 
-    var emailSection = document.querySelector('section[data-section="email-templates"]');
-
-    /* Email templates mode: show only that section, hide everything else */
+    /* Email-templates-only mode: hide all form sections, filter email cards */
     if (audience === 'email-templates') {
       document.querySelectorAll(PROTO_SECTION_SEL).forEach(function (s) { s.style.display = 'none'; });
-      if (emailSection) emailSection.style.display = '';
+      _filterEmailCards(mda, searchTerm);
       _updateNoResults();
       return;
     }
 
-    /* All other audiences: hide the email templates section */
-    if (emailSection) emailSection.style.display = 'none';
+    /* All other audience modes: filter form cards AND email template cards */
+    _filterEmailCards(mda, searchTerm);
 
     document.querySelectorAll(PROTO_SECTION_SEL + ' .form-card').forEach(function (card) {
       var cardAudience = card.getAttribute('data-audience') || '';
@@ -172,7 +216,7 @@
   function _updateNoResults() {
     var msg = document.getElementById('db-no-results');
     var allHidden = Array.from(
-      document.querySelectorAll(PROTO_SECTION_SEL)
+      document.querySelectorAll('section[data-section]')
     ).every(function (s) { return s.style.display === 'none'; });
 
     if (allHidden) {
@@ -233,7 +277,8 @@
       '  <option value="">All agencies</option>' +
       '  <option value="nis">NIS</option>' +
       '  <option value="bla">BLA</option>' +
-      '  <option value="sea">SEA</option>' +
+      '  <option value="nab">NAB</option>' +
+      '  <option value="nhc">NHC</option>' +
       '  <option value="caipo">CAIPO</option>' +
       '  <option value="cipd">CIPD (Immigration)</option>' +
       '</select>' +
