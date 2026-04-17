@@ -320,22 +320,27 @@ const PAGES = {
   },
 
   /* ── Declaration ── */
-  'declaration': () => `
+  'declaration': () => {
+    const today = new Date();
+    const formattedDate = `${String(today.getDate()).padStart(2,'0')}/${String(today.getMonth()+1).padStart(2,'0')}/${today.getFullYear()}`;
+    return `
     <form novalidate>
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Declaration</h1>
       <div class="space-y-8">
-        <p class="text-[1.25rem] leading-normal text-bb-black-00">I declare that the information I have given in this application is true and correct to the best of my knowledge. I understand that giving false information may result in my application being rejected or cancelled.</p>
-        ${GovBB.textField('decl-first-name', 'Your first name')}
-        ${GovBB.textField('decl-last-name', 'Your last name')}
+        <div class="space-y-2">
+          <p class="text-[1.25rem]"><span class="font-bold">Applicant's name:</span> ${[GovBB.D['first-name'], GovBB.D['last-name']].filter(Boolean).join(' ') || '—'}</p>
+          <p class="text-[1.25rem]"><span class="font-bold">Date:</span> ${formattedDate}</p>
+        </div>
         ${GovBB.emailField('decl-email', 'Your email address', { hint: 'We will send your confirmation here' })}
-        ${GovBB.checkboxItem('decl-agree', 'I confirm that the information I have given is true and correct')}
+        ${GovBB.checkboxItem('decl-agree', 'I hereby certify that the information provided is true and correct to the best of my knowledge.')}
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
           <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Submit application</button>
         </div>
       </div>
-    </form>`,
+    </form>`;
+  },
 
   /* ── Confirmation ── */
   'confirmation': () => {
@@ -491,7 +496,7 @@ const PAGES = {
             <div>
               <h2 class="mda-section-h2">Declaration</h2>
               <div class="mda-data-table">
-                <div class="mda-data-row"><div class="mda-data-label">Declarant name</div><div class="mda-data-value">${D['decl-first-name'] || ''} ${D['decl-last-name'] || '[Name]'}</div></div>
+                <div class="mda-data-row"><div class="mda-data-label">Declarant name</div><div class="mda-data-value">${[D['first-name'], D['last-name']].filter(Boolean).join(' ') || '[Name]'}</div></div>
                 <div class="mda-data-row"><div class="mda-data-label">Declarant email</div><div class="mda-data-value">${D['decl-email'] || '[Email]'}</div></div>
                 <div class="mda-data-row"><div class="mda-data-label">Agreed to declaration</div><div class="mda-data-value">${D['decl-agree'] ? 'Yes' : 'No'}</div></div>
               </div>
@@ -580,8 +585,6 @@ function validate(pageId) {
 
   if (pageId === 'declaration') {
     if (!D['decl-agree']) errors.push({ id: 'decl-agree', msg: 'Declaration – You must agree to the declaration to continue' });
-    if (!D['decl-first-name']) errors.push({ id: 'decl-first-name', msg: 'First name – Enter your first name' });
-    if (!D['decl-last-name']) errors.push({ id: 'decl-last-name', msg: 'Last name – Enter your last name' });
     if (!D['decl-email']) {
       errors.push({ id: 'decl-email', msg: 'Email address – Enter your email address' });
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(D['decl-email'])) {

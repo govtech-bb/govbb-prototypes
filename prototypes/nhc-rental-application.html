@@ -510,34 +510,27 @@ const PAGES = {
         </div>
     </div>`; },
 
-  'declaration': function() { return `
+  'declaration': function() {
+    const today = new Date();
+    const formattedDate = `${String(today.getDate()).padStart(2,'0')}/${String(today.getMonth()+1).padStart(2,'0')}/${today.getFullYear()}`;
+    return `
     <form novalidate>
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Declaration</h1>
       <div class="space-y-8">
-        <div class="bg-bb-blue-10 border-l-4 border-bb-blue-40 p-6 space-y-4">
-          <p class="text-[1.25rem] leading-normal font-bold">Please read this carefully before you submit.</p>
-          <p class="text-[1.25rem] leading-normal">I declare that the information I have given in this application is true and correct to the best of my knowledge and belief. I understand that if I give false information, my application may be refused and I may be removed from any NHC housing I have been allocated.</p>
-          <p class="text-[1.25rem] leading-normal">I agree to inform the National Housing Corporation of any change in my circumstances that may affect my eligibility.</p>
+        <div class="space-y-2">
+          <p class="text-[1.25rem]"><span class="font-bold">Applicant's name:</span> ${[GovBB.D['first-name'], GovBB.D['last-name']].filter(Boolean).join(' ') || '—'}</p>
+          <p class="text-[1.25rem]"><span class="font-bold">Date:</span> ${formattedDate}</p>
         </div>
-
-        ${GovBB.checkboxItem('decl-agree', 'I agree with the declaration above')}
-
-        <div class="space-y-4">
-          <h2 class="font-bold text-[2.5rem] leading-[1.2]">Sign your name</h2>
-          <p class="text-[1.25rem] leading-normal text-bb-mid-grey-00">Enter your name as it appears on your national ID card.</p>
-          ${GovBB.textField('decl-first-name', 'Your first name')}
-          ${GovBB.textField('decl-last-name', 'Your last name')}
-          ${GovBB.emailField('decl-email', 'Your email address', {hint: 'We will send your confirmation here'})}
-        </div>
-
-        
+        ${GovBB.emailField('decl-email', 'Your email address', {hint: 'We will send your confirmation here'})}
+        ${GovBB.checkboxItem('decl-agree', 'I declare that the information provided in this application is true and correct to the best of my knowledge.')}
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
           <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Submit application</button>
         </div>
       </div>
-    </form>`; },
+    </form>`;
+  },
 
   'confirmation': function() {
     const ref = window.__refNumber || ('NHC-' + Math.random().toString(36).substring(2,8).toUpperCase());
@@ -779,8 +772,7 @@ const PAGES = {
             <div>
               <h2 class="mda-section-h2">Declaration</h2>
               <div class="mda-data-table">
-                ${dataRow('Declared by (first name)', GovBB.D['decl-first-name'])}
-                ${dataRow('Declared by (last name)', GovBB.D['decl-last-name'])}
+                ${dataRow('Declared by', [GovBB.D['first-name'], GovBB.D['last-name']].filter(Boolean).join(' '))}
                 ${dataRow('Declaration email', GovBB.D['decl-email'])}
               </div>
             </div>
@@ -878,8 +870,6 @@ function validate(pageId) {
 
   if (pageId === 'declaration') {
     if (!D['decl-agree']) errors.push({id: 'decl-agree', msg: 'Declaration – You must agree to the declaration before you can submit'});
-    if (!D['decl-first-name']) errors.push({id: 'decl-first-name', msg: 'Your first name – Enter your first name'});
-    if (!D['decl-last-name']) errors.push({id: 'decl-last-name', msg: 'Your last name – Enter your last name'});
     if (!D['decl-email']) errors.push({id: 'decl-email', msg: 'Your email address – Enter your email address'});
   }
 
