@@ -310,22 +310,14 @@ const PAGES = {
   'declaration': () => `
     <form novalidate>
       ${GovBB.caption()}
-      <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Statutory Declaration</h1>
+      <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Declaration</h1>
       <div class="space-y-8">
         <div id="error-summary-container"></div>
         <div class="space-y-2">
           <p class="text-[1.25rem]"><span class="font-bold">Declarant's name:</span> ${GovBB.D['declarant-name'] || '—'}</p>
           <p class="text-[1.25rem]"><span class="font-bold">Date:</span> ${(function(){ var d=new Date(); return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(); })()}</p>
         </div>
-        <div class="bg-bb-teal-10 border-l-4 border-bb-teal-00 p-s space-y-2">
-          <ul class="list-disc pl-6 space-y-1 text-[1.25rem]">
-            <li>I am the registered owner (or authorised representative) of the domain name <strong>${GovBB.D['domain-url'] || '[domain name]'}</strong></li>
-            <li>There are no existing disputes over ownership or use of this domain</li>
-            <li>I consent to this domain name being used as the basis for the incorporation of a company in Barbados</li>
-            <li>All information I have provided is true and correct to the best of my knowledge</li>
-          </ul>
-        </div>
-        ${GovBB.checkboxItem('declaration-agree', 'I confirm that the information I have provided is true and correct to the best of my knowledge.')}
+        ${GovBB.checkboxItem('decl-agree', 'I hereby declare that the URL stated is registered to and legally owned by me; that I am not aware of any disputes concerning the use or ownership of the domain name; that I consent to the name being used for the incorporation of a corporate entity in Barbados; and that if ownership or use of the domain becomes disputed, I will notify the Registrar of Corporate Affairs and Intellectual Property and request a change of name.')}
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
           <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Submit application</button>
@@ -542,7 +534,7 @@ function validate(pageId) {
   }
 
   if (pageId === 'declaration') {
-    if (!D['declaration-agree']) errors.push({ id: 'declaration-agree', msg: 'Declaration – You must confirm that the information you have provided is true and correct' });
+    if (!D['decl-agree']) errors.push({ id: 'decl-agree', msg: 'Declaration – You must confirm that the information you have provided is true and correct' });
   }
 
   return errors;

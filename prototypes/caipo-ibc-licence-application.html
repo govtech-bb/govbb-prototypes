@@ -690,34 +690,24 @@ const PAGES = {
 
   /* ── DECLARATION ── */
   'declaration': () => {
-    const companyName = GovBB.D['company-name'] || '[Company name]';
+    const today = new Date();
+    const formattedDate = String(today.getDate()).padStart(2,'0')+'/'+String(today.getMonth()+1).padStart(2,'0')+'/'+today.getFullYear();
     return `
     <form novalidate>
       ${GovBB.caption()}
-      <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Statutory declaration</h1>
-      <div class="border-l-4 border-bb-blue-40 pl-s mb-8 space-y-3">
-        <p class="text-[1.25rem]">I / We, the undersigned, being duly authorised to make this application on behalf of <strong>${companyName}</strong>, hereby declare that:</p>
-        <ol class="list-decimal pl-6 space-y-2 text-[1.25rem]">
-          <li>The information provided in this application is true and correct in all material respects.</li>
-          <li>The company complies with, and will continue to comply with, all applicable anti-money laundering and counter-financing of terrorism (AML/CFT) requirements.</li>
-          <li>All proposed directors, shareholders, and senior managers are fit and proper persons as required under the International Business Companies Act, Cap. 77.</li>
-          <li>The company is not, and will not be used, for any activity that facilitates terrorism or any other unlawful purpose.</li>
-          <li>The company will notify the International Business Division of any material change in the information provided in this application.</li>
-          <li>The Ministry is authorised to make such enquiries as it considers necessary in connection with this application.</li>
-        </ol>
-      </div>
+      <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Declaration</h1>
       <div class="space-y-8">
-        <div id="field-wrap-declaration-consent">
-          <p id="err-declaration-consent" class="text-bb-red-00 text-[1.25rem] hidden"></p>
-          ${checkboxHtml('declaration-consent','I confirm that the above declaration is true and that I am authorised to make it on behalf of the company.')}
+        <div id="error-summary-container"></div>
+        <div class="space-y-2">
+          <p class="text-[1.25rem]"><span class="font-bold">Applicant's name:</span> ${[GovBB.D['first-name'], GovBB.D['last-name']].filter(Boolean).join(' ') || '—'}</p>
+          <p class="text-[1.25rem]"><span class="font-bold">Date:</span> ${formattedDate}</p>
         </div>
-        ${fieldWrap('declarant-name','Full name of declarant','Full name of the person signing this declaration.',inputHtml('declarant-name','text',''))}
-        ${fieldWrap('declarant-capacity','Capacity','Your position — e.g., Director, Authorised Signatory, Registered Agent.',inputHtml('declarant-capacity','text',''))}
+        ${GovBB.checkboxItem('decl-agree', 'I am authorised to make this application under the International Business Companies Act Cap. 77 and that, having made all reasonable enquiries, the information supplied is, to the best of my knowledge and belief, accurate in all material respects. I confirm the company will not carry on any international business other than that disclosed; that all proposed directors, shareholders and managers are fit and proper persons; and that the applicant authorises the Ministry to make such enquiries as it considers necessary in connection with this application.')}
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
           <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Submit application</button>
         </div>
-        
+
       </div>
     </form>`;
   },
@@ -977,10 +967,8 @@ function validate(pageId) {
   }
 
   if (pageId === 'declaration') {
-    const consent = D['declaration-consent'] === true || D['declaration-consent'] === 'true';
-    if (!consent) errors.push({id:'declaration-consent', msg:'Declaration – You must confirm the statutory declaration before submitting'});
-    if (!D['declarant-name']) errors.push({id:'declarant-name', msg:'Declarant name – Enter your full name'});
-    if (!D['declarant-capacity']) errors.push({id:'declarant-capacity', msg:'Capacity – Enter your position'});
+    const consent = D['decl-agree'] === true || D['decl-agree'] === 'true';
+    if (!consent) errors.push({id:'decl-agree', msg:'Declaration – You must confirm the declaration before submitting'});
   }
 
   return errors;

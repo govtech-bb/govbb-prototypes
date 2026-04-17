@@ -328,7 +328,7 @@ const PAGES = {
           <p class="text-[1.25rem]"><span class="font-bold">Attorney's name:</span> ${GovBB.D['attorney-name'] || '—'}</p>
           <p class="text-[1.25rem]"><span class="font-bold">Date:</span> ${(function(){ var d = new Date(); return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear(); })()}</p>
         </div>
-        ${GovBB.checkboxItem('declaration-agree', 'I confirm that the information I have provided is true and correct to the best of my knowledge. I understand that providing false information may result in my application being rejected or legal action being taken.')}
+        ${GovBB.checkboxItem('decl-agree', 'I, being an Attorney-at-Law in Barbados, DO HEREBY DECLARE that to the best of my knowledge, information and belief: (1) No signatory to the Articles of Incorporation of the above-named Company is an individual who is less than eighteen (18) years of age, is of unsound mind, or has the status of a bankrupt. (2) The names of the signatories to the said Articles of Incorporation are as stated above.')}
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
           <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Submit application</button>
@@ -522,7 +522,7 @@ function validate(pageId) {
   }
 
   if (pageId === 'declaration') {
-    if (!D['declaration-agree']) errors.push({ id: 'declaration-agree', msg: 'Declaration – You must confirm the information is correct' });
+    if (!D['decl-agree']) errors.push({ id: 'decl-agree', msg: 'Declaration – You must confirm the information is correct' });
   }
 
   return errors;

@@ -329,15 +329,7 @@ const PAGES = {
           <p class="text-[1.25rem]"><span class="font-bold">Authorised officer:</span> ${[GovBB.D['officer-first-name'], GovBB.D['officer-last-name']].filter(Boolean).join(' ') || '—'}</p>
           <p class="text-[1.25rem]"><span class="font-bold">Date:</span> ${(function(){ var d=new Date(); return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(); })()}</p>
         </div>
-          <p class="text-[1.25rem]">By submitting this application, I confirm that:</p>
-          <ul class="list-disc pl-6 space-y-1 text-[1.25rem]">
-            <li>the information in this application is true and correct</li>
-            <li>I am authorised to sign on behalf of the company</li>
-            <li>all shareholders have given their written agreement to this exemption (where required)</li>
-            <li>the company meets the conditions for exemption under the Companies Act Cap. 308</li>
-          </ul>
-        
-        ${GovBB.checkboxItem('declaration-agree', 'I confirm that the information I have provided is true and correct to the best of my knowledge. I understand that providing false information may result in my application being rejected or legal action being taken.')}
+        ${GovBB.checkboxItem('decl-agree', 'I, being a Director of the Company, DO HEREBY DECLARE that the Company did not file Financial Statements for the years stated because the gross revenue and assets as shown in those Financial Statements did not exceed the applicable thresholds under section 152(1)(b) of the Companies Act Cap. 308.')}
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
           <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Submit application</button>
@@ -559,7 +551,7 @@ const PAGES = {
                 <p class="mda-section-h2">Declaration</p>
                 <div class="mda-data-table">
                   ${dr('Shareholders agreed', D['shareholders-agreed'] ? 'Yes' : 'No')}
-                  ${dr('Declaration agreed', D['declaration-agree'] ? 'Yes – I confirm the information is true and correct' : 'No')}
+                  ${dr('Declaration agreed', D['decl-agree'] ? 'Yes – I confirm the information is true and correct' : 'No')}
                 </div>
                 <div class="mda-internal-box">
                   <p>Due date: <span class="fv">[To be filled by officer]</span></p>
@@ -633,7 +625,7 @@ function validate(pageId) {
   }
 
   if (pageId === 'declaration') {
-    if (!D['declaration-agree']) errors.push({ id: 'declaration-agree', msg: 'Declaration – You must confirm the information is correct' });
+    if (!D['decl-agree']) errors.push({ id: 'decl-agree', msg: 'Declaration – You must confirm the information is correct' });
   }
 
   return errors;

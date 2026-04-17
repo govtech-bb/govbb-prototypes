@@ -629,13 +629,13 @@ const PAGES = {
   'declaration': () => `
     <form novalidate>
       ${GovBB.caption()}
-      <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Certification</h1>
+      <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Declaration</h1>
       <div class="space-y-8">
         <div class="space-y-2">
-          <p class="text-[1.25rem]"><span class="font-bold">Company:</span> ${GovBB.D['company-name'] || '—'} (Company Number: ${GovBB.D['company-number'] || '—'})</p>
-          <p class="text-[1.25rem]"><span class="font-bold">Date:</span> ${(function(){ var d=new Date(); return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(); })()}</p>
+          <p class="text-[1.25rem]"><span class="font-bold">Applicant's name:</span> ${[GovBB.D['first-name'], GovBB.D['last-name']].filter(Boolean).join(' ') || '—'}</p>
+          <p class="text-[1.25rem]"><span class="font-bold">Date:</span> ${(function(){ var today = new Date(); var formattedDate = String(today.getDate()).padStart(2,'0')+'/'+String(today.getMonth()+1).padStart(2,'0')+'/'+today.getFullYear(); return formattedDate; })()}</p>
         </div>
-        ${GovBB.checkboxItem('declaration-agree', 'I confirm the above certification is true and correct.')}
+        ${GovBB.checkboxItem('decl-agree', 'I confirm that the information provided in these Articles of Reincorporation is true and correct, and that I am authorised to sign on behalf of the company.')}
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
           <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Submit application</button>
@@ -872,7 +872,7 @@ function validate(pageId) {
   }
 
   if (pageId === 'declaration') {
-    if (!D['declaration-agree']) errors.push({ id: 'declaration-agree', msg: 'Certification – You must confirm the certification to submit this filing' });
+    if (!D['decl-agree']) errors.push({ id: 'decl-agree', msg: 'Certification – You must confirm the certification to submit this filing' });
   }
 
   return errors;
