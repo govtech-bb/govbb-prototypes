@@ -337,26 +337,17 @@ const PAGES = {
 
   'declaration': () => {
     const today = new Date();
-    const formattedDate = `${String(today.getDate()).padStart(2,'0')} ${String(today.getMonth()+1).padStart(2,'0')} ${today.getFullYear()}`;
+    const formattedDate = `${String(today.getDate()).padStart(2,'0')}/${String(today.getMonth()+1).padStart(2,'0')}/${today.getFullYear()}`;
     return `
     <form novalidate>
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Declaration</h1>
       <div class="space-y-8">
-        <div class="flex flex-col gap-s">
-          <div class="flex gap-5 items-start" id="declaration-agree-wrap">
-            <button type="button" role="checkbox" aria-checked="${GovBB.D['declaration-agree'] ? 'true' : 'false'}"
-              onclick="GovBB.toggleCheckbox('declaration-agree'); GovBB.render();"
-              class="relative inline-flex size-12 shrink-0 items-center justify-center bg-bb-white-00 border-2 border-bb-black-00 rounded-sm transition-all hover:cursor-pointer hover:shadow-form-hover focus-visible:ring-4 focus-visible:ring-bb-teal-100 mt-1">
-              ${GovBB.D['declaration-agree'] ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>` : ''}
-            </button>
-            <label class="text-[1.25rem] leading-normal text-bb-black-00 cursor-pointer pt-2 font-bold"
-                   onclick="GovBB.toggleCheckbox('declaration-agree'); GovBB.render();">
-              I agree that the information I have given is true
-            </label>
-          </div>
-          <p id="declaration-agree-error" class="text-bb-red-00 text-[1.25rem] hidden">Declaration – You must agree to the declaration to continue.</p>
+        <div class="space-y-2">
+          <p class="text-[1.25rem]"><span class="font-bold">Applicant's name:</span> ${[GovBB.D['first-name'], GovBB.D['surname']].filter(Boolean).join(' ') || '—'}</p>
+          <p class="text-[1.25rem]"><span class="font-bold">Date:</span> ${formattedDate}</p>
         </div>
+        ${GovBB.checkboxItem('declaration-agree', 'By submitting this form I hereby declare that the information I have given in this document is true.')}
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
           <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Submit application</button>
