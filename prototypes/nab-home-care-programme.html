@@ -529,13 +529,18 @@ const PAGES = {
     </div>`,
 
   /* ── Declaration ── */
-  'declaration': () => `
+  'declaration': () => {
+    const today = new Date();
+    const formattedDate = `${String(today.getDate()).padStart(2,'0')}/${String(today.getMonth()+1).padStart(2,'0')}/${today.getFullYear()}`;
+    return `
     <form novalidate>
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Declaration</h1>
       <div class="space-y-8">
-        ${GovBB.textField('decl-first-name', 'Your first name')}
-        ${GovBB.textField('decl-last-name', 'Your last name')}
+        <div class="space-y-2">
+          <p class="text-[1.25rem]"><span class="font-bold">Applicant's name:</span> ${[GovBB.D['first-name'], GovBB.D['last-name']].filter(Boolean).join(' ') || '—'}</p>
+          <p class="text-[1.25rem]"><span class="font-bold">Date:</span> ${formattedDate}</p>
+        </div>
         ${GovBB.emailField('decl-email', 'Your email address', { hint: 'We will send your confirmation to this address' })}
         ${GovBB.checkboxItem('decl-agree', 'I declare that the information I have given in this application is true and correct to the best of my knowledge.')}
         <div class="mt-8 flex gap-4 flex-wrap">
@@ -543,7 +548,8 @@ const PAGES = {
           <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Submit application</button>
         </div>
       </div>
-    </form>`,
+    </form>`;
+  },
 
   /* ── Confirmation ── */
   'confirmation': () => {
@@ -876,8 +882,6 @@ function validate(pageId) {
       errors.push({ id: 'agree-error', msg: 'Declaration – You must agree to the declaration to continue' });
       setTimeout(() => { const el = document.getElementById('agree-error'); if (el) el.classList.remove('hidden'); }, 50);
     }
-    if (!D['decl-first-name'] || !D['decl-first-name'].trim()) errors.push({ id: 'decl-first-name', msg: 'First name – Enter your first name' });
-    if (!D['decl-last-name'] || !D['decl-last-name'].trim()) errors.push({ id: 'decl-last-name', msg: 'Last name – Enter your last name' });
     if (!D['decl-email'] || !D['decl-email'].trim()) errors.push({ id: 'decl-email', msg: 'Email address – Enter your email address' });
   }
 
