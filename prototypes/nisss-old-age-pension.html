@@ -506,30 +506,11 @@ const PAGES = {
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Declaration</h1>
       <div class="space-y-8">
-        <div class="space-y-4">
-          <div class="flex gap-4 items-start">
-            <button type="button" role="checkbox" id="confirm-true" aria-checked="${GovBB.D['confirm-true']==='true'?'true':'false'}" onclick="GovBB.toggleCheckbox('confirm-true');GovBB.render()"
-              class="relative inline-flex size-8 shrink-0 mt-1 items-center justify-center bg-bb-white-00 border-2 border-bb-black-00 rounded-sm transition-all outline-none hover:cursor-pointer hover:shadow-form-hover focus-visible:ring-4 focus-visible:ring-bb-teal-100 ${GovBB.D['confirm-true']==='true'?'bg-bb-teal-00 border-bb-teal-00':''}">
-              ${GovBB.D['confirm-true']==='true'?'<svg class="text-white" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.5 8L6.5 12L13.5 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}
-            </button>
-            <label for="confirm-true" class="text-[1.25rem] leading-normal text-bb-black-00 cursor-pointer">I confirm the information I have provided is true and correct to the best of my knowledge</label>
-          </div>
-          <div class="flex gap-4 items-start">
-            <button type="button" role="checkbox" id="confirm-offence" aria-checked="${GovBB.D['confirm-offence']==='true'?'true':'false'}" onclick="GovBB.toggleCheckbox('confirm-offence');GovBB.render()"
-              class="relative inline-flex size-8 shrink-0 mt-1 items-center justify-center bg-bb-white-00 border-2 border-bb-black-00 rounded-sm transition-all outline-none hover:cursor-pointer hover:shadow-form-hover focus-visible:ring-4 focus-visible:ring-bb-teal-100 ${GovBB.D['confirm-offence']==='true'?'bg-bb-teal-00 border-bb-teal-00':''}">
-              ${GovBB.D['confirm-offence']==='true'?'<svg class="text-white" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.5 8L6.5 12L13.5 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}
-            </button>
-            <label for="confirm-offence" class="text-[1.25rem] leading-normal text-bb-black-00 cursor-pointer">I understand that providing false information is a criminal offence under Cap. 47</label>
-          </div>
-          <div class="flex gap-4 items-start">
-            <button type="button" role="checkbox" id="confirm-authorise" aria-checked="${GovBB.D['confirm-authorise']==='true'?'true':'false'}" onclick="GovBB.toggleCheckbox('confirm-authorise');GovBB.render()"
-              class="relative inline-flex size-8 shrink-0 mt-1 items-center justify-center bg-bb-white-00 border-2 border-bb-black-00 rounded-sm transition-all outline-none hover:cursor-pointer hover:shadow-form-hover focus-visible:ring-4 focus-visible:ring-bb-teal-100 ${GovBB.D['confirm-authorise']==='true'?'bg-bb-teal-00 border-bb-teal-00':''}">
-              ${GovBB.D['confirm-authorise']==='true'?'<svg class="text-white" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.5 8L6.5 12L13.5 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}
-            </button>
-            <label for="confirm-authorise" class="text-[1.25rem] leading-normal text-bb-black-00 cursor-pointer">I authorise NIS to use the information I have provided to process my pension claim</label>
-          </div>
+        <div class="space-y-2 mb-6">
+          <p class="text-[1.25rem]"><span class="font-bold">Applicant's name:</span> ${[GovBB.D['first-name'], GovBB.D['middle-name'], GovBB.D['last-name']].filter(Boolean).join(' ') || '—'}</p>
+          <p class="text-[1.25rem]"><span class="font-bold">Date:</span> ${(function(){ var d=new Date(); return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(); })()}</p>
         </div>
-        <p class="text-[1.25rem] text-bb-mid-grey-00">Date: ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+        ${GovBB.checkboxItem('declaration-agree', 'I hereby declare that the information given on this form is true to the best of my knowledge and belief.')}
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
           <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Submit application</button>
@@ -829,9 +810,7 @@ function validate(pageId) {
   }
 
   if (pageId === 'declaration') {
-    if (D['confirm-true'] !== 'true') errors.push({ id: 'confirm-true', msg: 'Declaration – You must confirm the information is true' });
-    if (D['confirm-offence'] !== 'true') errors.push({ id: 'confirm-offence', msg: 'Declaration – You must acknowledge the criminal offence warning' });
-    if (D['confirm-authorise'] !== 'true') errors.push({ id: 'confirm-authorise', msg: 'Declaration – You must authorise NIS to process your claim' });
+    if (!D['declaration-agree']) errors.push({ id: 'declaration-agree', msg: 'Declaration – You must confirm the declaration to continue' });
   }
 
   return errors;

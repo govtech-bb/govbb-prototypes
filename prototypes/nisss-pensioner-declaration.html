@@ -331,8 +331,6 @@ const PAGES = {
           </div>
         </div>` : ''}
 
-        ${GovBB.checkboxItem('declaration-agree', 'I confirm that the information I have given is true and complete to the best of my knowledge.')}
-
         <div class="flex flex-col gap-xs w-full items-start">
           <label for="application-date" class="block text-[1.25rem] leading-normal font-bold text-bb-black-00">Date of application</label>
           <p class="text-[1.25rem] leading-normal text-bb-mid-grey-00">This is today's date. It is filled in for you.</p>
@@ -347,11 +345,12 @@ const PAGES = {
             />
           </div>
         </div>
+        ${GovBB.checkboxItem('declaration-agree', 'I hereby certify that the information given in this Declaration filed with Central Bank of Barbados is true and correct.')}
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
           <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Submit application</button>
         </div>
-        
+
       </div>
     </form>`;
   },

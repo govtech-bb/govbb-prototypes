@@ -389,26 +389,12 @@ const PAGES = {
           <p class="text-[1.25rem]"><span class="font-bold">Date:</span> ${(function(){ var d=new Date(); return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(); })()}</p>
         </div>
 
-        <div class="flex items-start gap-4">
-          <div class="relative inline-flex size-12 shrink-0 items-center justify-center bg-bb-white-00 border-2 border-bb-black-00 rounded-sm transition-all hover:cursor-pointer hover:shadow-form-hover focus-within:ring-4 focus-within:ring-bb-teal-100"
-               onclick="GovBB.toggleCheckbox('email-consent'); GovBB.render();">
-            <input type="checkbox" id="email-consent" name="email-consent"
-                   class="sr-only"
-                   ${GovBB.D['email-consent'] ? 'checked' : ''}>
-            ${GovBB.D['email-consent'] ? `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>` : ''}
-          </div>
-          <label for="email-consent" class="text-[1.25rem] leading-normal text-bb-black-00 cursor-pointer pt-2">
-            I agree to receive email notifications from NIS
-          </label>
-        </div>
-        <p id="email-consent-error" class="text-bb-red-00 text-[1.25rem] hidden">Email consent – You must agree to receive email notifications to continue</p>
-
         <div class="bg-bb-red-10 border-l-4 border-bb-red-00 p-s">
           <p class="text-[1.25rem] text-bb-red-00 font-bold">Warning</p>
           <p class="text-[1.25rem]">Giving false information may result in prosecution.</p>
         </div>
 
-        ${GovBB.checkboxItem('declaration-agree', 'I confirm that the information I have given is true and complete to the best of my knowledge.')}
+        ${GovBB.checkboxItem('declaration-agree', 'I hereby make an application for the National Insurance Online Social Security Service and declare that the information given in this form is true to the best of my knowledge and belief. I also agree to my username and password being sent electronically to my above listed email address.')}
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
           <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Submit application</button>
