@@ -118,7 +118,7 @@ const _LOGO = `<svg width="276" height="27" viewBox="0 0 276 27" fill="currentCo
 /* ───────── Form-specific configuration ───────── */
 const FORM_NAME = 'Online Social Security Service Registration Form (Employer)';
 
-const FLOW = ['start', 'business-details', 'contact-details', 'check', 'declaration', 'confirmation', 'applicant-email', 'mda-email'];
+const FLOW = ['start', 'business-details', 'check', 'declaration', 'confirmation', 'applicant-email', 'mda-email'];
 
 const PAGES = {
 
@@ -157,67 +157,58 @@ const PAGES = {
       ${GovBB.startBtn('Complete the online form')}
     </div>`,
 
-  /* ── Page 2: Business details ──────────────── */
+  /* ── Page 2: Business & Contact details ───── */
   'business-details': () => `
     <form novalidate>
       ${GovBB.caption()}
-      <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Your business details</h1>
+      <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Your details</h1>
       <div class="space-y-8">
-        ${GovBB.textField('business-name', 'Name of business', {
-          maxlength: '200',
-          placeholder: 'e.g., Acme Ltd.'
-        })}
-        ${GovBB.textField('employer-nis-number', 'Employer\'s National Insurance Number', {
-          hint: 'This is the 7-digit number assigned to your business by NIS. For example, 1234567',
-          placeholder: '1234567',
-          inputmode: 'numeric',
-          maxlength: '7'
-        })}
-        ${GovBB.textField('business-reg-number', 'Business Registration Number', {
-          hint: 'Your 6-character registration number from the Corporate Affairs registry. For example, AB1234',
-          placeholder: 'AB1234',
-          maxlength: '6'
-        })}
-        ${GovBB.textField('business-address-1', 'Street address', {
-          placeholder: 'e.g., 123 Broad Street'
-        })}
-        ${GovBB.textField('business-address-2', 'Address line 2 (optional)')}
-        ${GovBB.textField('business-district', 'District (optional)', {
-          hint: 'For example, Worthing, Bridgetown, Holetown'
-        })}
-        ${GovBB.selectField('business-parish', 'Parish', GovBB.PARISHES)}
-        ${GovBB.textField('business-postal-code', 'Postal code (optional)', {
-          hint: 'For example, BB11000',
-          placeholder: 'BB11000'
-        })}
-        
-        <div class="mt-8 flex gap-4 flex-wrap">
-          <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
-          <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
-        </div>
-      </div>
-    </form>`,
-
-  /* ── Page 3: Contact details ────────────────── */
-  'contact-details': () => `
-    <form novalidate>
-      ${GovBB.caption()}
-      <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Contact details</h1>
-      <div class="space-y-8">
-        ${GovBB.textField('contact-name', 'Contact person name', {
-          hint: 'The person NIS should contact about this registration'
-        })}
-        ${GovBB.telField('contact-phone', 'Contact phone number', {
-          hint: 'For example, 246-555-1234',
-          placeholder: '246-555-1234'
-        })}
-        ${GovBB.emailField('contact-email', 'Email address', {
-          hint: 'Your login credentials will be sent to this email address'
-        })}
-        ${GovBB.emailField('confirm-email', 'Confirm email address', {
-          hint: 'Enter your email address again to confirm'
-        })}
-        
+        <fieldset class="space-y-8">
+          <legend class="font-bold text-[1.5rem]">Business details</legend>
+          ${GovBB.textField('business-name', 'Name of business', {
+            maxlength: '200',
+            placeholder: 'e.g., Acme Ltd.'
+          })}
+          ${GovBB.textField('employer-nis-number', 'Employer\'s National Insurance Number', {
+            hint: 'This is the 7-digit number assigned to your business by NIS. For example, 1234567',
+            placeholder: '1234567',
+            inputmode: 'numeric',
+            maxlength: '7'
+          })}
+          ${GovBB.textField('business-reg-number', 'Business Registration Number', {
+            hint: 'Your 6-character registration number from the Corporate Affairs registry. For example, AB1234',
+            placeholder: 'AB1234',
+            maxlength: '6'
+          })}
+          ${GovBB.textField('business-address-1', 'Street address', {
+            placeholder: 'e.g., 123 Broad Street'
+          })}
+          ${GovBB.textField('business-address-2', 'Address line 2 (optional)')}
+          ${GovBB.textField('business-district', 'District (optional)', {
+            hint: 'For example, Worthing, Bridgetown, Holetown'
+          })}
+          ${GovBB.selectField('business-parish', 'Parish', GovBB.PARISHES)}
+          ${GovBB.textField('business-postal-code', 'Postal code (optional)', {
+            hint: 'For example, BB11000',
+            placeholder: 'BB11000'
+          })}
+        </fieldset>
+        <fieldset class="space-y-8">
+          <legend class="font-bold text-[1.5rem]">Contact details</legend>
+          ${GovBB.textField('contact-name', 'Contact person name', {
+            hint: 'The person NIS should contact about this registration'
+          })}
+          ${GovBB.telField('contact-phone', 'Contact phone number', {
+            hint: 'For example, 246-555-1234',
+            placeholder: '246-555-1234'
+          })}
+          ${GovBB.emailField('contact-email', 'Email address', {
+            hint: 'Your login credentials will be sent to this email address'
+          })}
+          ${GovBB.emailField('confirm-email', 'Confirm email address', {
+            hint: 'Enter your email address again to confirm'
+          })}
+        </fieldset>
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
           <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
@@ -290,9 +281,9 @@ const PAGES = {
         <div>
           <h2 class="font-bold text-[2.5rem] leading-[1.2] mb-4">Contact details</h2>
           <dl class="divide-y divide-bb-grey-00 border-t border-b border-bb-grey-00">
-            ${GovBB.summaryRow('Contact person name', GovBB.D['contact-name'], 'contact-details')}
-            ${GovBB.summaryRow('Contact phone number', GovBB.D['contact-phone'], 'contact-details')}
-            ${GovBB.summaryRow('Email address', GovBB.D['contact-email'], 'contact-details')}
+            ${GovBB.summaryRow('Contact person name', GovBB.D['contact-name'], 'business-details')}
+            ${GovBB.summaryRow('Contact phone number', GovBB.D['contact-phone'], 'business-details')}
+            ${GovBB.summaryRow('Email address', GovBB.D['contact-email'], 'business-details')}
           </dl>
         </div>
 
@@ -543,7 +534,7 @@ function validate(pageId) {
     }
   }
 
-  if (pageId === 'contact-details') {
+  if (pageId === 'business-details') {
     if (!D['contact-name'] || !D['contact-name'].trim()) {
       errors.push({ id: 'contact-name', msg: 'Contact person name – Enter the name of the contact person' });
     }
