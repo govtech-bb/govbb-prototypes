@@ -223,7 +223,7 @@ const PAGES = {
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Declaration</h1>
       <div class="space-y-8">
         <div class="space-y-2">
-          <p class="text-[1.25rem] leading-normal"><strong>Applicant's name:</strong> ${GovBB.esc(GovBB.D['contact-name'] || '') || 'Not provided yet'}</p>
+          <p class="text-[1.25rem] leading-normal"><strong>Applicant's name:</strong> ${GovBB.D['contact-name'] || 'Not provided yet'}</p>
           <p class="text-[1.25rem] leading-normal"><strong>Date:</strong> ${new Date().toLocaleDateString('en-GB')}</p>
         </div>
 
@@ -326,7 +326,7 @@ const PAGES = {
       <div class="space-y-6">
         <h2 class="font-bold text-[2.5rem] leading-[1.2]">What happens next</h2>
         <p class="text-[1.25rem] leading-normal">NIS will process your employer registration for online services.</p>
-        <p class="text-[1.25rem] leading-normal">A link to set your password will be sent to <strong>${GovBB.esc(email)}</strong>. Allow up to 5 working days.</p>
+        <p class="text-[1.25rem] leading-normal">A link to set your password will be sent to <strong>${email}</strong>. Allow up to 5 working days.</p>
         <p class="text-[1.25rem] leading-normal">Once you have set your password, you can log in to the NIS Online Social Security Service portal to manage your employer account.</p>
 
         <div class="border-t border-bb-grey-00 pt-6">
