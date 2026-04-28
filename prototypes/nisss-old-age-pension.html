@@ -374,17 +374,17 @@ const PAGES = {
 
   'payment-preferences': () => `
     <form novalidate>
-      ${GovBB.backLink()}
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">How would you like to receive your pension?</h1>
       <div class="space-y-8">
         ${GovBB.radioGroup('alternate-payee', 'Do you want your pension paid to someone else on your behalf?', ['Yes', 'No'], {
-          hint: 'For example, a family member or carer. You will need to give their details on the next page.'
+          hint: 'Choose Yes if a family member, carer, or legal representative will collect your pension for you.'
         })}
         ${GovBB.radioGroup('provide-banking', 'Do you want your pension paid directly into a bank account?', ['Yes', 'No'], {
-          hint: 'If yes, you will need your account number and bank branch details.'
+          hint: 'Choose Yes to give your bank account details. Choose No if you prefer another arrangement — NIS will contact you.'
         })}
         <div class="mt-8 flex gap-4 flex-wrap">
+          <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
           <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
         </div>
       </div>
@@ -761,8 +761,10 @@ const PAGES = {
           </div>
         </div>
       </div>
-      <a href="../index.html" class="inline-flex outline-none underline-offset-2 underline hover:no-underline text-bb-teal-00 hover:text-bb-black-00">
-      </a>
+      <div class="mt-8 flex gap-4 flex-wrap">
+        <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
+        <button type="button" onclick="GovBB.nav('start')" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none border-2 border-bb-teal-00 text-bb-teal-00 hover:bg-bb-teal-10 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Return to start</button>
+      </div>
     </div>`;
   }
 };
