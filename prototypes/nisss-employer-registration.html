@@ -163,18 +163,33 @@ const PAGES = {
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Your business details</h1>
       <div class="space-y-8">
-        ${GovBB.textField('employer-reg-number', 'NIS Employer Registration Number', {
-          hint: 'Find this on your NIS employer registration certificate or a previous D.P.10 submission'
+        ${GovBB.textField('business-name', 'Name of business', {
+          maxlength: '200',
+          placeholder: 'e.g., Acme Ltd.'
         })}
-        ${GovBB.textField('business-name', 'Business name', {
-          maxlength: '200'
+        ${GovBB.textField('employer-nis-number', 'Employer\'s National Insurance Number', {
+          hint: 'This is the 7-digit number assigned to your business by NIS. For example, 1234567',
+          placeholder: '1234567',
+          inputmode: 'numeric',
+          maxlength: '7'
         })}
-        ${GovBB.textField('business-address-1', 'Address line 1')}
+        ${GovBB.textField('business-reg-number', 'Business Registration Number', {
+          hint: 'Your 6-character registration number from the Corporate Affairs registry. For example, AB1234',
+          placeholder: 'AB1234',
+          maxlength: '6'
+        })}
+        ${GovBB.textField('business-address-1', 'Street address', {
+          placeholder: 'e.g., 123 Broad Street'
+        })}
         ${GovBB.textField('business-address-2', 'Address line 2 (optional)')}
         ${GovBB.textField('business-district', 'District (optional)', {
           hint: 'For example, Worthing, Bridgetown, Holetown'
         })}
         ${GovBB.selectField('business-parish', 'Parish', GovBB.PARISHES)}
+        ${GovBB.textField('business-postal-code', 'Postal code (optional)', {
+          hint: 'For example, BB11000',
+          placeholder: 'BB11000'
+        })}
         
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
@@ -227,9 +242,26 @@ const PAGES = {
           </p>
         </div>
 
+        <div class="bg-bb-red-10 border-l-4 border-bb-red-00 p-6">
+          <p class="text-[1.25rem] leading-normal text-bb-red-00 font-bold">Legal warning</p>
+          <p class="text-[1.25rem] leading-normal mt-2">Any person who knowingly makes a false statement or any false representation for the purpose of obtaining benefit commits a criminal offence punishable by a fine or imprisonment or both.</p>
+        </div>
+
+        <p class="text-[1.25rem] leading-normal">I hereby make an application for the National Insurance Online Social Security Service and declare that the information given in this form is true to the best of my knowledge and belief. I also agree to my username and password being sent electronically to my above listed email address.</p>
+
+        ${GovBB.textField('authorised-person-name', 'Authorised person: print name', {
+          hint: 'Enter the full name of the person authorised to submit this registration on behalf of the business',
+          maxlength: '100'
+        })}
+
+        <div class="flex flex-col gap-xs">
+          <p class="text-[1.25rem] leading-normal font-bold">Date</p>
+          <p class="text-[1.25rem] leading-normal text-bb-mid-grey-00">${(function(){ var d=new Date(); return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear(); })()}</p>
+        </div>
+
         <div id="field-declaration-consent">
           <span class="field-error hidden text-bb-red-00 text-[1.25rem] leading-normal block mb-2" id="err-declaration-consent"></span>
-          ${GovBB.checkboxItem('declaration-consent', 'I hereby make an application for the National Insurance Online Social Security Service and declare that the information given in this form is true to the best of my knowledge and belief. I also agree to my username and password being sent electronically to my above listed email address.')}
+          ${GovBB.checkboxItem('declaration-consent', 'I confirm that the information given in this form is true to the best of my knowledge and belief, and that I am authorised to submit this registration on behalf of the business.')}
         </div>
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
@@ -249,12 +281,14 @@ const PAGES = {
         <div>
           <h2 class="font-bold text-[2.5rem] leading-[1.2] mb-4">Business details</h2>
           <dl class="divide-y divide-bb-grey-00 border-t border-b border-bb-grey-00">
-            ${GovBB.summaryRow('NIS Employer Registration Number', GovBB.D['employer-reg-number'], 'business-details')}
-            ${GovBB.summaryRow('Business name', GovBB.D['business-name'], 'business-details')}
-            ${GovBB.summaryRow('Address line 1', GovBB.D['business-address-1'], 'business-details')}
+            ${GovBB.summaryRow('Name of business', GovBB.D['business-name'], 'business-details')}
+            ${GovBB.summaryRow("Employer's National Insurance Number", GovBB.D['employer-nis-number'], 'business-details')}
+            ${GovBB.summaryRow('Business Registration Number', GovBB.D['business-reg-number'], 'business-details')}
+            ${GovBB.summaryRow('Street address', GovBB.D['business-address-1'], 'business-details')}
             ${GovBB.summaryRow('Address line 2', GovBB.D['business-address-2'] || '', 'business-details')}
             ${GovBB.summaryRow('District', GovBB.D['business-district'] || '', 'business-details')}
             ${GovBB.summaryRow('Parish', GovBB.D['business-parish'], 'business-details')}
+            ${GovBB.summaryRow('Postal code', GovBB.D['business-postal-code'] || '', 'business-details')}
           </dl>
         </div>
 
@@ -264,6 +298,13 @@ const PAGES = {
             ${GovBB.summaryRow('Contact person name', GovBB.D['contact-name'], 'contact-details')}
             ${GovBB.summaryRow('Contact phone number', GovBB.D['contact-phone'], 'contact-details')}
             ${GovBB.summaryRow('Email address', GovBB.D['contact-email'], 'contact-details')}
+          </dl>
+        </div>
+
+        <div>
+          <h2 class="font-bold text-[2.5rem] leading-[1.2] mb-4">Declaration</h2>
+          <dl class="divide-y divide-bb-grey-00 border-t border-b border-bb-grey-00">
+            ${GovBB.summaryRow('Authorised person', GovBB.D['authorised-person-name'], 'declaration')}
           </dl>
         </div>
 
@@ -316,6 +357,101 @@ const PAGES = {
         </div>
     </div>`;
   },
+
+  'mda-email': () => {
+    const D = GovBB.D;
+    const ref = window.__refNumber || 'EREG-XXXXXX';
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2,'0');
+    const mm = String(today.getMonth()+1).padStart(2,'0');
+    const yyyy = today.getFullYear();
+    const hh = String(today.getHours()).padStart(2,'0');
+    const min = String(today.getMinutes()).padStart(2,'0');
+    const subDate = `${dd}/${mm}/${yyyy}`;
+    const subTime = `${hh}:${min}`;
+    const dr = (label, value) => `<div class="mda-data-row"><div class="mda-data-label">${label}</div><div class="mda-data-value">${value || '&mdash;'}</div></div>`;
+    return `
+    <div class="space-y-6">
+      <div class="mda-page-badge">&#9993; MDA email template &mdash; Employer Registration Form</div>
+      <p class="eml-page-label">Email Templates / MDA Emails</p>
+      <h1 class="eml-page-title">MDA Submission Email &mdash; Employer NIS Online Services Registration</h1>
+      <p class="eml-page-desc">Sent to the NIS when an employer submits the Employer Registration Form.</p>
+      <div style="background:#f2f4f6;padding:32px 0;">
+        <div class="mda-email">
+          <div class="mda-header"><div style="width:276px;height:27px;color:#000;">${_LOGO}</div></div>
+          <div class="mda-content">
+            <h1 class="mda-h1">You have received an Employer NIS Online Services Registration</h1>
+            <div class="mda-summary-table">
+              <div class="mda-summary-row"><div class="mda-summary-label">Service:</div><div class="mda-summary-value">Online Social Security Service Registration Form (Employer)</div></div>
+              <div class="mda-summary-row"><div class="mda-summary-label">Submission ID:</div><div class="mda-summary-value">${ref}</div></div>
+              <div class="mda-summary-row"><div class="mda-summary-label">Submission date:</div><div class="mda-summary-value">${subDate}</div></div>
+              <div class="mda-summary-row"><div class="mda-summary-label">Submission time:</div><div class="mda-summary-value">${subTime}</div></div>
+              <div class="mda-summary-row"><div class="mda-summary-label">Applicant phone number:</div><div class="mda-summary-value">${D['contact-phone'] || '&mdash;'}</div></div>
+              <div class="mda-summary-row" style="border-bottom:1px solid #e5e9f2;"><div class="mda-summary-label">Applicant email:</div><div class="mda-summary-value">${D['contact-email'] || '&mdash;'}</div></div>
+            </div>
+            <p class="mda-intro">Here is the data from this request:</p>
+            <div class="mda-sections">
+              <div>
+                <h2 class="mda-section-h2">Declaration</h2>
+                <p class="mda-declaration-text">I ${D['contact-name'] || '[Submitter\'s name]'} confirm that my information is true and correct. I understand that false details may lead to my application being rejected or legal action and that the Government of Barbados will keep my information confidential.</p>
+                <div class="mda-data-table">
+                  ${dr('Name', D['contact-name'])}
+                  ${dr('Date', subDate)}
+                </div>
+              </div>
+              <div>
+                <h2 class="mda-section-h2">Business details</h2>
+                <div class="mda-data-table">
+                  ${dr('Name of business', D['business-name'])}
+                  ${dr("Employer's National Insurance Number", D['employer-nis-number'])}
+                  ${dr('Business Registration Number', D['business-reg-number'])}
+                  ${dr('Street address', D['business-address-1'])}
+                  ${dr('Address line 2', D['business-address-2'])}
+                  ${dr('District', D['business-district'])}
+                  ${dr('Parish', D['business-parish'])}
+                  ${dr('Postal code', D['business-postal-code'])}
+                </div>
+              </div>
+              <div>
+                <h2 class="mda-section-h2">Contact details</h2>
+                <div class="mda-data-table">
+                  ${dr('Contact person name', D['contact-name'])}
+                  ${dr('Contact phone number', D['contact-phone'])}
+                  ${dr('Email address', D['contact-email'])}
+                </div>
+              </div>
+              <div>
+                <h2 class="mda-section-h2">Declaration</h2>
+                <div class="mda-data-table">
+                  ${dr('Authorised person', D['authorised-person-name'])}
+                  ${dr('Date', subDate)}
+                </div>
+              </div>
+              <div class="mda-internal-box">
+                <p>Due date: <span class="fv">[To be filled by officer]</span></p>
+                <p>Officer assigned: <span class="fv">[To be filled by officer]</span></p>
+                <p>Reference: <span class="fv">[To be filled by officer]</span></p>
+              </div>
+            </div>
+          </div>
+          <div class="mda-footer">
+            <div class="mda-footer-text">
+              <p>This is an automated confirmation email from the Government of Barbados.</p>
+              <p>Please <strong>do not reply</strong> to this email.</p>
+            </div>
+            <div class="mda-footer-right">
+              <img src="${_COAT}" alt="Coat of arms">
+              <p class="mda-footer-copyright">&copy; 2025 Government of Barbados</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="../index.html" class="inline-flex outline-none underline-offset-2 underline hover:no-underline active:bg-bb-yellow-100 active:no-underline focus-visible:bg-bb-yellow-100 focus-visible:no-underline active:text-bb-black-00 focus-visible:text-bb-black-00 text-bb-teal-00 hover:text-bb-black-00 hover:bg-bb-teal-10 text-[1.25rem]">
+        Return to all forms
+      </a>
+    </div>`;
+  }
+
 };
 
 /* ───────── Validation ───────── */
@@ -324,17 +460,27 @@ function validate(pageId) {
   const errors = [];
 
   if (pageId === 'business-details') {
-    if (!D['employer-reg-number'] || !D['employer-reg-number'].trim()) {
-      errors.push({ id: 'employer-reg-number', msg: 'NIS Employer Registration Number – Enter your NIS Employer Registration Number' });
-    }
     if (!D['business-name'] || !D['business-name'].trim()) {
-      errors.push({ id: 'business-name', msg: 'Business name – Enter your business name' });
+      errors.push({ id: 'business-name', msg: 'Name of business – Enter your business name' });
+    }
+    if (!D['employer-nis-number'] || !D['employer-nis-number'].trim()) {
+      errors.push({ id: 'employer-nis-number', msg: "Employer's National Insurance Number – Enter your 7-digit NIS number" });
+    } else if (!/^\d{7}$/.test(D['employer-nis-number'].trim())) {
+      errors.push({ id: 'employer-nis-number', msg: "Employer's National Insurance Number – Enter a 7-digit number, for example 1234567" });
+    }
+    if (!D['business-reg-number'] || !D['business-reg-number'].trim()) {
+      errors.push({ id: 'business-reg-number', msg: 'Business Registration Number – Enter your 6-character registration number' });
+    } else if (!/^[A-Z0-9]{6}$/i.test(D['business-reg-number'].trim())) {
+      errors.push({ id: 'business-reg-number', msg: 'Business Registration Number – Enter a 6-character alphanumeric number, for example AB1234' });
     }
     if (!D['business-address-1'] || !D['business-address-1'].trim()) {
-      errors.push({ id: 'business-address-1', msg: 'Address line 1 – Enter the first line of your business address' });
+      errors.push({ id: 'business-address-1', msg: 'Street address – Enter the street address of your business' });
     }
     if (!D['business-parish'] || !D['business-parish'].trim()) {
       errors.push({ id: 'business-parish', msg: 'Parish – Choose the parish where your business is located' });
+    }
+    if (D['business-postal-code'] && D['business-postal-code'].trim() && !/^BB\d{5}$/i.test(D['business-postal-code'].trim())) {
+      errors.push({ id: 'business-postal-code', msg: 'Postal code – Enter a valid postal code, for example BB11000' });
     }
   }
 
@@ -358,6 +504,9 @@ function validate(pageId) {
   }
 
   if (pageId === 'declaration') {
+    if (!D['authorised-person-name'] || !D['authorised-person-name'].trim()) {
+      errors.push({ id: 'authorised-person-name', msg: 'Authorised person name – Enter the full name of the authorised person' });
+    }
     if (!D['declaration-consent']) {
       errors.push({ id: 'declaration-consent', msg: 'Authorisation – You must confirm you are authorised to submit this registration' });
     }
