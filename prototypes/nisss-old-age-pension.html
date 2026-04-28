@@ -121,10 +121,10 @@ const FORM_NAME = 'Claim for Old Age Contributory Pension';
 let overseasRows = [];
 let overseasRowId = 0;
 
-const FLOW = ['start', 'eligibility', 'personal-details', 'retirement-type', 'employment-details', 'employment-history', 'alternate-payee', 'banking-details', 'check', 'declaration', 'confirmation', 'applicant-email', 'mda-email'];
+const FLOW = ['start', 'eligibility', 'personal-details', 'retirement-type', 'employment-details', 'employment-history', 'payment-preferences', 'alternate-payee', 'banking-details', 'check', 'declaration', 'confirmation', 'applicant-email', 'mda-email'];
 
 function getFlow() {
-  const flow = ['start', 'eligibility', 'personal-details', 'retirement-type', 'employment-details', 'employment-history'];
+  const flow = ['start', 'eligibility', 'personal-details', 'retirement-type', 'employment-details', 'employment-history', 'payment-preferences'];
   if (GovBB.D['alternate-payee'] === 'Yes') flow.push('alternate-payee');
   if (GovBB.D['provide-banking'] === 'Yes') flow.push('banking-details');
   flow.push('check', 'declaration', 'confirmation', 'applicant-email', 'mda-email');
@@ -373,8 +373,27 @@ const PAGES = {
       </div>
     </form>`,
 
+  'payment-preferences': () => `
+    <form novalidate>
+      ${GovBB.backLink()}
+      ${GovBB.caption()}
+      <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">How would you like to receive your pension?</h1>
+      <div class="space-y-8">
+        ${GovBB.radioGroup('alternate-payee', 'Do you want your pension paid to someone else on your behalf?', ['Yes', 'No'], {
+          hint: 'For example, a family member or carer. You will need to give their details on the next page.'
+        })}
+        ${GovBB.radioGroup('provide-banking', 'Do you want your pension paid directly into a bank account?', ['Yes', 'No'], {
+          hint: 'If yes, you will need your account number and bank branch details.'
+        })}
+        <div class="mt-8 flex gap-4 flex-wrap">
+          <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
+        </div>
+      </div>
+    </form>`,
+
   'alternate-payee': () => `
     <form novalidate>
+      ${GovBB.backLink()}
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Person who will receive your pension</h1>
       <div class="space-y-8">
@@ -404,17 +423,19 @@ const PAGES = {
 
   'banking-details': () => `
     <form novalidate>
+      ${GovBB.backLink()}
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Your bank account details</h1>
       <div class="space-y-8">
-        <p class="text-[1.25rem] leading-normal">NIS will pay your pension directly into this bank account. Make sure the details match your bank records exactly.</p>
         ${GovBB.textField('account-name', 'Name(s) on account', { hint: 'Enter the name exactly as it appears on your bank account' })}
         ${GovBB.textField('account-number', 'Account number', { hint: 'Enter your full bank account number', inputmode: 'numeric' })}
         ${GovBB.textField('bank-branch', 'Bank name and branch', { hint: 'For example, First Citizens Bank, Broad Street, Bridgetown' })}
-        ${GovBB.textField('overseas-banking-codes', 'Banking codes (overseas pensioners only)', { hint: 'If you live outside Barbados, enter your SWIFT code, IBAN, or other banking codes. Leave blank if not applicable.' })}
-        
+        <div class="bg-bb-blue-10 border-l-4 border-bb-blue-40 p-s space-y-2">
+          <p class="font-bold text-[1.25rem]">Proof of bank account</p>
+          <p class="text-[1.25rem]">You must bring a bank statement header or a bank letter stamped by your bank when you visit the NIS office. This confirms the account belongs to you.</p>
+        </div>
+        ${GovBB.checkboxItem('bank-auth', 'I authorise NIS to pay my pension benefit into the bank account given above.')}
         <div class="mt-8 flex gap-4 flex-wrap">
-          <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
           <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
         </div>
       </div>
@@ -483,6 +504,14 @@ const PAGES = {
         </dl>
       </div>` : ''}
 
+      <div>
+        <h2 class="font-bold text-[2rem] leading-[1.2] mb-4">Payment preferences</h2>
+        <dl class="divide-y divide-bb-grey-00 border-t border-bb-grey-00">
+          ${GovBB.summaryRow('Pension paid to alternate payee', GovBB.D['alternate-payee'] || 'Not answered', 'payment-preferences')}
+          ${GovBB.summaryRow('Pension paid to bank account', GovBB.D['provide-banking'] || 'Not answered', 'payment-preferences')}
+        </dl>
+      </div>
+
       ${hasBanking ? `
       <div>
         <h2 class="font-bold text-[2rem] leading-[1.2] mb-4">Banking details</h2>
@@ -490,6 +519,7 @@ const PAGES = {
           ${GovBB.summaryRow('Account name', GovBB.D['account-name'], 'banking-details')}
           ${GovBB.summaryRow('Account number', GovBB.D['account-number'] ? '••••' + GovBB.D['account-number'].slice(-4) : '', 'banking-details')}
           ${GovBB.summaryRow('Bank and branch', GovBB.D['bank-branch'], 'banking-details')}
+          ${GovBB.summaryRow('Bank authorisation', GovBB.D['bank-auth'] ? 'Authorised' : 'Not authorised', 'banking-details')}
         </dl>
       </div>` : ''}
 
@@ -503,19 +533,24 @@ const PAGES = {
 
   'declaration': () => `
     <form novalidate>
+      ${GovBB.backLink()}
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Declaration</h1>
       <div class="space-y-8">
-        <div class="space-y-2 mb-6">
+        <div class="space-y-2">
           <p class="text-[1.25rem]"><span class="font-bold">Applicant's name:</span> ${[GovBB.D['first-name'], GovBB.D['middle-name'], GovBB.D['last-name']].filter(Boolean).join(' ') || '—'}</p>
-          <p class="text-[1.25rem]"><span class="font-bold">Date:</span> ${(function(){ var d=new Date(); return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(); })()}</p>
+          <p class="text-[1.25rem]"><span class="font-bold">Date signed:</span> ${(function(){ var d=new Date(); return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(); })()}</p>
         </div>
         ${GovBB.checkboxItem('declaration-agree', 'I hereby declare that the information given on this form is true to the best of my knowledge and belief.')}
-        <div class="mt-8 flex gap-4 flex-wrap">
-          <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
-          <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Submit application</button>
+        <div class="flex flex-col gap-xs">
+          <p class="text-[1.25rem] leading-normal font-bold text-bb-black-00">Signature of claimant</p>
+          <p class="text-[1.25rem] leading-normal text-bb-mid-grey-00">Draw your signature in the box below using your mouse or finger.</p>
+          <canvas data-signature="claimant-signature" width="480" height="160" class="sig-canvas" style="max-width:100%;"></canvas>
+          <button type="button" onclick="document.querySelector('[data-signature=claimant-signature]').getContext('2d').clearRect(0,0,480,160); GovBB.D['claimant-signature']='';" class="self-start text-[1rem] text-bb-teal-00 underline hover:no-underline">Clear signature</button>
         </div>
-        
+        <div class="mt-8 flex gap-4 flex-wrap">
+          <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Submit claim</button>
+        </div>
       </div>
     </form>`,
 
@@ -803,14 +838,21 @@ function validate(pageId) {
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(D['ap-email'].trim())) errors.push({ id: 'ap-email', msg: 'Email address – Enter a valid email address, for example name@example.com' });
   }
 
+  if (pageId === 'payment-preferences') {
+    if (!D['alternate-payee']) errors.push({ id: 'alternate-payee', msg: 'Alternate payee – Select Yes or No' });
+    if (!D['provide-banking']) errors.push({ id: 'provide-banking', msg: 'Bank payment – Select Yes or No' });
+  }
+
   if (pageId === 'banking-details') {
     if (!D['account-name']) errors.push({ id: 'account-name', msg: 'Account name – Enter the name on the account' });
     if (!D['account-number']) errors.push({ id: 'account-number', msg: 'Account number – Enter your bank account number' });
     if (!D['bank-branch']) errors.push({ id: 'bank-branch', msg: 'Bank and branch – Enter the bank name and branch' });
+    if (!D['bank-auth']) errors.push({ id: 'bank-auth', msg: 'Bank authorisation – You must authorise NIS to pay into this account' });
   }
 
   if (pageId === 'declaration') {
     if (!D['declaration-agree']) errors.push({ id: 'declaration-agree', msg: 'Declaration – You must confirm the declaration to continue' });
+    if (!D['claimant-signature']) errors.push({ id: 'claimant-signature', msg: 'Signature – Please sign in the box before submitting' });
   }
 
   return errors;
