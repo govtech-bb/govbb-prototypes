@@ -168,9 +168,7 @@ const PAGES = {
         ${GovBB.radioGroup('gender','What is your gender?',['Male','Female'])}
         ${GovBB.dateField('dob','Date of birth','For example, 27 03 1985')}
         ${GovBB.textField('nis-number','National Insurance Number',{hint:'Find this on your NIS card or payslip.'})}
-        <div class="space-y-4">
-          ${GovBB.selectField('id-type','What identification do you have?',['National Registration Number','Passport'],{hint:'Select the document you will use to prove your identity.'})}
-        </div>
+        ${GovBB.radioGroup('id-type','What identification do you have?',['National Registration Number','Passport'],{hint:'Select the document you will use to prove your identity.'})}
         ${nrnField}
         ${passportFields}
         ${GovBB.textField('street-address','Street address')}
