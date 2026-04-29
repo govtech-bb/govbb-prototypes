@@ -169,14 +169,14 @@ const PAGES = {
         ${GovBB.textField('last-name', 'Last name')}
         ${GovBB.textField('first-name', 'First name')}
         ${GovBB.textField('middle-name', 'Middle name(s)', { hint: 'Optional' })}
-        ${GovBB.textField('address', 'Home address')}
+        ${GovBB.textField('address', 'Address')}
+        ${GovBB.dateField('dob', 'Date of birth', 'For example, 27 03 2005')}
         ${GovBB.textField('district', 'District', { hint: 'Optional' })}
         ${GovBB.selectField('parish', 'Parish', GovBB.PARISHES)}
         ${GovBB.textField('postal-code', 'Postal code', { hint: 'For example, BB11000' })}
-        ${GovBB.emailField('email', 'Email address', { hint: 'For example, name@example.com' })}
-        ${GovBB.telField('tel', 'Telephone number', { hint: 'Include area code. For example, 246-555-1234. At least one of telephone or mobile is required.' })}
-        ${GovBB.telField('cell', 'Mobile number', { hint: 'Include area code. For example, 246-555-1234. At least one of telephone or mobile is required.' })}
-        ${GovBB.dateField('dob', 'Date of birth', 'For example, 27 03 2005')}
+        ${GovBB.emailField('email', 'E-mail address', { hint: 'For example, name@example.com' })}
+        ${GovBB.telField('tel', 'Tel. No.', { hint: 'Include area code. For example, 246-555-1234. At least one of telephone or mobile is required.' })}
+        ${GovBB.telField('cell', 'Cell No.', { hint: 'Include area code. For example, 246-555-1234. At least one of telephone or mobile is required.' })}
         
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
@@ -218,15 +218,19 @@ const PAGES = {
         <div>
           <h2 class="font-bold text-[2rem] leading-[1.2] mb-4">Student details</h2>
           <dl class="divide-y divide-bb-grey-00 border-t border-b border-bb-grey-00">
-            ${GovBB.summaryRow('NIS number', D['nis-number'], 'student-details')}
+            ${GovBB.summaryRow('National Insurance number', D['nis-number'], 'student-details')}
             ${GovBB.summaryRow('National Registration Number', D['nrn'], 'student-details')}
             ${GovBB.summaryRow('Last name', D['last-name'], 'student-details')}
             ${GovBB.summaryRow('First name', D['first-name'], 'student-details')}
             ${D['middle-name'] ? GovBB.summaryRow('Middle name(s)', D['middle-name'], 'student-details') : ''}
-            ${GovBB.summaryRow('Home address', D['address'], 'student-details')}
+            ${GovBB.summaryRow('Address', D['address'], 'student-details')}
+            ${GovBB.summaryRow('Date of birth', [D['dob-day'], D['dob-month'], D['dob-year']].filter(Boolean).join(' / '), 'student-details')}
+            ${D['district'] ? GovBB.summaryRow('District', D['district'], 'student-details') : ''}
             ${GovBB.summaryRow('Parish', D['parish'], 'student-details')}
             ${GovBB.summaryRow('Postal code', D['postal-code'], 'student-details')}
-            ${GovBB.summaryRow('Date of birth', [D['dob-day'], D['dob-month'], D['dob-year']].filter(Boolean).join(' / '), 'student-details')}
+            ${GovBB.summaryRow('E-mail address', D['email'], 'student-details')}
+            ${D['tel'] ? GovBB.summaryRow('Tel. No.', D['tel'], 'student-details') : ''}
+            ${D['cell'] ? GovBB.summaryRow('Cell No.', D['cell'], 'student-details') : ''}
           </dl>
         </div>
         <div>
@@ -256,16 +260,22 @@ const PAGES = {
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Declaration</h1>
       <div class="space-y-8">
-        <div class="space-y-2">
-          <p class="text-[1.25rem]"><span class="font-bold">Applicant's name:</span> ${[GovBB.D['first-name'], GovBB.D['middle-name'], GovBB.D['last-name']].filter(Boolean).join(' ') || '—'}</p>
-          <p class="text-[1.25rem]"><span class="font-bold">Date:</span> ${(function(){ var d=new Date(); return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(); })()}</p>
+        <p class="text-[1.25rem]">To be completed by the authorised person at the educational institution.</p>
+        ${GovBB.textField('signatory-name', 'Name (please print)')}
+        ${GovBB.textField('signatory-title', 'Position / title')}
+        <div>
+          <p class="text-[1.25rem] font-bold">Date</p>
+          <p class="text-[1.25rem] text-bb-mid-grey-00">${(function(){ var d=new Date(); return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(); })()}</p>
+        </div>
+        <div class="bg-bb-blue-10 border-l-4 border-bb-blue-40 p-4">
+          <p class="font-bold text-[1.25rem]">Official stamp</p>
+          <p class="text-[1.25rem]">The physical copy of this form must include the official stamp of the educational institution.</p>
         </div>
         ${GovBB.checkboxItem('declaration-agree', 'I confirm that the student details provided on this form are true and correct, and that the student is currently enrolled and attending full-time classes at this institution.')}
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
-          <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Submit application</button>
+          <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Submit form</button>
         </div>
-        
       </div>
     </form>`,
 
@@ -406,14 +416,14 @@ const PAGES = {
                   ${dr('Last name', D['last-name'])}
                   ${dr('First name', D['first-name'])}
                   ${dr('Middle name(s)', D['middle-name'])}
-                  ${dr('Home address', D['address'])}
+                  ${dr('Address', D['address'])}
+                  ${dr('Date of birth', dobDate)}
                   ${dr('District', D['district'])}
                   ${dr('Parish', D['parish'])}
                   ${dr('Postal code', D['postal-code'])}
-                  ${dr('Email address', D['email'])}
-                  ${dr('Telephone number', D['tel'])}
-                  ${dr('Mobile number', D['cell'])}
-                  ${dr('Date of birth', dobDate)}
+                  ${dr('E-mail address', D['email'])}
+                  ${dr('Tel. No.', D['tel'])}
+                  ${dr('Cell No.', D['cell'])}
                 </div>
               </div>
               <div>
@@ -466,7 +476,7 @@ function validate(pageId) {
     else if (!/^\d{6}-\d{4}$/.test(D['nrn'])) errors.push({ id: 'nrn', msg: 'National Registration Number – Enter in the format YYMMDD-XXXX' });
     if (!D['last-name']) errors.push({ id: 'last-name', msg: 'Last name – Enter the student\'s last name' });
     if (!D['first-name']) errors.push({ id: 'first-name', msg: 'First name – Enter the student\'s first name' });
-    if (!D['address']) errors.push({ id: 'address', msg: 'Home address – Enter the student\'s home address' });
+    if (!D['address']) errors.push({ id: 'address', msg: 'Address – Enter the student\'s address' });
     if (!D['parish']) errors.push({ id: 'parish', msg: 'Parish – Choose the student\'s parish' });
     if (!D['postal-code']) errors.push({ id: 'postal-code', msg: 'Postal code – Enter the postal code' });
     else if (!/^BB\d{5}$/.test(D['postal-code'])) errors.push({ id: 'postal-code', msg: 'Postal code – Enter in the format BB followed by 5 digits' });
@@ -488,6 +498,8 @@ function validate(pageId) {
   }
 
   if (pageId === 'declaration') {
+    if (!D['signatory-name']) errors.push({ id: 'signatory-name', msg: 'Name – Enter your name' });
+    if (!D['signatory-title']) errors.push({ id: 'signatory-title', msg: 'Position / title – Enter your position or title' });
     if (!D['declaration-agree']) errors.push({ id: 'declaration-agree', msg: 'Declaration – You must confirm the information is correct' });
   }
 
