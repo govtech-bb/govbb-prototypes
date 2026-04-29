@@ -164,8 +164,11 @@ const PAGES = {
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Student details</h1>
       <div class="space-y-8">
-        ${GovBB.textField('nis-number', 'National Insurance number', { hint: 'The student\'s 6-digit NIS number', inputmode: 'numeric', maxlength: '6' })}
-        ${GovBB.textField('nrn', 'National Registration Number', { hint: 'Found on the student\'s national ID card. For example, 870315-1234' })}
+        <div class="bg-bb-grey-00 border border-bb-black-00 p-4 space-y-4">
+          <p class="font-bold text-[1.25rem] uppercase tracking-wide">For Official Use Only</p>
+          ${GovBB.textField('nis-number', 'National Insurance No.', { hint: 'The student\'s 6-digit NIS number', inputmode: 'numeric', maxlength: '6' })}
+          ${GovBB.textField('nrn', 'National Registration No.', { hint: 'Found on the student\'s national ID card. For example, 870315-1234' })}
+        </div>
         ${GovBB.textField('last-name', 'Last name')}
         ${GovBB.textField('first-name', 'First name')}
         ${GovBB.textField('middle-name', 'Middle name(s)', { hint: 'Optional' })}
