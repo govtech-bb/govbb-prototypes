@@ -117,10 +117,6 @@ const _LOGO = `<svg width="276" height="27" viewBox="0 0 276 27" fill="currentCo
 
 const FORM_NAME = 'Claim for Unemployment Benefit';
 
-const REASON_OPTIONS = [
-  'Redundancy', 'Retrenchment', 'Expiry of contract', 'Closure of business',
-  'Resignation due to constructive dismissal', 'End of seasonal employment', 'Other'
-];
 
 function getEmploymentRows() {
   return GovBB.D['employment-rows'] || [];
@@ -228,7 +224,7 @@ const PAGES = {
         ${GovBB.textField('surname', 'Last name')}
         ${GovBB.textField('first-name', 'First name')}
         ${GovBB.textField('middle-name', 'Middle name(s)', { hint: 'Optional' })}
-        ${GovBB.textField('nis-number', 'NIS number', { hint: 'Your 6-digit National Insurance number', inputmode: 'numeric', maxlength: '6' })}
+        ${GovBB.textField('nis-number', 'National Insurance Number (NIS number)', { hint: 'Your 6-digit National Insurance number', inputmode: 'numeric', maxlength: '6' })}
         ${GovBB.textField('nrn', 'National Registration Number (NRN)', { hint: 'For example, 870315-1234' })}
         ${GovBB.textField('street-address', 'Street address')}
         ${GovBB.textField('district', 'District', { hint: 'Optional' })}
@@ -277,18 +273,17 @@ const PAGES = {
     var D = GovBB.D;
     var pilWeeks = parseInt(D['pil-weeks']) || 0;
     var showPilDates = pilWeeks > 0;
-    var showReasonOther = D['reason-unemployment'] === 'Other';
     return `
     <form novalidate>
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Your last job</h1>
       <div class="space-y-8">
         ${GovBB.textField('last-employer-name', 'Name of last employer')}
-        ${GovBB.textField('last-employer-address', 'Employer\'s address')}
-        ${GovBB.textField('occupation', 'Your occupation or job title')}
-        ${GovBB.dateField('date-commenced', 'Date you started this job')}
-        ${GovBB.dateField('last-day-work', 'Last day you worked')}
-        ${GovBB.dateField('last-day-paid', 'Last day for which you were paid')}
+        ${GovBB.textField('last-employer-address', 'Address of employer')}
+        ${GovBB.textField('occupation', 'Occupation at last employer')}
+        ${GovBB.dateField('date-commenced', 'I commenced work at the above employer on')}
+        ${GovBB.dateField('last-day-paid', 'The last day for which I was paid by employer')}
+        ${GovBB.dateField('last-day-work', 'My last day of work was')}
         ${GovBB.textField('pil-weeks', 'Payment in lieu of notice — number of weeks', { hint: 'Enter 0 if you did not receive payment in lieu of notice', inputmode: 'numeric' })}
         ${showPilDates ? `
           <div class="bg-bb-blue-10 p-4 rounded-md space-y-4">
@@ -296,8 +291,7 @@ const PAGES = {
             ${GovBB.dateField('pil-from', 'Payment in lieu — from date')}
             ${GovBB.dateField('pil-to', 'Payment in lieu — to date')}
           </div>` : ''}
-        ${GovBB.selectField('reason-unemployment', 'Reason for unemployment', REASON_OPTIONS)}
-        ${showReasonOther ? GovBB.textField('reason-unemployment-other', 'Please describe the reason') : ''}
+        ${GovBB.textareaField('reason-unemployment', 'I have become unemployed for the following reason', { rows: 3 })}
         
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
@@ -355,26 +349,31 @@ const PAGES = {
       <dl class="divide-y divide-bb-grey-00 border-t border-bb-grey-00">
         ${GovBB.summaryRow('Last name', D['surname'], 'applicant-details')}
         ${GovBB.summaryRow('First name', D['first-name'], 'applicant-details')}
-        ${GovBB.summaryRow('NIS number', D['nis-number'], 'applicant-details')}
+        ${GovBB.summaryRow('National Insurance Number (NIS number)', D['nis-number'], 'applicant-details')}
         ${GovBB.summaryRow('NRN', D['nrn'], 'applicant-details')}
         ${GovBB.summaryRow('Address', [D['street-address'], D['parish']].filter(Boolean).join(', '), 'applicant-details')}
         ${GovBB.summaryRow('Telephone', D['telephone'], 'applicant-details')}
       </dl>
       <h2 class="font-bold text-[1.5rem]">Eligibility</h2>
       <dl class="divide-y divide-bb-grey-00 border-t border-bb-grey-00">
-        ${GovBB.summaryRow('Currently receiving benefit', D['b1'], 'eligibility')}
-        ${GovBB.summaryRow('Available for work', D['b3'], 'eligibility')}
-        ${GovBB.summaryRow('Capable of working', D['b4'], 'eligibility')}
-        ${GovBB.summaryRow('Registered at Employment Bureau', D['b5'], 'eligibility')}
-        ${GovBB.summaryRow('Lost job through no fault of own', D['b6'], 'eligibility')}
+        ${GovBB.summaryRow('B1. Currently receiving any other NIS benefit?', D['b1'], 'eligibility')}
+        ${D['b1'] === 'Yes' ? GovBB.summaryRow('Name of benefit being received', D['b1-benefit-name'], 'eligibility') : ''}
+        ${GovBB.summaryRow('B2. Received any NIS benefit in last 52 weeks?', D['b2'], 'eligibility')}
+        ${D['b2'] === 'Yes' ? GovBB.summaryRow('Name of benefit received', D['b2-benefit-name'], 'eligibility') : ''}
+        ${GovBB.summaryRow('B3. Available for and seeking work?', D['b3'], 'eligibility')}
+        ${GovBB.summaryRow('B4. Capable of working?', D['b4'], 'eligibility')}
+        ${GovBB.summaryRow('B5. Registered as unemployed at Employment Bureau?', D['b5'], 'eligibility')}
+        ${GovBB.summaryRow('B6. Lost job through no fault of own?', D['b6'], 'eligibility')}
       </dl>
       <h2 class="font-bold text-[1.5rem]">Last employer</h2>
       <dl class="divide-y divide-bb-grey-00 border-t border-bb-grey-00">
         ${GovBB.summaryRow('Employer name', D['last-employer-name'], 'employment-history')}
+        ${GovBB.summaryRow("Employer's address", D['last-employer-address'], 'employment-history')}
         ${GovBB.summaryRow('Occupation', D['occupation'], 'employment-history')}
-        ${GovBB.summaryRow('Date started', [D['date-commenced-day'], D['date-commenced-month'], D['date-commenced-year']].filter(Boolean).join('/'), 'employment-history')}
+        ${GovBB.summaryRow('Date commenced', [D['date-commenced-day'], D['date-commenced-month'], D['date-commenced-year']].filter(Boolean).join('/'), 'employment-history')}
+        ${GovBB.summaryRow('Last day paid', [D['last-day-paid-day'], D['last-day-paid-month'], D['last-day-paid-year']].filter(Boolean).join('/'), 'employment-history')}
         ${GovBB.summaryRow('Last day worked', [D['last-day-work-day'], D['last-day-work-month'], D['last-day-work-year']].filter(Boolean).join('/'), 'employment-history')}
-        ${GovBB.summaryRow('Reason for unemployment', D['reason-unemployment'] === 'Other' ? D['reason-unemployment-other'] : D['reason-unemployment'], 'employment-history')}
+        ${GovBB.summaryRow('Reason for unemployment', D['reason-unemployment'], 'employment-history')}
         ${pilWeeks > 0 ? GovBB.summaryRow('Payment in lieu (weeks)', String(pilWeeks), 'employment-history') : ''}
       </dl>
       <h2 class="font-bold text-[1.5rem]">Other employment (last 52 weeks)</h2>
@@ -517,7 +516,7 @@ const PAGES = {
                   ${dr('Last name', D['surname'])}
                   ${dr('First name', D['first-name'])}
                   ${dr('Middle name(s)', D['middle-name'])}
-                  ${dr('NIS number', D['nis-number'])}
+                  ${dr('National Insurance Number (NIS number)', D['nis-number'])}
                   ${dr('National Registration Number (NRN)', D['nrn'])}
                   ${dr('Street address', D['street-address'])}
                   ${dr('Parish', D['parish'])}
@@ -542,11 +541,11 @@ const PAGES = {
                 <div class="mda-data-table">
                   ${dr('Name of last employer', D['last-employer-name'])}
                   ${dr("Employer's address", D['last-employer-address'])}
-                  ${dr('Occupation or job title', D['occupation'])}
-                  ${dr('Date employment started', [D['emp-start-day'], D['emp-start-month'], D['emp-start-year']].filter(Boolean).join(' / '))}
-                  ${dr('Last day worked', [D['last-day-work-day'], D['last-day-work-month'], D['last-day-work-year']].filter(Boolean).join(' / '))}
-                  ${dr('Last day for which you were paid', [D['paid-to-date-day'], D['paid-to-date-month'], D['paid-to-date-year']].filter(Boolean).join(' / '))}
-                  ${dr('Payment in lieu of notice (weeks)', D['pilw-weeks'])}
+                  ${dr('Occupation', D['occupation'])}
+                  ${dr('Date commenced work', [D['date-commenced-day'], D['date-commenced-month'], D['date-commenced-year']].filter(Boolean).join(' / '))}
+                  ${dr('Last day for which paid', [D['last-day-paid-day'], D['last-day-paid-month'], D['last-day-paid-year']].filter(Boolean).join(' / '))}
+                  ${dr('Last day of work', [D['last-day-work-day'], D['last-day-work-month'], D['last-day-work-year']].filter(Boolean).join(' / '))}
+                  ${dr('Payment in lieu of notice (weeks)', D['pil-weeks'])}
                   ${dr('Reason for unemployment', D['reason-unemployment'])}
                 </div>
               </div>
@@ -583,8 +582,8 @@ function validate(pageId) {
   if (pageId === 'applicant-details') {
     if (!D['surname']) errors.push({ id: 'surname', msg: 'Last name – Enter your last name' });
     if (!D['first-name']) errors.push({ id: 'first-name', msg: 'First name – Enter your first name' });
-    if (!D['nis-number']) errors.push({ id: 'nis-number', msg: 'NIS number – Enter your NIS number' });
-    else if (!/^\d{6}$/.test(D['nis-number'].trim())) errors.push({ id: 'nis-number', msg: 'NIS number – Enter a valid 6-digit National Insurance Number, for example 123456' });
+    if (!D['nis-number']) errors.push({ id: 'nis-number', msg: 'National Insurance Number (NIS number) – Enter your NIS number' });
+    else if (!/^\d{6}$/.test(D['nis-number'].trim())) errors.push({ id: 'nis-number', msg: 'National Insurance Number (NIS number) – Enter a valid 6-digit number, for example 123456' });
     if (!D['nrn']) errors.push({ id: 'nrn', msg: 'NRN – Enter your National Registration Number' });
     else if (!/^\d{6}-\d{4}$/.test(D['nrn'].trim())) errors.push({ id: 'nrn', msg: 'NRN – Enter a valid National Registration Number in the format 870315-1234' });
     if (!D['street-address']) errors.push({ id: 'street-address', msg: 'Street address – Enter your street address' });
@@ -599,9 +598,9 @@ function validate(pageId) {
   }
   if (pageId === 'employment-history') {
     if (!D['last-employer-name']) errors.push({ id: 'last-employer-name', msg: 'Employer name – Enter your last employer\'s name' });
-    if (!D['occupation']) errors.push({ id: 'occupation', msg: 'Occupation – Enter your occupation' });
-    if (!D['last-day-work-day'] || !D['last-day-work-month'] || !D['last-day-work-year']) errors.push({ id: 'last-day-work-day', msg: 'Last day worked – Enter the date you last worked' });
-    if (!D['reason-unemployment']) errors.push({ id: 'reason-unemployment', msg: 'Reason – Select the reason for unemployment' });
+    if (!D['occupation']) errors.push({ id: 'occupation', msg: 'Occupation – Enter your occupation at your last employer' });
+    if (!D['last-day-work-day'] || !D['last-day-work-month'] || !D['last-day-work-year']) errors.push({ id: 'last-day-work-day', msg: 'Last day of work – Enter the date your last day of work was' });
+    if (!D['reason-unemployment']) errors.push({ id: 'reason-unemployment', msg: 'Reason for unemployment – Enter the reason you became unemployed' });
   }
   if (pageId === 'declaration') {
     if (!D['declaration-agree']) errors.push({ id: 'declaration-agree', msg: 'Declaration – You must confirm the declaration to continue' });
@@ -615,7 +614,7 @@ GovBB.init({
   pages: PAGES,
   validate: validate,
   onRadioChange: function(name) {
-    if (['b1','b2','b6','reason-unemployment'].indexOf(name) !== -1) GovBB.render();
+    if (['b1','b2','b6'].indexOf(name) !== -1) GovBB.render();
   }
 });
 </script>
