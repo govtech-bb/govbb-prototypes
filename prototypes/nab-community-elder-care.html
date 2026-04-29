@@ -319,7 +319,6 @@ const PAGES = {
 
   'start': () => `
     <div class="space-y-8">
-      <a href="#" onclick="history.back();return false;" class="inline-flex items-center gap-xs outline-none underline-offset-2 underline hover:no-underline active:bg-bb-yellow-100 focus-visible:bg-bb-yellow-100 text-bb-teal-00 hover:text-bb-black-00 hover:bg-bb-teal-10">← Back</a>
       <div>
         <p class="text-[1rem] text-bb-mid-grey-00 mb-2">National Assistance Board</p>
         <h1 class="font-bold text-[3.5rem] leading-[1.15]">Application for Companion Assistance</h1>
@@ -351,7 +350,6 @@ const PAGES = {
 
   'recipient-name': () => `
     <form novalidate>
-      ${GovBB.backLink()}
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">What is the recipient's name?</h1>
       <div class="space-y-8">
@@ -360,13 +358,15 @@ const PAGES = {
         ${GovBB.textField('first-name', 'First name')}
         ${GovBB.textField('initial', 'Middle initial', { hint: 'For example, A (optional)' })}
         ${GovBB.textField('last-name', 'Last name')}
-        ${GovBB.continueBtn()}
+        <div class="mt-8 flex gap-4">
+          <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
+          <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
+        </div>
       </div>
     </form>`,
 
   'recipient-details': () => `
     <form novalidate>
-      ${GovBB.backLink()}
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">About the recipient</h1>
       <div class="space-y-8">
@@ -377,13 +377,15 @@ const PAGES = {
         ${GovBB.radioGroup('gender', 'Gender', ['Male', 'Female'])}
         ${GovBB.textField('nrn', 'National Registration Number', { hint: 'You can find this on the national ID card. For example, 870315-1234' })}
         ${GovBB.textField('place-of-birth', 'Place of birth', { hint: 'For example, Bridgetown, Barbados (optional)' })}
-        ${GovBB.continueBtn()}
+        <div class="mt-8 flex gap-4">
+          <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
+          <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
+        </div>
       </div>
     </form>`,
 
   'contact-person': () => `
     <form novalidate>
-      ${GovBB.backLink()}
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Contact details</h1>
       <div class="space-y-8">
@@ -395,13 +397,15 @@ const PAGES = {
         ${GovBB.telField('tel-mobile', 'Mobile telephone', { hint: 'Optional', placeholder: '246-555-1234' })}
         ${GovBB.emailField('contact-email', 'Email address', { hint: 'Optional. We will send your confirmation here.' })}
         ${GovBB.selectField('marital-status', 'Marital status', ['Single', 'Married', 'Divorced', 'Widowed', 'Separated'])}
-        ${GovBB.continueBtn()}
+        <div class="mt-8 flex gap-4">
+          <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
+          <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
+        </div>
       </div>
     </form>`,
 
   'income': () => `
     <form novalidate>
-      ${GovBB.backLink()}
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Source of income</h1>
       <div class="space-y-8">
@@ -430,13 +434,15 @@ const PAGES = {
         ${GovBB.textField('social-interests', 'Social interests', { hint: 'For example, gardening, church, dominoes (optional)' })}
         ${GovBB.textField('referred-by', 'Referred by', { hint: 'Who referred this person to the programme? (optional)' })}
         ${GovBB.dateField('application-date', 'Date of application')}
-        ${GovBB.continueBtn()}
+        <div class="mt-8 flex gap-4">
+          <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
+          <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
+        </div>
       </div>
     </form>`,
 
   'household': () => `
     <form novalidate>
-      ${GovBB.backLink()}
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Who else lives in the household?</h1>
       <div class="space-y-8">
@@ -451,13 +457,15 @@ const PAGES = {
             + Add household member
           </button>
         </div>
-        ${GovBB.continueBtn()}
+        <div class="mt-8 flex gap-4">
+          <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
+          <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
+        </div>
       </div>
     </form>`,
 
   'physical-condition': () => `
     <form novalidate>
-      ${GovBB.backLink()}
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Physical condition — sight and hearing</h1>
       <div class="space-y-8">
@@ -465,13 +473,15 @@ const PAGES = {
         ${GovBB.radioGroup('sight', 'Sight', ['Normal', 'Visual Impairment', 'Blind', 'Uses Spectacles'])}
         ${GovBB.radioGroup('hearing', 'Hearing', ['Normal', 'Hearing Impairment', 'Speech', 'Deaf', 'Abnormal'])}
         ${GovBB.textareaField('physical-condition-description', 'Brief description', { hint: 'Optional. Give any extra details about sight or hearing.', rows: 3 })}
-        ${GovBB.continueBtn()}
+        <div class="mt-8 flex gap-4">
+          <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
+          <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
+        </div>
       </div>
     </form>`,
 
   'physical-details': () => `
     <form novalidate>
-      ${GovBB.backLink()}
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Physical condition — build and mobility</h1>
       <div class="space-y-8">
@@ -487,13 +497,15 @@ const PAGES = {
           'Tick all that apply'
         )}
         ${GovBB.textareaField('illness-details', 'Details of illnesses or conditions', { hint: 'Optional. Give any extra information about the conditions ticked above.', rows: 3 })}
-        ${GovBB.continueBtn()}
+        <div class="mt-8 flex gap-4">
+          <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
+          <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
+        </div>
       </div>
     </form>`,
 
   'mental-status': () => `
     <form novalidate>
-      ${GovBB.backLink()}
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Mental status</h1>
       <div class="space-y-8">
@@ -502,13 +514,15 @@ const PAGES = {
         ${GovBB.textareaField('behaviour-description', 'Brief description of behaviour', { hint: 'Optional', rows: 3 })}
         ${customRadioGroup('memory', 'Memory', ['Normal', 'Fair'], 'memory-other')}
         ${GovBB.textareaField('memory-description', 'Brief description of memory', { hint: 'Optional', rows: 3 })}
-        ${GovBB.continueBtn()}
+        <div class="mt-8 flex gap-4">
+          <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
+          <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
+        </div>
       </div>
     </form>`,
 
   'assistance': () => `
     <form novalidate>
-      ${GovBB.backLink()}
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">What assistance is needed?</h1>
       <div class="space-y-8">
@@ -520,7 +534,10 @@ const PAGES = {
           'Tick all that apply'
         )}
         ${GovBB.textareaField('assistance-other', 'If other, please specify', { hint: 'Optional', rows: 3 })}
-        ${GovBB.continueBtn()}
+        <div class="mt-8 flex gap-4">
+          <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
+          <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
+        </div>
       </div>
     </form>`,
 
@@ -530,7 +547,6 @@ const PAGES = {
     const recipientName = [GovBB.D['first-name'], GovBB.D['initial'], GovBB.D['last-name']].filter(Boolean).join(' ') || '—';
     return `
     <form novalidate>
-      ${GovBB.backLink()}
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Declaration</h1>
       <div class="space-y-8">
@@ -558,7 +574,6 @@ const PAGES = {
     const illnessOptions = ['Hypertension', 'Diabetes', 'Arthritis', 'Heart Condition', 'Visual Impairment', 'Other', 'Applicant is healthy'];
     const assistOptions = ['Light Cleaning', 'Preparation of Light Meal', 'Washing if Home Care is not available', 'Light Errands', 'Supervision of Bathing', 'Grooming', 'Reminding of Appointments'];
     return `
-    ${GovBB.backLink()}
     <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Check your answers before sending your application</h1>
     <div class="space-y-10">
 
@@ -637,7 +652,10 @@ const PAGES = {
         </dl>
       </div>
 
-      ${GovBB.continueBtn('Submit application')}
+      <div class="mt-8 flex gap-4">
+        <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
+        <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Submit application</button>
+      </div>
     </div>`;
   },
 
@@ -673,7 +691,6 @@ const PAGES = {
   /* ── Applicant email preview ── */
   'applicant-email': () => `
     <div class="space-y-6">
-      <a href="#" onclick="GovBB.back(); return false;" class="inline-flex items-center gap-xs outline-none underline-offset-2 underline hover:no-underline text-bb-teal-00 hover:text-bb-black-00 hover:bg-bb-teal-10 text-[1.25rem]">← Back</a>
       <div>
         <p class="eml-page-label">Email preview</p>
         <p class="eml-page-title">Applicant confirmation email</p>
