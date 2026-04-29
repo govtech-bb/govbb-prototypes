@@ -266,8 +266,6 @@ const PAGES = {
 
   'employment-history': () => {
     var D = GovBB.D;
-    var pilWeeks = parseInt(D['pil-weeks']) || 0;
-    var showPilDates = pilWeeks > 0;
     return `
     <form novalidate>
       ${GovBB.caption()}
@@ -279,13 +277,12 @@ const PAGES = {
         ${GovBB.dateField('date-commenced', 'When did you start work?')}
         ${GovBB.dateField('last-day-paid', 'What was the last day you were paid?')}
         ${GovBB.dateField('last-day-work', 'What was the last day you worked?')}
-        ${GovBB.textField('pil-weeks', 'Paid in lieu of notice or vacation pay — number of weeks', { hint: 'Enter 0 if this does not apply to you', inputmode: 'numeric' })}
-        ${showPilDates ? `
-          <div class="space-y-4">
-            <p class="font-bold text-[1.25rem]">Dates paid</p>
-            ${GovBB.dateField('pil-from', 'From')}
-            ${GovBB.dateField('pil-to', 'To')}
-          </div>` : ''}
+        ${GovBB.textField('pil-weeks', 'Paid in lieu of notice or vacation pay — number of weeks', { hint: 'Leave blank if this does not apply to you', inputmode: 'numeric' })}
+        <div class="space-y-4">
+          <p class="font-bold text-[1.25rem]">Dates paid</p>
+          ${GovBB.dateField('pil-from', 'From')}
+          ${GovBB.dateField('pil-to', 'To')}
+        </div>
         ${GovBB.textareaField('reason-unemployment', 'Reason for unemployment', { rows: 3 })}
         
         <div class="mt-8 flex gap-4 flex-wrap">
