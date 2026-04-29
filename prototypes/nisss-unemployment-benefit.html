@@ -242,24 +242,19 @@ const PAGES = {
     var D = GovBB.D;
     var showB1name = D['b1'] === 'Yes';
     var showB2name = D['b2'] === 'Yes';
-    var b6No = D['b6'] === 'No';
     return `
     <form novalidate>
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Check your eligibility</h1>
       <div class="space-y-8">
-        ${GovBB.radioGroup('b1', 'B1. Are you currently receiving any other NIS benefit?', ['Yes', 'No'])}
-        ${showB1name ? GovBB.textField('b1-benefit-name', 'Name of benefit you are receiving') : ''}
-        ${GovBB.radioGroup('b2', 'B2. Have you received any NIS benefit in the last 52 weeks?', ['Yes', 'No'])}
-        ${showB2name ? GovBB.textField('b2-benefit-name', 'Name of benefit you received') : ''}
-        ${GovBB.radioGroup('b3', 'B3. Are you available for and seeking work?', ['Yes', 'No'])}
-        ${GovBB.radioGroup('b4', 'B4. Are you capable of working?', ['Yes', 'No'])}
-        ${GovBB.radioGroup('b5', 'B5. Have you registered as unemployed at the Employment Bureau?', ['Yes', 'No'])}
-        ${GovBB.radioGroup('b6', 'B6. Did you lose your job through no fault of your own?', ['Yes', 'No'])}
-        ${b6No ? `<div class="bg-bb-yellow-10 border-l-4 border-bb-yellow-00 p-4">
-          <p class="font-bold">You may not be eligible</p>
-          <p>Unemployment benefit is for people who lost their job through no fault of their own. NIS will review your claim and contact you if more information is needed.</p>
-        </div>` : ''}
+        ${GovBB.radioGroup('b1', 'Are you claiming any other NI benefit?', ['Yes', 'No'])}
+        ${showB1name ? GovBB.textField('b1-benefit-name', 'Name of benefit') : ''}
+        ${GovBB.radioGroup('b2', 'Are you receiving any other NI benefit?', ['Yes', 'No'])}
+        ${showB2name ? GovBB.textField('b2-benefit-name', 'Name of benefit') : ''}
+        ${GovBB.radioGroup('b3', 'Are you doing any kind of work (including spare time work)?', ['No', 'Yes'])}
+        ${GovBB.radioGroup('b4', 'Are you actively involved in business?', ['No', 'Yes'])}
+        ${GovBB.radioGroup('b5', 'Are you receiving a pension from your last employment?', ['No', 'Yes'])}
+        ${GovBB.radioGroup('b6', 'Have you been contributing to the NIS as an employed person in the last 52 weeks before becoming unemployed?', ['No', 'Yes'])}
         
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
@@ -356,14 +351,14 @@ const PAGES = {
       </dl>
       <h2 class="font-bold text-[1.5rem]">Eligibility</h2>
       <dl class="divide-y divide-bb-grey-00 border-t border-bb-grey-00">
-        ${GovBB.summaryRow('B1. Currently receiving any other NIS benefit?', D['b1'], 'eligibility')}
-        ${D['b1'] === 'Yes' ? GovBB.summaryRow('Name of benefit being received', D['b1-benefit-name'], 'eligibility') : ''}
-        ${GovBB.summaryRow('B2. Received any NIS benefit in last 52 weeks?', D['b2'], 'eligibility')}
-        ${D['b2'] === 'Yes' ? GovBB.summaryRow('Name of benefit received', D['b2-benefit-name'], 'eligibility') : ''}
-        ${GovBB.summaryRow('B3. Available for and seeking work?', D['b3'], 'eligibility')}
-        ${GovBB.summaryRow('B4. Capable of working?', D['b4'], 'eligibility')}
-        ${GovBB.summaryRow('B5. Registered as unemployed at Employment Bureau?', D['b5'], 'eligibility')}
-        ${GovBB.summaryRow('B6. Lost job through no fault of own?', D['b6'], 'eligibility')}
+        ${GovBB.summaryRow('Claiming any other NI benefit?', D['b1'], 'eligibility')}
+        ${D['b1'] === 'Yes' ? GovBB.summaryRow('Name of benefit (claiming)', D['b1-benefit-name'], 'eligibility') : ''}
+        ${GovBB.summaryRow('Receiving any other NI benefit?', D['b2'], 'eligibility')}
+        ${D['b2'] === 'Yes' ? GovBB.summaryRow('Name of benefit (receiving)', D['b2-benefit-name'], 'eligibility') : ''}
+        ${GovBB.summaryRow('Doing any kind of work (including spare time work)?', D['b3'], 'eligibility')}
+        ${GovBB.summaryRow('Actively involved in business?', D['b4'], 'eligibility')}
+        ${GovBB.summaryRow('Receiving a pension from last employment?', D['b5'], 'eligibility')}
+        ${GovBB.summaryRow('Contributing to NIS as employed person in last 52 weeks?', D['b6'], 'eligibility')}
       </dl>
       <h2 class="font-bold text-[1.5rem]">Last employer</h2>
       <dl class="divide-y divide-bb-grey-00 border-t border-bb-grey-00">
@@ -526,14 +521,14 @@ const PAGES = {
               <div>
                 <h2 class="mda-section-h2">Availability and eligibility</h2>
                 <div class="mda-data-table">
-                  ${dr('B1. Currently receiving another NIS benefit?', D['b1'])}
-                  ${D['b1'] === 'Yes' ? dr('Name of benefit being received', D['b1-benefit-name']) : ''}
-                  ${dr('B2. Received any NIS benefit in last 52 weeks?', D['b2'])}
-                  ${D['b2'] === 'Yes' ? dr('Name of benefit received', D['b2-benefit-name']) : ''}
-                  ${dr('B3. Available for and seeking work?', D['b3'])}
-                  ${dr('B4. Capable of working?', D['b4'])}
-                  ${dr('B5. Registered as unemployed at Employment Bureau?', D['b5'])}
-                  ${dr('B6. Lost job through no fault of own?', D['b6'])}
+                  ${dr('Claiming any other NI benefit?', D['b1'])}
+                  ${D['b1'] === 'Yes' ? dr('Name of benefit (claiming)', D['b1-benefit-name']) : ''}
+                  ${dr('Receiving any other NI benefit?', D['b2'])}
+                  ${D['b2'] === 'Yes' ? dr('Name of benefit (receiving)', D['b2-benefit-name']) : ''}
+                  ${dr('Doing any kind of work (including spare time work)?', D['b3'])}
+                  ${dr('Actively involved in business?', D['b4'])}
+                  ${dr('Receiving a pension from last employment?', D['b5'])}
+                  ${dr('Contributing to NIS as employed person in last 52 weeks?', D['b6'])}
                 </div>
               </div>
               <div>
