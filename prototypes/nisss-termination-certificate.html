@@ -118,7 +118,7 @@ const _LOGO = `<svg width="276" height="27" viewBox="0 0 276 27" fill="currentCo
 const FORM_NAME = 'Termination of Services / Layoff Certificate';
 
 function getFlow() {
-  return ['start','employee-details','employer-details','termination-type','employment-details','evidence-questions','check', 'declaration','confirmation', 'applicant-email', 'mda-email'];
+  return ['start','employee-details','employer-details','employment-details','evidence-questions','check','declaration','confirmation','applicant-email','mda-email'];
 }
 
 const PAGES = {
@@ -213,74 +213,72 @@ const PAGES = {
     </form>`;
   },
 
-  'employment-details': () => `
+  'employment-details': () => {
+    var isLayoff = GovBB.D['layoff'] === 'Yes';
+    return `
     <form novalidate>
       ${GovBB.caption()}
-      <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Employment dates</h1>
+      <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Employment details</h1>
       <div class="space-y-8">
-        ${GovBB.textField('occupation', 'Employee\'s occupation or job title')}
-        ${GovBB.textField('position', 'Employee\'s position within the organisation', { hint: 'For example, Senior Sales Associate' })}
+        ${GovBB.textField('occupation', 'Occupation')}
+        ${GovBB.textField('position', 'Position within organisation', { hint: 'For example, Senior Sales Associate' })}
         ${GovBB.dateField('date-commenced', 'Date employment started')}
         ${GovBB.dateField('last-day-work', 'Last day at work')}
         ${GovBB.dateField('date-termination', 'Date of termination')}
         ${GovBB.dateField('last-day-paid', 'Last day for which employee will be paid')}
-        
+        ${GovBB.textareaField('reason-unemployment', 'State reason for unemployment', { rows: 3 })}
+        ${GovBB.radioGroup('layoff', 'Was the employee laid off temporarily?', ['Yes', 'No'], { hint: 'A layoff is temporary — you expect the employee to return to work.' })}
+        ${isLayoff ? `
+          <div class="bg-bb-blue-10 border-l-4 border-bb-blue-40 p-4 space-y-4">
+            <p class="font-bold text-[1.25rem]">Complete only if the employee was laid off</p>
+            ${GovBB.dateField('layoff-date', 'Date of lay-off')}
+            ${GovBB.dateField('reemployment-date', 'Expected date of re-employment', 'Leave blank if unknown. For example, 27 03 2026')}
+          </div>
+        ` : ''}
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
           <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
         </div>
       </div>
-    </form>`,
+    </form>`;
+  },
 
   'evidence-questions': () => {
     var D = GovBB.D;
-    var isVoluntary = D['voluntary'] === 'Yes';
-    var isLabourDispute = D['labour-dispute'] === 'Yes';
-    var isLayoff = D['layoff'] === 'Yes';
-    var isHolidayPay = D['holiday-pay'] === 'Yes';
     var isPension = D['employer-pension'] === 'Yes';
+    var isHolidayPay = D['holiday-pay'] === 'Yes';
     var isMisconduct = D['misconduct'] === 'Yes';
+    var isLabourDispute = D['labour-dispute'] === 'Yes';
 
     return `
     <form novalidate>
       ${GovBB.caption()}
-      <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Additional details</h1>
+      <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Other details</h1>
       <div class="space-y-8">
 
-        ${!isVoluntary && !isLabourDispute ? `
-          ${GovBB.radioGroup('layoff', 'Was the employee laid off (temporary)?', ['Yes', 'No'], { hint: 'A layoff is when you expect the employee to return to work.' })}
-          ${isLayoff ? `
-            <div class="bg-bb-blue-10 p-4 rounded-md space-y-4">
-              <p class="font-bold">Layoff details</p>
-              ${GovBB.dateField('layoff-date', 'Date of layoff')}
-              ${GovBB.dateField('reemployment-date', 'Expected date of re-employment', 'Optional — leave blank if unknown. For example, 27 03 2026')}
-            </div>` : ''}
+        ${GovBB.radioGroup('employer-pension', 'Is the employee receiving or entitled to a pension from you (the employer)?', ['Yes', 'No'])}
+        ${isPension ? GovBB.dateField('pension-start', 'Start date of pension') : ''}
+
+        ${GovBB.radioGroup('holiday-pay', 'Was holiday pay given to the employee who was laid off?', ['Yes', 'No'])}
+        ${isHolidayPay ? `
+          <div class="bg-bb-blue-10 border-l-4 border-bb-blue-40 p-4 space-y-4">
+            <p class="font-bold text-[1.25rem]">Holiday pay details</p>
+            ${GovBB.dateField('holiday-from', 'Period from')}
+            ${GovBB.dateField('holiday-to', 'Period to')}
+            ${GovBB.textField('holiday-amount', 'Amount of holiday pay (BDS$)', { inputmode: 'decimal' })}
+          </div>
         ` : ''}
 
-        ${!isVoluntary ? `
-          ${GovBB.radioGroup('misconduct', 'Was the employee dismissed for misconduct?', ['Yes', 'No'])}
-          ${isMisconduct ? GovBB.textareaField('misconduct-details', 'Describe the misconduct', { hint: 'Give details of the reason for dismissal.', rows: 4 }) : ''}
-        ` : ''}
+        ${GovBB.radioGroup('misconduct', 'Was the employee dismissed because of their own misconduct?', ['Yes', 'No'])}
+        ${isMisconduct ? GovBB.textareaField('misconduct-details', 'Explain the misconduct', { rows: 4 }) : ''}
 
-        ${GovBB.radioGroup('employer-pension', 'Is the employee receiving a pension from you (the employer)?', ['Yes', 'No'])}
-        ${isPension ? GovBB.dateField('pension-start', 'Pension start date') : ''}
+        ${GovBB.radioGroup('voluntary', 'Did the employee voluntarily leave your employment?', ['Yes', 'No'])}
 
-        ${isLayoff || (!isVoluntary && !isLabourDispute) ? `
-          ${GovBB.radioGroup('holiday-pay', 'Is the employee receiving payment for outstanding holiday?', ['Yes', 'No'])}
-          ${isHolidayPay ? `
-            <div class="bg-bb-blue-10 p-4 rounded-md space-y-4">
-              <p class="font-bold">Holiday pay details</p>
-              ${GovBB.dateField('holiday-from', 'Holiday pay — from date')}
-              ${GovBB.dateField('holiday-to', 'Holiday pay — to date')}
-              ${GovBB.textField('holiday-amount', 'Holiday pay amount (BDS$)', { inputmode: 'decimal' })}
-            </div>` : ''}
-        ` : ''}
-
-        ${isLabourDispute ? GovBB.textareaField('labour-dispute-details', 'Describe the labour dispute', { hint: 'Give relevant details about the dispute.', rows: 4 }) : ''}
+        ${GovBB.radioGroup('labour-dispute', 'Has the employee become unemployed because of a stoppage of work due to a labour dispute at your workplace?', ['Yes', 'No'])}
+        ${isLabourDispute ? GovBB.radioGroup('on-strike', 'Is or was the employee participating in a strike?', ['Yes', 'No']) : ''}
 
         ${GovBB.textareaField('other-details', 'Any other relevant details', { hint: 'Optional — add any other information that may be relevant.', rows: 3 })}
 
-        
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
           <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
@@ -314,7 +312,6 @@ const PAGES = {
   'check': () => {
     var D = GovBB.D;
     var empName = [D['emp-first-name'], D['emp-middle-name'], D['emp-last-name']].filter(Boolean).join(' ');
-    var isVoluntary = D['voluntary'] === 'Yes';
     var isLayoff = D['layoff'] === 'Yes';
     var isMisconduct = D['misconduct'] === 'Yes';
     var isPension = D['employer-pension'] === 'Yes';
@@ -336,33 +333,37 @@ const PAGES = {
         ${GovBB.summaryRow('Registration number', D['employer-reg'], 'employer-details')}
         ${GovBB.summaryRow('Address', [D['employer-street'], D['employer-parish']].filter(Boolean).join(', '), 'employer-details')}
       </dl>
-      <h2 class="font-bold text-[1.5rem]">Termination type</h2>
-      <dl class="divide-y divide-bb-grey-00 border-t border-bb-grey-00">
-        ${GovBB.summaryRow('Voluntary leaving', D['voluntary'], 'termination-type')}
-        ${GovBB.summaryRow('Labour dispute', D['labour-dispute'], 'termination-type')}
-        ${isLabourDispute ? GovBB.summaryRow('On strike', D['on-strike'], 'termination-type') : ''}
-      </dl>
-      <h2 class="font-bold text-[1.5rem]">Employment dates</h2>
+      <h2 class="font-bold text-[1.5rem]">Employment details</h2>
       <dl class="divide-y divide-bb-grey-00 border-t border-bb-grey-00">
         ${GovBB.summaryRow('Occupation', D['occupation'], 'employment-details')}
+        ${GovBB.summaryRow('Position within organisation', D['position'], 'employment-details')}
         ${GovBB.summaryRow('Date employment started', [D['date-commenced-day'],D['date-commenced-month'],D['date-commenced-year']].filter(Boolean).join('/'), 'employment-details')}
         ${GovBB.summaryRow('Last day at work', [D['last-day-work-day'],D['last-day-work-month'],D['last-day-work-year']].filter(Boolean).join('/'), 'employment-details')}
         ${GovBB.summaryRow('Date of termination', [D['date-termination-day'],D['date-termination-month'],D['date-termination-year']].filter(Boolean).join('/'), 'employment-details')}
+        ${GovBB.summaryRow('Last day for which employee will be paid', [D['last-day-paid-day'],D['last-day-paid-month'],D['last-day-paid-year']].filter(Boolean).join('/'), 'employment-details')}
+        ${GovBB.summaryRow('Reason for unemployment', D['reason-unemployment'], 'employment-details')}
+        ${GovBB.summaryRow('Employee laid off temporarily', D['layoff'], 'employment-details')}
+        ${isLayoff ? GovBB.summaryRow('Date of lay-off', [D['layoff-date-day'],D['layoff-date-month'],D['layoff-date-year']].filter(Boolean).join('/'), 'employment-details') : ''}
+        ${isLayoff ? GovBB.summaryRow('Expected date of re-employment', [D['reemployment-date-day'],D['reemployment-date-month'],D['reemployment-date-year']].filter(Boolean).join('/'), 'employment-details') : ''}
       </dl>
-      <h2 class="font-bold text-[1.5rem]">Additional details</h2>
+      <h2 class="font-bold text-[1.5rem]">Other details</h2>
       <dl class="divide-y divide-bb-grey-00 border-t border-bb-grey-00">
-        ${!isVoluntary && !isLabourDispute ? GovBB.summaryRow('Layoff', D['layoff'], 'evidence-questions') : ''}
-        ${!isVoluntary ? GovBB.summaryRow('Misconduct', D['misconduct'], 'evidence-questions') : ''}
+        ${GovBB.summaryRow('Receiving or entitled to employer pension', D['employer-pension'], 'evidence-questions')}
+        ${isPension ? GovBB.summaryRow('Pension start date', [D['pension-start-day'],D['pension-start-month'],D['pension-start-year']].filter(Boolean).join('/'), 'evidence-questions') : ''}
+        ${GovBB.summaryRow('Holiday pay given to laid off employee', D['holiday-pay'], 'evidence-questions')}
+        ${isHolidayPay ? GovBB.summaryRow('Holiday pay period', [D['holiday-from-day'],D['holiday-from-month'],D['holiday-from-year']].filter(Boolean).join('/') + ' to ' + [D['holiday-to-day'],D['holiday-to-month'],D['holiday-to-year']].filter(Boolean).join('/'), 'evidence-questions') : ''}
+        ${isHolidayPay ? GovBB.summaryRow('Amount of holiday pay (BDS$)', D['holiday-amount'], 'evidence-questions') : ''}
+        ${GovBB.summaryRow('Dismissed for misconduct', D['misconduct'], 'evidence-questions')}
         ${isMisconduct ? GovBB.summaryRow('Misconduct details', D['misconduct-details'], 'evidence-questions') : ''}
-        ${GovBB.summaryRow('Employer pension', D['employer-pension'], 'evidence-questions')}
-        ${isLayoff ? GovBB.summaryRow('Holiday pay', D['holiday-pay'], 'evidence-questions') : ''}
+        ${GovBB.summaryRow('Voluntarily left employment', D['voluntary'], 'evidence-questions')}
+        ${GovBB.summaryRow('Unemployed due to labour dispute', D['labour-dispute'], 'evidence-questions')}
+        ${isLabourDispute ? GovBB.summaryRow('Is or was on strike', D['on-strike'], 'evidence-questions') : ''}
         ${D['other-details'] ? GovBB.summaryRow('Other details', D['other-details'], 'evidence-questions') : ''}
       </dl>
-      
-        <div class="mt-8 flex gap-4 flex-wrap">
-          <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
-          <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
-        </div>
+      <div class="mt-8 flex gap-4 flex-wrap">
+        <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
+        <button type="button" onclick="next()" class="${GovBB.BTN_CLS}">Continue</button>
+      </div>
     </div>`;
   },
 
@@ -523,21 +524,35 @@ const PAGES = {
                 </div>
               </div>
               <div>
-                <h2 class="mda-section-h2">Termination / layoff details</h2>
+                <h2 class="mda-section-h2">Employment details</h2>
                 <div class="mda-data-table">
-                  ${dr('Did the employee voluntarily leave?', D['voluntary'])}
-                  ${dr('Is this related to a labour dispute?', D['labour-dispute'])}
-                  ${D['labour-dispute'] === 'Yes' ? dr('Is or was the employee on strike?', D['on-strike']) : ''}
-                  ${dr("Employee's occupation or job title", D['occupation'])}
+                  ${dr('Occupation', D['occupation'])}
+                  ${dr('Position within organisation', D['position'])}
                   ${dr('Date employment started', [D['date-commenced-day'], D['date-commenced-month'], D['date-commenced-year']].filter(Boolean).join(' / '))}
                   ${dr('Last day at work', [D['last-day-work-day'], D['last-day-work-month'], D['last-day-work-year']].filter(Boolean).join(' / '))}
                   ${dr('Date of termination', [D['date-termination-day'], D['date-termination-month'], D['date-termination-year']].filter(Boolean).join(' / '))}
-                  ${dr('Was the employee laid off (temporary)?', D['layoff'])}
+                  ${dr('Last day for which employee will be paid', [D['last-day-paid-day'], D['last-day-paid-month'], D['last-day-paid-year']].filter(Boolean).join(' / '))}
+                  ${dr('Reason for unemployment', D['reason-unemployment'])}
+                  ${dr('Employee laid off temporarily', D['layoff'])}
+                  ${D['layoff'] === 'Yes' ? dr('Date of lay-off', [D['layoff-date-day'], D['layoff-date-month'], D['layoff-date-year']].filter(Boolean).join(' / ')) : ''}
+                  ${D['layoff'] === 'Yes' ? dr('Expected date of re-employment', [D['reemployment-date-day'], D['reemployment-date-month'], D['reemployment-date-year']].filter(Boolean).join(' / ')) : ''}
+                </div>
+              </div>
+              <div>
+                <h2 class="mda-section-h2">Other details</h2>
+                <div class="mda-data-table">
+                  ${dr('Is employee receiving or entitled to employer pension?', D['employer-pension'])}
+                  ${D['employer-pension'] === 'Yes' ? dr('Pension start date', [D['pension-start-day'], D['pension-start-month'], D['pension-start-year']].filter(Boolean).join(' / ')) : ''}
+                  ${dr('Was holiday pay given to laid off employee?', D['holiday-pay'])}
+                  ${D['holiday-pay'] === 'Yes' ? dr('Holiday pay period from', [D['holiday-from-day'], D['holiday-from-month'], D['holiday-from-year']].filter(Boolean).join(' / ')) : ''}
+                  ${D['holiday-pay'] === 'Yes' ? dr('Holiday pay period to', [D['holiday-to-day'], D['holiday-to-month'], D['holiday-to-year']].filter(Boolean).join(' / ')) : ''}
+                  ${D['holiday-pay'] === 'Yes' ? dr('Amount of holiday pay (BDS$)', D['holiday-amount']) : ''}
                   ${dr('Was employee dismissed for misconduct?', D['misconduct'])}
                   ${D['misconduct'] === 'Yes' ? dr('Misconduct details', D['misconduct-details']) : ''}
-                  ${dr('Is employee receiving employer pension?', D['employer-pension'])}
-                  ${dr('Is employee receiving holiday pay?', D['holiday-pay'])}
-                  ${D['holiday-pay'] === 'Yes' ? dr('Holiday pay amount (BDS$)', D['holiday-pay-amount']) : ''}
+                  ${dr('Did employee voluntarily leave?', D['voluntary'])}
+                  ${dr('Unemployed due to labour dispute?', D['labour-dispute'])}
+                  ${D['labour-dispute'] === 'Yes' ? dr('Is or was employee on strike?', D['on-strike']) : ''}
+                  ${D['other-details'] ? dr('Other relevant details', D['other-details']) : ''}
                 </div>
               </div>
               <div>
@@ -589,18 +604,19 @@ function validate(pageId) {
     if (!D['employer-street']) errors.push({ id: 'employer-street', msg: 'Street address – Enter your street address' });
     if (!D['employer-parish']) errors.push({ id: 'employer-parish', msg: 'Parish – Select your parish' });
   }
-  if (pageId === 'termination-type') {
-    if (!D['voluntary']) errors.push({ id: 'voluntary', msg: 'Voluntary leaving – Select Yes or No' });
-    if (!D['labour-dispute']) errors.push({ id: 'labour-dispute', msg: 'Labour dispute – Select Yes or No' });
-  }
   if (pageId === 'employment-details') {
     if (!D['occupation']) errors.push({ id: 'occupation', msg: 'Occupation – Enter the employee\'s occupation' });
     if (!D['date-commenced-day'] || !D['date-commenced-month'] || !D['date-commenced-year']) errors.push({ id: 'date-commenced-day', msg: 'Date employment started – Enter a complete date' });
     if (!D['last-day-work-day'] || !D['last-day-work-month'] || !D['last-day-work-year']) errors.push({ id: 'last-day-work-day', msg: 'Last day at work – Enter a complete date' });
     if (!D['date-termination-day'] || !D['date-termination-month'] || !D['date-termination-year']) errors.push({ id: 'date-termination-day', msg: 'Date of termination – Enter a complete date' });
+    if (!D['layoff']) errors.push({ id: 'layoff', msg: 'Laid off – Select Yes or No' });
   }
   if (pageId === 'evidence-questions') {
     if (!D['employer-pension']) errors.push({ id: 'employer-pension', msg: 'Employer pension – Select Yes or No' });
+    if (!D['holiday-pay']) errors.push({ id: 'holiday-pay', msg: 'Holiday pay – Select Yes or No' });
+    if (!D['misconduct']) errors.push({ id: 'misconduct', msg: 'Misconduct – Select Yes or No' });
+    if (!D['voluntary']) errors.push({ id: 'voluntary', msg: 'Voluntary leaving – Select Yes or No' });
+    if (!D['labour-dispute']) errors.push({ id: 'labour-dispute', msg: 'Labour dispute – Select Yes or No' });
   }
   if (pageId === 'declaration') {
     if (!D['declaration-agree']) errors.push({ id: 'declaration-agree', msg: 'Declaration – You must confirm the declaration to continue' });
@@ -610,12 +626,12 @@ function validate(pageId) {
 
 GovBB.init({
   formName: FORM_NAME,
-  flow: ['start','employee-details','employer-details','termination-type','employment-details','evidence-questions','check', 'declaration','confirmation', 'applicant-email', 'mda-email'],
+  flow: ['start','employee-details','employer-details','employment-details','evidence-questions','check','declaration','confirmation','applicant-email','mda-email'],
   pages: PAGES,
   validate: validate,
   getFlow: getFlow,
   onRadioChange: function(name) {
-    var rerenderOn = ['voluntary','labour-dispute','on-strike','layoff','misconduct','employer-pension','holiday-pay'];
+    var rerenderOn = ['layoff','employer-pension','holiday-pay','misconduct','voluntary','labour-dispute','on-strike'];
     if (rerenderOn.indexOf(name) !== -1) GovBB.render();
   }
 });
