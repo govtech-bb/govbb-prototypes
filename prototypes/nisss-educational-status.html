@@ -270,9 +270,12 @@ const PAGES = {
           <p class="text-[1.25rem] font-bold">Date</p>
           <p class="text-[1.25rem] text-bb-mid-grey-00">${(function(){ var d=new Date(); return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(); })()}</p>
         </div>
-        <div class="bg-bb-blue-10 border-l-4 border-bb-blue-40 p-4">
-          <p class="font-bold text-[1.25rem]">Official stamp</p>
-          <p class="text-[1.25rem]">The physical copy of this form must include the official stamp of the educational institution.</p>
+        <div class="space-y-2">
+          <p class="font-bold text-[1.25rem]">Official Stamp of Educational Institution</p>
+          <p class="text-[1.25rem] text-bb-mid-grey-00">Affix the official stamp of the educational institution in the box below when printing and submitting the physical copy.</p>
+          <div class="border-2 border-bb-black-00 rounded-sm flex items-center justify-center text-bb-mid-grey-00 text-[1rem]" style="width:200px;height:120px;">
+            Stamp area
+          </div>
         </div>
         ${GovBB.checkboxItem('declaration-agree', 'I confirm that the student details provided on this form are true and correct, and that the student is currently enrolled and attending full-time classes at this institution.')}
         <div class="mt-8 flex gap-4 flex-wrap">
