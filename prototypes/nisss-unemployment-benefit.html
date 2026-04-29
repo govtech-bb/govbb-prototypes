@@ -276,17 +276,17 @@ const PAGES = {
         ${GovBB.textField('last-employer-name', 'Name of last employer')}
         ${GovBB.textField('last-employer-address', 'Address of employer')}
         ${GovBB.textField('occupation', 'Occupation at last employer')}
-        ${GovBB.dateField('date-commenced', 'I commenced work at the above employer on')}
-        ${GovBB.dateField('last-day-paid', 'The last day for which I was paid by employer')}
-        ${GovBB.dateField('last-day-work', 'My last day of work was')}
-        ${GovBB.textField('pil-weeks', 'Payment in lieu of notice — number of weeks', { hint: 'Enter 0 if you did not receive payment in lieu of notice', inputmode: 'numeric' })}
+        ${GovBB.dateField('date-commenced', 'When did you start work?')}
+        ${GovBB.dateField('last-day-paid', 'What was the last day you were paid?')}
+        ${GovBB.dateField('last-day-work', 'What was the last day you worked?')}
+        ${GovBB.textField('pil-weeks', 'Paid in lieu of notice or vacation pay — number of weeks', { hint: 'Enter 0 if this does not apply to you', inputmode: 'numeric' })}
         ${showPilDates ? `
-          <div class="bg-bb-blue-10 p-4 rounded-md space-y-4">
-            <p class="font-bold">Payment in lieu of notice dates</p>
-            ${GovBB.dateField('pil-from', 'Payment in lieu — from date')}
-            ${GovBB.dateField('pil-to', 'Payment in lieu — to date')}
+          <div class="space-y-4">
+            <p class="font-bold text-[1.25rem]">Dates paid</p>
+            ${GovBB.dateField('pil-from', 'From')}
+            ${GovBB.dateField('pil-to', 'To')}
           </div>` : ''}
-        ${GovBB.textareaField('reason-unemployment', 'I have become unemployed for the following reason', { rows: 3 })}
+        ${GovBB.textareaField('reason-unemployment', 'Reason for unemployment', { rows: 3 })}
         
         <div class="mt-8 flex gap-4 flex-wrap">
           <button type="button" onclick="back()" class="relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-white-00 text-bb-black-00 border-2 border-bb-black-00 hover:bg-bb-grey-00 active:bg-bb-grey-00 px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100">Back</button>
