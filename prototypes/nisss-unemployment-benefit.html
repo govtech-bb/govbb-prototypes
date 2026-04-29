@@ -233,7 +233,6 @@ const PAGES = {
         ${GovBB.textField('street-address', 'Street address')}
         ${GovBB.textField('district', 'District', { hint: 'Optional' })}
         ${GovBB.selectField('parish', 'Parish', GovBB.PARISHES)}
-        ${GovBB.textField('postal-code', 'Postal code', { hint: 'For example, BB11000' })}
         ${GovBB.telField('telephone', 'Telephone number', { hint: 'Include area code', placeholder: '246-555-1234' })}
         
         <div class="mt-8 flex gap-4 flex-wrap">
@@ -358,7 +357,7 @@ const PAGES = {
         ${GovBB.summaryRow('First name', D['first-name'], 'applicant-details')}
         ${GovBB.summaryRow('NIS number', D['nis-number'], 'applicant-details')}
         ${GovBB.summaryRow('NRN', D['nrn'], 'applicant-details')}
-        ${GovBB.summaryRow('Address', [D['street-address'], D['parish'], D['postal-code']].filter(Boolean).join(', '), 'applicant-details')}
+        ${GovBB.summaryRow('Address', [D['street-address'], D['parish']].filter(Boolean).join(', '), 'applicant-details')}
         ${GovBB.summaryRow('Telephone', D['telephone'], 'applicant-details')}
       </dl>
       <h2 class="font-bold text-[1.5rem]">Eligibility</h2>
@@ -522,7 +521,6 @@ const PAGES = {
                   ${dr('National Registration Number (NRN)', D['nrn'])}
                   ${dr('Street address', D['street-address'])}
                   ${dr('Parish', D['parish'])}
-                  ${dr('Postal code', D['postal-code'])}
                   ${dr('Telephone number', D['telephone'])}
                 </div>
               </div>
