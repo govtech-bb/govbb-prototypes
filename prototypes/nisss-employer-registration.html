@@ -245,11 +245,6 @@ const PAGES = {
           maxlength: '100'
         })}
 
-        <div class="flex flex-col gap-xs">
-          <p class="text-[1.25rem] leading-normal font-bold">Date</p>
-          <p class="text-[1.25rem] leading-normal text-bb-mid-grey-00">${(function(){ var d=new Date(); return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear(); })()}</p>
-        </div>
-
         <div id="field-declaration-consent">
           <span class="field-error hidden text-bb-red-00 text-[1.25rem] leading-normal block mb-2" id="err-declaration-consent"></span>
           ${GovBB.checkboxItem('declaration-consent', 'I confirm that the information given in this form is true to the best of my knowledge and belief, and that I am authorised to submit this registration on behalf of the business.')}
