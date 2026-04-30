@@ -189,17 +189,21 @@ const PAGES = {
 
   'declaration': function() {
     const today = new Date();
-    const formattedDate = `${String(today.getDate()).padStart(2,'0')} ${['January','February','March','April','May','June','July','August','September','October','November','December'][today.getMonth()]} ${today.getFullYear()}`;
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const formattedDate = `${String(today.getDate()).padStart(2,'0')} ${months[today.getMonth()]} ${today.getFullYear()}`;
     return `
     <form novalidate>
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Declaration</h1>
       <div class="space-y-8">
-        <p class="text-[1.25rem]"><span class="font-bold">Date:</span> ${formattedDate}</p>
-
         <div class="notice-box">
+          <p style="margin-bottom:1rem;"><span style="color:#595959;font-size:0.875rem;">To:</span><br><strong>${GovBB.D['landlord-name'] || '[Landlord name]'}</strong></p>
+
           <p><strong>TAKE NOTICE THAT:</strong></p>
-          <p>I, the undersigned, being a tenant of a lot comprised in <strong>${GovBB.D['tenantry-name'] || '[Tenantry Name]'}</strong>, in the parish of <strong>${GovBB.D['parish'] || '[Parish]'}</strong>, hereby give you notice of my intention to purchase the freehold of the said lot, in accordance with the Tenantries Freehold Purchase Act, Cap. 239B, Section 12(1).</p>
+          <p style="margin-top:0.5rem;">I, the undersigned, being a tenant of a lot comprised in <strong>${GovBB.D['tenantry-name'] || '[Tenantry Name]'}</strong>, in the parish of <strong>${GovBB.D['parish'] || '[Parish]'}</strong>, hereby give you notice of my intention to purchase the freehold of the said lot, in accordance with the Tenantries Freehold Purchase Act, Cap. 239B, Section 12(1).</p>
+
+          <p style="margin-top:1.5rem;">Given under my hand this ${formattedDate}.</p>
+
           <p style="margin-top:1.5rem; border-top: 1px solid #99a8cc; padding-top: 1rem;">
             <span style="display:block; font-size:0.875rem; color:#595959; margin-bottom:0.25rem;">Tenant</span>
             <strong>${GovBB.D['tenant-name'] || '[Your Name]'}</strong>
