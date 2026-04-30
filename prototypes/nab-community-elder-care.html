@@ -296,8 +296,9 @@ function checkboxGroup(groupLabel, name, options, hint) {
         return `
           <div class="flex gap-5 items-center">
             <button type="button" role="checkbox" aria-checked="${checked}"
-              onclick="GovBB.toggleCheckbox('${key}');GovBB.render()"
-              class="relative inline-flex size-12 shrink-0 items-center justify-center bg-bb-white-00 border-2 border-bb-black-00 rounded-sm transition-all outline-none hover:cursor-pointer hover:shadow-form-hover focus-visible:ring-4 focus-visible:ring-bb-teal-100 ${checked ? 'after:content-[\\"✓\\"] after:text-[1.1rem] after:font-bold' : ''}">
+              onclick="GovBB.toggleCheckbox('${key}')"
+              class="relative inline-flex size-12 shrink-0 items-center justify-center bg-bb-white-00 border-2 border-bb-black-00 rounded-sm transition-all outline-none hover:cursor-pointer hover:shadow-form-hover focus-visible:ring-4 focus-visible:ring-bb-teal-100">
+              ${checked ? '<svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>' : ''}
             </button>
             <label class="text-[1.25rem] leading-normal text-bb-black-00 cursor-pointer">${opt}</label>
           </div>
