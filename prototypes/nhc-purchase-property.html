@@ -36,6 +36,31 @@
     .eml-page-badge { display:inline-flex; align-items:center; gap:6px; background:#fff9e9; border:1.5px solid #ffc726; border-radius:4px; padding:6px 14px; font-size:14px; font-weight:600; color:#000; }
     .warn-banner { background:#fff0f0; border:2px solid #a42c2c; padding:24px; border-radius:4px; }
     .warn-banner p { color:#a42c2c; font-size:20px; font-weight:700; margin:0; }
+    .mda-email { background:#fff; overflow:hidden; max-width:900px; margin:0 auto; }
+    .mda-header { background:#ffc726; padding:32px 40px; display:flex; align-items:center; }
+    .mda-content { background:#fff; padding:32px 40px; display:flex; flex-direction:column; gap:16px; }
+    .mda-h1 { font-size:40px; font-weight:700; line-height:1.2; color:#000; margin:0; }
+    .mda-summary-table { background:#e5e9f2; padding:24px; display:flex; flex-direction:column; gap:8px; }
+    .mda-summary-row { display:flex; gap:16px; align-items:baseline; font-size:16px; }
+    .mda-summary-label { color:#595959; min-width:130px; flex-shrink:0; }
+    .mda-summary-value { color:#000; font-weight:600; }
+    .mda-intro { font-size:20px; color:#000; line-height:1.5; margin:0; }
+    .mda-sections { display:flex; flex-direction:column; gap:24px; }
+    .mda-section-h2 { font-size:24px; font-weight:700; color:#000; margin:0 0 8px 0; border-bottom:2px solid #e0e4e9; padding-bottom:8px; }
+    .mda-data-table { width:100%; border-collapse:collapse; }
+    .mda-data-row { border-bottom:1px solid #e0e4e9; }
+    .mda-data-label { padding:10px 0; color:#595959; font-size:16px; width:40%; vertical-align:top; }
+    .mda-data-value { padding:10px 0; color:#000; font-size:16px; font-weight:500; }
+    .mda-internal-box { background:#fff9e9; border:2px solid #ffc726; padding:24px; }
+    .mda-internal-h3 { font-size:20px; font-weight:700; color:#000; margin:0 0 8px 0; }
+    .mda-internal-p { font-size:16px; color:#595959; margin:0; }
+    .mda-footer { background:#00267f; color:#fff; padding:32px; display:flex; align-items:stretch; justify-content:space-between; gap:32px; }
+    .mda-footer-text { flex:1; font-size:16px; line-height:1.5; display:flex; flex-direction:column; gap:8px; }
+    .mda-footer-text p { margin:0; }
+    .mda-footer-right { display:flex; flex-direction:column; align-items:flex-end; justify-content:flex-end; gap:12px; flex-shrink:0; }
+    .mda-footer-right img { width:60px; height:auto; }
+    .mda-footer-copyright { font-size:14px; color:#fff; white-space:nowrap; margin:0; }
+    .mda-page-badge { display:inline-flex; align-items:center; gap:6px; background:#e5e9f2; border:1.5px solid #99a8cc; border-radius:4px; padding:6px 14px; font-size:14px; font-weight:600; color:#000; }
   </style>
 </head>
 <body>
@@ -398,13 +423,19 @@ const PAGES = {
   'applicant-email': function() {
     const ref = window.__refNumber || ('NHC-PURCH-' + Math.random().toString(36).substring(2,8).toUpperCase());
     const firstName = GovBB.D['first-name'] || 'Applicant';
+    const houseTypes = [
+      GovBB.D['house-timber'] ? 'Timber' : null,
+      GovBB.D['house-wall'] ? 'Wall (block)' : null,
+      GovBB.D['house-timber-wall'] ? 'Timber and wall' : null,
+      GovBB.D['house-steel'] ? 'Steel frame' : null
+    ].filter(Boolean).join(', ') || '—';
     return `
     <div class="space-y-6">
       <a href="#" onclick="GovBB.back(); return false;" class="inline-flex items-center gap-xs outline-none underline-offset-2 underline hover:no-underline text-bb-teal-00 hover:text-bb-black-00 hover:bg-bb-teal-10 text-[1.25rem]">← Back</a>
       <div>
         <p class="eml-page-label">Email preview</p>
         <p class="eml-page-title">Applicant confirmation email</p>
-        <p class="eml-page-desc">This is the confirmation email you receive after submitting your application.</p>
+        <p class="eml-page-desc">This is the confirmation email sent to ${GovBB.D['email'] || 'the email address you provided'} after submitting your application.</p>
         <span class="eml-page-badge">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
           Applicant email
@@ -417,7 +448,7 @@ const PAGES = {
         <div class="email-content">
           <h1 class="email-h1">Your application has been received</h1>
           <p class="email-greeting">Dear ${firstName},</p>
-          <p class="email-body">Thank you for applying to purchase land or property from the National Housing Corporation.</p>
+          <p class="email-body">Thank you for applying to purchase land or property from the National Housing Corporation. We have received your application and will be in touch soon.</p>
           <div class="ref-box">
             <p class="ref-sub">Your reference number</p>
             <p class="ref-number">${ref}</p>
@@ -426,18 +457,20 @@ const PAGES = {
           <div class="next-section">
             <p class="next-heading">What happens next</p>
             <ul class="next-list">
-              <li>The NHC will review your application.</li>
-              <li>They will contact you within 10 working days.</li>
-              <li>They may ask you to send in supporting documents.</li>
+              <li>The NHC will review your application and check your eligibility.</li>
+              <li>They will contact you within <strong>10 working days</strong>.</li>
+              <li>They may ask you to send in supporting documents such as proof of income, a mortgage certificate, or identification.</li>
+              <li>Keep your reference number safe — you will need it for any follow-up.</li>
             </ul>
           </div>
-          <p class="email-body">Contact the NHC at <strong>nhc@govtech.bb</strong> or <strong>246-467-7300</strong> if you have questions.</p>
+          <p class="email-body">If you have questions, contact the NHC at <strong>nhc@govtech.bb</strong> or call <strong>246-467-7300</strong>.</p>
         </div>
         <div class="email-footer-bar">
           <div class="email-footer-text">
-            <p>National Housing Corporation</p>
+            <p><strong>National Housing Corporation</strong></p>
             <p>Ministry of Housing, Lands and Rural Development</p>
             <p>Government of Barbados</p>
+            <p>nhc@govtech.bb &nbsp;|&nbsp; 246-467-7300</p>
           </div>
           <div class="email-footer-right">
             <img src="${_COAT}" alt="Coat of arms of Barbados">
@@ -454,49 +487,143 @@ const PAGES = {
 
   'mda-email': function() {
     const ref = window.__refNumber || ('NHC-PURCH-' + Math.random().toString(36).substring(2,8).toUpperCase());
-    const applicantName = [GovBB.D['first-name'], GovBB.D['last-name']].filter(Boolean).join(' ') || 'Applicant';
+    const today = new Date();
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const formattedDate = `${String(today.getDate()).padStart(2,'0')} ${months[today.getMonth()]} ${today.getFullYear()}`;
+    const formattedTime = `${String(today.getHours()).padStart(2,'0')}:${String(today.getMinutes()).padStart(2,'0')}`;
+    const applicantName = [GovBB.D['title'], GovBB.D['first-name'], GovBB.D['last-name']].filter(Boolean).join(' ') || '—';
+    const houseTypes = [
+      GovBB.D['house-timber'] ? 'Timber' : null,
+      GovBB.D['house-wall'] ? 'Wall (block)' : null,
+      GovBB.D['house-timber-wall'] ? 'Timber and wall' : null,
+      GovBB.D['house-steel'] ? 'Steel frame' : null
+    ].filter(Boolean).join(', ') || '—';
+    const coApplicantName = GovBB.D['co-applicant'] === 'Yes'
+      ? [GovBB.D['co-title'], GovBB.D['co-first-name'], GovBB.D['co-last-name']].filter(Boolean).join(' ') || '—'
+      : null;
     return `
     <div class="space-y-6">
       <a href="#" onclick="GovBB.back(); return false;" class="inline-flex items-center gap-xs outline-none underline-offset-2 underline hover:no-underline text-bb-teal-00 hover:text-bb-black-00 hover:bg-bb-teal-10 text-[1.25rem]">← Back</a>
       <div>
         <p class="eml-page-label">Email preview</p>
-        <p class="eml-page-title">NHC internal notification</p>
-        <p class="eml-page-desc">This is the internal notification the NHC receives for their records.</p>
-        <span class="eml-page-badge">
+        <p class="eml-page-title">NHC internal notification email</p>
+        <p class="eml-page-desc">This is the internal notification sent to the NHC processing team for intake screening and records.</p>
+        <span class="mda-page-badge">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
           NHC email
         </span>
       </div>
-      <div class="email-wrapper border border-[#e0e4e9]">
-        <div class="email-header-bar">
+      <div class="mda-email border border-[#e0e4e9]">
+        <div class="mda-header">
           <div style="width:276px;height:27px;color:#000;">${_LOGO}</div>
         </div>
-        <div class="email-content">
-          <h1 class="email-h1">New Application Received</h1>
-          <p class="email-greeting">NHC Processing Team,</p>
-          <p class="email-body">A new application to purchase land or property has been submitted and is ready for processing.</p>
-          <div class="ref-box">
-            <p class="ref-sub">Application reference</p>
-            <p class="ref-number">${ref}</p>
+        <div class="mda-content">
+          <h1 class="mda-h1">New Application to Purchase Land or Property</h1>
+          <div class="mda-summary-table">
+            <div class="mda-summary-row"><span class="mda-summary-label">Service</span><span class="mda-summary-value">Apply to Purchase Land or Property</span></div>
+            <div class="mda-summary-row"><span class="mda-summary-label">Reference</span><span class="mda-summary-value">${ref}</span></div>
+            <div class="mda-summary-row"><span class="mda-summary-label">Date submitted</span><span class="mda-summary-value">${formattedDate} at ${formattedTime}</span></div>
+            <div class="mda-summary-row"><span class="mda-summary-label">Applicant</span><span class="mda-summary-value">${applicantName}</span></div>
+            <div class="mda-summary-row"><span class="mda-summary-label">Contact email</span><span class="mda-summary-value">${GovBB.D['email'] || '—'}</span></div>
+            <div class="mda-summary-row"><span class="mda-summary-label">Co-applicant</span><span class="mda-summary-value">${GovBB.D['co-applicant'] === 'Yes' ? 'Yes' : 'No'}</span></div>
           </div>
-          <div style="background:#f5f5f5;padding:20px;border-radius:4px;font-size:16px;line-height:1.5;margin:20px 0;">
-            <p><strong>Applicant:</strong> ${applicantName}</p>
-            <p><strong>Contact:</strong> ${GovBB.D['email'] || '—'}</p>
-            <p><strong>Employment:</strong> ${GovBB.D['emp-status'] || '—'}</p>
-            <p><strong>Financing:</strong> ${GovBB.D['financing'] || '—'}</p>
-            <p><strong>Co-applicant:</strong> ${GovBB.D['co-applicant'] === 'Yes' ? 'Yes' : 'No'}</p>
+          <p class="mda-intro">A new application to purchase land or property from the NHC has been submitted and is ready for intake screening.</p>
+          <div class="mda-sections">
+            <div>
+              <p class="mda-section-h2">Applicant details</p>
+              <table class="mda-data-table">
+                <tr class="mda-data-row"><td class="mda-data-label">Full name</td><td class="mda-data-value">${applicantName}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Maiden name</td><td class="mda-data-value">${GovBB.D['maiden-name'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Date of birth</td><td class="mda-data-value">${[GovBB.D['dob-day'],GovBB.D['dob-month'],GovBB.D['dob-year']].filter(Boolean).join(' / ') || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">NRN</td><td class="mda-data-value">${GovBB.D['nrn'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">TAMIS number</td><td class="mda-data-value">${GovBB.D['tamis'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Marital status</td><td class="mda-data-value">${GovBB.D['marital-status'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Citizenship</td><td class="mda-data-value">${GovBB.D['citizenship'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Home address</td><td class="mda-data-value">${GovBB.D['address'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Parish</td><td class="mda-data-value">${GovBB.D['parish'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Cell phone</td><td class="mda-data-value">${GovBB.D['phone'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Email</td><td class="mda-data-value">${GovBB.D['email'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Employer</td><td class="mda-data-value">${GovBB.D['employer'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Occupation</td><td class="mda-data-value">${GovBB.D['occupation'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Period of employment</td><td class="mda-data-value">${GovBB.D['emp-period'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Monthly salary (BBD)</td><td class="mda-data-value">${GovBB.D['salary'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Pay period</td><td class="mda-data-value">${GovBB.D['pay-period'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Employment status</td><td class="mda-data-value">${GovBB.D['emp-status'] || '—'}</td></tr>
+              </table>
+            </div>
+            ${coApplicantName ? `
+            <div>
+              <p class="mda-section-h2">Co-applicant details</p>
+              <table class="mda-data-table">
+                <tr class="mda-data-row"><td class="mda-data-label">Full name</td><td class="mda-data-value">${coApplicantName}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Date of birth</td><td class="mda-data-value">${[GovBB.D['co-dob-day'],GovBB.D['co-dob-month'],GovBB.D['co-dob-year']].filter(Boolean).join(' / ') || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">NRN</td><td class="mda-data-value">${GovBB.D['co-nrn'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">TAMIS number</td><td class="mda-data-value">${GovBB.D['co-tamis'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Home address</td><td class="mda-data-value">${GovBB.D['co-address'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Parish</td><td class="mda-data-value">${GovBB.D['co-parish'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Cell phone</td><td class="mda-data-value">${GovBB.D['co-phone'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Email</td><td class="mda-data-value">${GovBB.D['co-email'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Employer</td><td class="mda-data-value">${GovBB.D['co-employer'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Occupation</td><td class="mda-data-value">${GovBB.D['co-occupation'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Period of employment</td><td class="mda-data-value">${GovBB.D['co-emp-period'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Monthly salary (BBD)</td><td class="mda-data-value">${GovBB.D['co-salary'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Pay period</td><td class="mda-data-value">${GovBB.D['co-pay-period'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Employment status</td><td class="mda-data-value">${GovBB.D['co-emp-status'] || '—'}</td></tr>
+              </table>
+            </div>` : ''}
+            <div>
+              <p class="mda-section-h2">Criteria and entitlement</p>
+              <table class="mda-data-table">
+                <tr class="mda-data-row"><td class="mda-data-label">Currently renting</td><td class="mda-data-value">${GovBB.D['currently-renting'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Owns land, wants NHC to build</td><td class="mda-data-value">${GovBB.D['own-land-housing'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Tenant of land to build on</td><td class="mda-data-value">${GovBB.D['tenant-land'] || '—'}</td></tr>
+              </table>
+            </div>
+            <div>
+              <p class="mda-section-h2">Preferences</p>
+              <table class="mda-data-table">
+                <tr class="mda-data-row"><td class="mda-data-label">House construction types</td><td class="mda-data-value">${houseTypes}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Preferred bedrooms</td><td class="mda-data-value">${GovBB.D['bedrooms'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Adults in household</td><td class="mda-data-value">${GovBB.D['adults'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Children in household</td><td class="mda-data-value">${GovBB.D['children'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Persons with disabilities</td><td class="mda-data-value">${GovBB.D['disability'] || '—'}</td></tr>
+              </table>
+            </div>
+            <div>
+              <p class="mda-section-h2">Household income</p>
+              <table class="mda-data-table">
+                <tr class="mda-data-row"><td class="mda-data-label">Income source 1</td><td class="mda-data-value">${GovBB.D['alt-income-source-1'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Monthly amount 1 (BBD)</td><td class="mda-data-value">${GovBB.D['alt-income-amount-1'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Income source 2</td><td class="mda-data-value">${GovBB.D['alt-income-source-2'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Monthly amount 2 (BBD)</td><td class="mda-data-value">${GovBB.D['alt-income-amount-2'] || '—'}</td></tr>
+              </table>
+            </div>
+            <div>
+              <p class="mda-section-h2">Financing</p>
+              <table class="mda-data-table">
+                <tr class="mda-data-row"><td class="mda-data-label">Financing method</td><td class="mda-data-value">${GovBB.D['financing'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Lending institution</td><td class="mda-data-value">${GovBB.D['lending-institution'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Deposit available (BBD)</td><td class="mda-data-value">${GovBB.D['deposit-amount'] || '—'}</td></tr>
+                <tr class="mda-data-row"><td class="mda-data-label">Qualifying amount (BBD)</td><td class="mda-data-value">${GovBB.D['qualifying-amount'] || '—'}</td></tr>
+              </table>
+            </div>
           </div>
-          <p class="email-body" style="margin-top:20px;">Application is ready for intake screening and processing.</p>
+          <div class="mda-internal-box">
+            <p class="mda-internal-h3">For officer use only</p>
+            <p class="mda-internal-p">Verify NRN and TAMIS number. Confirm applicant does not currently own land or property. Check eligibility criteria and request supporting documents if needed (proof of income, mortgage certificate, national ID). Assign to intake officer for processing.</p>
+          </div>
         </div>
-        <div class="email-footer-bar">
-          <div class="email-footer-text">
-            <p>National Housing Corporation</p>
+        <div class="mda-footer">
+          <div class="mda-footer-text">
+            <p><strong>National Housing Corporation</strong></p>
             <p>Ministry of Housing, Lands and Rural Development</p>
             <p>Government of Barbados</p>
+            <p>nhc@govtech.bb &nbsp;|&nbsp; 246-467-7300</p>
+            <p style="font-size:12px;color:#99a8cc;">This is an internal notification. Do not reply to this email.</p>
           </div>
-          <div class="email-footer-right">
+          <div class="mda-footer-right">
             <img src="${_COAT}" alt="Coat of arms of Barbados">
-            <p class="email-footer-copy">&copy; 2026 Government of Barbados</p>
+            <p class="mda-footer-copyright">&copy; 2026 Government of Barbados</p>
           </div>
         </div>
       </div>
