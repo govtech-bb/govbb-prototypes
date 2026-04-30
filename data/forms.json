@@ -1,0 +1,385 @@
+{
+  "generated": "2026-04-13",
+  "forms": [
+    {
+      "id": "nisss-self-employment-registration",
+      "title": "Self-Employment Registration",
+      "mda": "National Insurance Scheme (NIS)",
+      "mdaSlug": "nis",
+      "type": "registration",
+      "status": "alpha",
+      "audience": ["individual", "self-employed"],
+      "file": "prototypes/nisss-self-employment-registration.html"
+    },
+    {
+      "id": "nisss-employee-registration",
+      "title": "NIS Online Social Security Service Registration",
+      "mda": "National Insurance Scheme (NIS)",
+      "mdaSlug": "nis",
+      "type": "registration",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/nisss-employee-registration.html"
+    },
+    {
+      "id": "nisss-direct-deposit",
+      "title": "Direct Deposit Form",
+      "mda": "National Insurance Scheme (NIS)",
+      "mdaSlug": "nis",
+      "type": "other",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/nisss-direct-deposit.html"
+    },
+    {
+      "id": "nisss-unemployment-benefit",
+      "title": "Claim for Unemployment Benefit",
+      "mda": "National Insurance Scheme (NIS)",
+      "mdaSlug": "nis",
+      "type": "claim",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/nisss-unemployment-benefit.html"
+    },
+    {
+      "id": "nisss-pensioner-declaration",
+      "title": "Pensioner Declaration Form",
+      "mda": "National Insurance Scheme (NIS)",
+      "mdaSlug": "nis",
+      "type": "declaration",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/nisss-pensioner-declaration.html"
+    },
+    {
+      "id": "nisss-self-employed-contributions",
+      "title": "Self-employed Contributions Certificate",
+      "mda": "National Insurance Scheme (NIS)",
+      "mdaSlug": "nis",
+      "type": "certificate",
+      "status": "alpha",
+      "audience": ["self-employed"],
+      "file": "prototypes/nisss-self-employed-contributions.html"
+    },
+    {
+      "id": "nisss-employer-registration",
+      "title": "Register as an Employer for NIS Online Services",
+      "mda": "National Insurance Scheme (NIS)",
+      "mdaSlug": "nis",
+      "type": "registration",
+      "status": "alpha",
+      "audience": ["employer"],
+      "file": "prototypes/nisss-employer-registration.html"
+    },
+    {
+      "id": "nisss-dp10",
+      "title": "National Insurance Contributions Certificate (D.P. 10)",
+      "mda": "National Insurance Scheme (NIS)",
+      "mdaSlug": "nis",
+      "type": "other",
+      "status": "alpha",
+      "audience": ["employer"],
+      "file": "prototypes/nisss-dp10.html"
+    },
+    {
+      "id": "nisss-termination-certificate",
+      "title": "Termination of Services / Layoff Certificate",
+      "mda": "National Insurance Scheme (NIS)",
+      "mdaSlug": "nis",
+      "type": "certificate",
+      "status": "alpha",
+      "audience": ["employer"],
+      "file": "prototypes/nisss-termination-certificate.html"
+    },
+    {
+      "id": "nisss-life-certificate",
+      "title": "NIS Life Certificate",
+      "mda": "National Insurance Scheme (NIS)",
+      "mdaSlug": "nis",
+      "type": "certificate",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/nisss-life-certificate.html"
+    },
+    {
+      "id": "nisss-educational-status",
+      "title": "NIS Educational Status Form",
+      "mda": "National Insurance Scheme (NIS)",
+      "mdaSlug": "nis",
+      "type": "other",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/nisss-educational-status.html"
+    },
+    {
+      "id": "nisss-old-age-pension",
+      "title": "Claim for Old Age Contributory Pension",
+      "mda": "National Insurance Scheme (NIS)",
+      "mdaSlug": "nis",
+      "type": "claim",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/nisss-old-age-pension.html"
+    },
+    {
+      "id": "bla-remove-building-boat",
+      "title": "Apply for a Permit to Move a Building, House or Boat on Public Roads",
+      "mda": "Barbados Licensing Authority (BLA)",
+      "mdaSlug": "bla",
+      "type": "permit",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/bla-remove-building-boat.html"
+    },
+    {
+      "id": "caipo-company-name-search",
+      "title": "Request a Company Name Search and Reservation (Form 33)",
+      "mda": "Corporate Affairs and Intellectual Property Office (CAIPO)",
+      "mdaSlug": "caipo",
+      "type": "search",
+      "status": "alpha",
+      "audience": ["individual", "employer"],
+      "file": "prototypes/caipo-company-name-search.html"
+    },
+    {
+      "id": "caipo-srl-name-search",
+      "title": "Request a Name Search and Reservation for a Society with Restricted Liability (Form 15)",
+      "mda": "Corporate Affairs and Intellectual Property Office (CAIPO)",
+      "mdaSlug": "caipo",
+      "type": "search",
+      "status": "alpha",
+      "audience": ["individual", "employer"],
+      "file": "prototypes/caipo-srl-name-search.html"
+    },
+    {
+      "id": "caipo-business-names",
+      "title": "Register a Business Name (Form I)",
+      "mda": "Corporate Affairs and Intellectual Property Office (CAIPO)",
+      "mdaSlug": "caipo",
+      "type": "registration",
+      "status": "alpha",
+      "audience": ["individual", "self-employed", "employer"],
+      "file": "prototypes/caipo-business-names.html"
+    },
+    {
+      "id": "caipo-financial-statements-exemption",
+      "title": "Apply for Exemption from Filing Financial Statements",
+      "mda": "Corporate Affairs and Intellectual Property Office (CAIPO)",
+      "mdaSlug": "caipo",
+      "type": "application",
+      "status": "alpha",
+      "audience": ["employer"],
+      "file": "prototypes/caipo-financial-statements-exemption.html"
+    },
+    {
+      "id": "caipo-articles-reincorporation",
+      "title": "File Articles of Reincorporation",
+      "mda": "Corporate Affairs and Intellectual Property Office (CAIPO)",
+      "mdaSlug": "caipo",
+      "type": "application",
+      "status": "alpha",
+      "audience": ["employer"],
+      "file": "prototypes/caipo-articles-reincorporation.html"
+    },
+    {
+      "id": "caipo-declaration-cap308",
+      "title": "Declaration of Compliance (Companies Act Cap. 308)",
+      "mda": "Corporate Affairs and Intellectual Property Office (CAIPO)",
+      "mdaSlug": "caipo",
+      "type": "declaration",
+      "status": "alpha",
+      "audience": ["employer"],
+      "file": "prototypes/caipo-declaration-cap308.html"
+    },
+    {
+      "id": "caipo-declaration-nonprofit",
+      "title": "Declaration of Compliance (Non-Profit Company)",
+      "mda": "Corporate Affairs and Intellectual Property Office (CAIPO)",
+      "mdaSlug": "caipo",
+      "type": "declaration",
+      "status": "alpha",
+      "audience": ["employer"],
+      "file": "prototypes/caipo-declaration-nonprofit.html"
+    },
+    {
+      "id": "caipo-url-domain-declaration",
+      "title": "Declaration of URL / Domain Name Ownership for Company Incorporation",
+      "mda": "Corporate Affairs and Intellectual Property Office (CAIPO)",
+      "mdaSlug": "caipo",
+      "type": "declaration",
+      "status": "alpha",
+      "audience": ["individual", "employer"],
+      "file": "prototypes/caipo-url-domain-declaration.html"
+    },
+    {
+      "id": "caipo-registered-agent",
+      "title": "Apply to Become a Registered Agent with CAIPO",
+      "mda": "Corporate Affairs and Intellectual Property Office (CAIPO)",
+      "mdaSlug": "caipo",
+      "type": "application",
+      "status": "alpha",
+      "audience": ["individual", "employer"],
+      "file": "prototypes/caipo-registered-agent.html"
+    },
+    {
+      "id": "caipo-geographical-agent-authorisation",
+      "title": "Authorise an Agent for a Geographical Indications Matter (Cap. 320)",
+      "mda": "Corporate Affairs and Intellectual Property Office (CAIPO)",
+      "mdaSlug": "caipo",
+      "type": "application",
+      "status": "alpha",
+      "audience": ["individual", "employer"],
+      "file": "prototypes/caipo-geographical-agent-authorisation.html"
+    },
+    {
+      "id": "caipo-caricom-complaints",
+      "title": "Submit a CARICOM Complaint About an Incident in Barbados",
+      "mda": "Corporate Affairs and Intellectual Property Office (CAIPO)",
+      "mdaSlug": "caipo",
+      "type": "other",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/caipo-caricom-complaints.html"
+    },
+    {
+      "id": "caipo-ibc-licence-application",
+      "title": "Apply for an International Business Company (IBC) Licence",
+      "mda": "Corporate Affairs and Intellectual Property Office (CAIPO)",
+      "mdaSlug": "caipo",
+      "type": "application",
+      "status": "alpha",
+      "audience": ["employer"],
+      "file": "prototypes/caipo-ibc-licence-application.html"
+    },
+    {
+      "id": "immd-caricom-indefinite-stay",
+      "title": "CARICOM Indefinite Stay Application",
+      "mda": "Citizenship, Immigration and Passports Department (CIPD)",
+      "mdaSlug": "cipd",
+      "type": "application",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/immd-caricom-indefinite-stay.html"
+    },
+    {
+      "id": "immd-student-certificate-h2",
+      "title": "Certificate by Non-Immigrant Student (Form H-2)",
+      "mda": "Citizenship, Immigration and Passports Department (CIPD)",
+      "mdaSlug": "cipd",
+      "type": "certificate",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/immd-student-certificate-h2.html"
+    },
+    {
+      "id": "immd-student-eligibility-h1",
+      "title": "Certificate of Eligibility for Non-Immigrant Student Status (H-1)",
+      "mda": "Citizenship, Immigration and Passports Department (CIPD)",
+      "mdaSlug": "cipd",
+      "type": "certificate",
+      "status": "alpha",
+      "audience": ["institution"],
+      "file": "prototypes/immd-student-eligibility-h1.html"
+    },
+    {
+      "id": "immd-citizenship-affidavit",
+      "title": "Citizenship Affidavit",
+      "mda": "Citizenship, Immigration and Passports Department (CIPD)",
+      "mdaSlug": "cipd",
+      "type": "declaration",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/immd-citizenship-affidavit.html"
+    },
+    {
+      "id": "immd-commonwealth-citizenship",
+      "title": "Commonwealth Citizenship Registration",
+      "mda": "Citizenship, Immigration and Passports Department (CIPD)",
+      "mdaSlug": "cipd",
+      "type": "registration",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/immd-commonwealth-citizenship.html"
+    },
+    {
+      "id": "immd-immigrant-status",
+      "title": "Immigrant Status and Non-National Registration (Form A)",
+      "mda": "Citizenship, Immigration and Passports Department (CIPD)",
+      "mdaSlug": "cipd",
+      "type": "application",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/immd-immigrant-status.html"
+    },
+    {
+      "id": "immd-permanent-resident",
+      "title": "Permanent Resident Registration (Form A1)",
+      "mda": "Citizenship, Immigration and Passports Department (CIPD)",
+      "mdaSlug": "cipd",
+      "type": "application",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/immd-permanent-resident.html"
+    },
+    {
+      "id": "immd-citizen-adult",
+      "title": "Registration as a Citizen of Barbados — Adult (Form R.4)",
+      "mda": "Citizenship, Immigration and Passports Department (CIPD)",
+      "mdaSlug": "cipd",
+      "type": "registration",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/immd-citizen-adult.html"
+    },
+    {
+      "id": "immd-citizen-marriage",
+      "title": "Registration as a Citizen of Barbados by Marriage",
+      "mda": "Citizenship, Immigration and Passports Department (CIPD)",
+      "mdaSlug": "cipd",
+      "type": "registration",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/immd-citizen-marriage.html"
+    },
+    {
+      "id": "immd-citizen-under18",
+      "title": "Registration as a Citizen of Barbados — Under 18",
+      "mda": "Citizenship, Immigration and Passports Department (CIPD)",
+      "mdaSlug": "cipd",
+      "type": "registration",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/immd-citizen-under18.html"
+    },
+    {
+      "id": "immd-citizenship-descent",
+      "title": "Certificate of Citizenship by Descent",
+      "mda": "Citizenship, Immigration and Passports Department (CIPD)",
+      "mdaSlug": "cipd",
+      "type": "certificate",
+      "status": "alpha",
+      "audience": ["individual"],
+      "file": "prototypes/immd-citizenship-descent.html"
+    },
+    {
+      "id": "immd-short-term-work-permit",
+      "title": "Short Term Work Permit or Training Attachment (Form C-3)",
+      "mda": "Citizenship, Immigration and Passports Department (CIPD)",
+      "mdaSlug": "cipd",
+      "type": "permit",
+      "status": "alpha",
+      "audience": ["employer"],
+      "file": "prototypes/immd-short-term-work-permit.html"
+    },
+    {
+      "id": "immd-work-permit",
+      "title": "Work Permit / Extension / Job Offer for Non-Immigrant Employment (Form C-2)",
+      "mda": "Citizenship, Immigration and Passports Department (CIPD)",
+      "mdaSlug": "cipd",
+      "type": "permit",
+      "status": "alpha",
+      "audience": ["employer"],
+      "file": "prototypes/immd-work-permit.html"
+    }
+  ]
+}

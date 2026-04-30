@@ -277,7 +277,7 @@
       '  <option value="">All agencies</option>' +
       '  <option value="nis">NIS</option>' +
       '  <option value="bla">BLA</option>' +
-      '  <option value="nab">NAB</option>' +
+      '  <option value="sea">SEA</option>' +
       '  <option value="nhc">NHC</option>' +
       '  <option value="caipo">CAIPO</option>' +
       '  <option value="cipd">CIPD (Immigration)</option>' +
