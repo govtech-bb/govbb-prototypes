@@ -519,9 +519,21 @@ const PAGES = {
       ${GovBB.caption()}
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Declaration</h1>
       <div class="space-y-8">
-        <div class="space-y-2">
-          <p class="text-[1.25rem]"><span class="font-bold">Applicant's name:</span> ${[GovBB.D['first-name'], GovBB.D['last-name']].filter(Boolean).join(' ') || '—'}</p>
-          <p class="text-[1.25rem]"><span class="font-bold">Date:</span> ${formattedDate}</p>
+        <div class="space-y-6">
+          <div class="space-y-2">
+            <p class="text-[1.25rem] font-bold">Applicant's name</p>
+            <p class="text-[1.25rem]">${[GovBB.D['first-name'], GovBB.D['last-name']].filter(Boolean).join(' ') || '—'}</p>
+          </div>
+          ${GovBB.D['co-applicant'] === 'Yes' ? `
+          <div class="space-y-2">
+            <p class="text-[1.25rem] font-bold">Co-applicant's name</p>
+            <p class="text-[1.25rem]">${[GovBB.D['co-first-name'], GovBB.D['co-last-name']].filter(Boolean).join(' ') || '—'}</p>
+          </div>
+          ` : ''}
+          <div class="space-y-2">
+            <p class="text-[1.25rem] font-bold">Date</p>
+            <p class="text-[1.25rem]">${formattedDate}</p>
+          </div>
         </div>
         ${GovBB.emailField('decl-email', 'Your email address', {hint: 'We will send your confirmation here'})}
         ${GovBB.checkboxItem('decl-agree', 'I declare that the information provided in this application is true and correct to the best of my knowledge.')}
