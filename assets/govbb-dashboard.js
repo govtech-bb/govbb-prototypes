@@ -37,10 +37,10 @@
     'prototypes/nisss-old-age-pension.html':              { mda: 'nis', type: 'claim'        },
     /* BLA */
     'prototypes/bla-remove-building-boat.html':           { mda: 'bla', type: 'permit'       },
-    /* NAB */
-    'prototypes/nab-seniors-recreational-activities.html': { mda: 'nab', type: 'application' },
-    'prototypes/nab-home-care-programme.html':             { mda: 'nab', type: 'application' },
-    'prototypes/nab-community-elder-care.html':            { mda: 'nab', type: 'application' },
+    /* SEA */
+    'prototypes/nab-seniors-recreational-activities.html': { mda: 'sea', type: 'application' },
+    'prototypes/nab-home-care-programme.html':             { mda: 'sea', type: 'application' },
+    'prototypes/nab-community-elder-care.html':            { mda: 'sea', type: 'application' },
     /* CAIPO */
     'prototypes/caipo-company-name-search.html':               { mda: 'caipo', type: 'search'      },
     'prototypes/caipo-srl-name-search.html':                   { mda: 'caipo', type: 'search'      },
@@ -96,7 +96,7 @@
       var filename = href.split('/').pop();
       var mda;
       if      (filename.startsWith('nisss-'))  mda = 'nis';
-      else if (filename.startsWith('nab-'))    mda = 'nab';
+      else if (filename.startsWith('nab-'))    mda = 'sea';
       else if (filename.startsWith('nhc-'))    mda = 'nhc';
       else if (filename.startsWith('bla-'))    mda = 'bla';
       else if (filename.startsWith('caipo-'))  mda = 'caipo';
