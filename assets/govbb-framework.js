@@ -514,4 +514,15 @@
   global.nav    = function (p) { GovBB.nav(p); };
   global.goTo   = function (p) { GovBB.nav(p); };
 
+  /* ── Inline edit mode loader ── */
+  if (/[?&]edit=1/.test(global.location.search)) {
+    var _fwSrc = (document.querySelector('script[src*="govbb-framework"]') || {}).src || '';
+    var _editSrc = _fwSrc
+      ? _fwSrc.replace(/govbb-framework[^/]*\.js[^/]*$/, 'govbb-inline-edit.js')
+      : '/assets/govbb-inline-edit.js';
+    var _editEl = document.createElement('script');
+    _editEl.src = _editSrc;
+    document.head.appendChild(_editEl);
+  }
+
 }(window));
