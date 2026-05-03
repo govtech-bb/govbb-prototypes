@@ -371,6 +371,12 @@
         if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
       });
     }
+    /* Labels have a `for` attribute that redirects clicks to the associated
+       input. Prevent that default so the label itself becomes editable. */
+    if (el.tagName === 'LABEL') {
+      el.addEventListener('click', function (e) { e.preventDefault(); });
+      el.addEventListener('mousedown', function (e) { e.preventDefault(); el.focus(); });
+    }
   }
 
   /* ─── Drag handle element ────────────────────────────── */
