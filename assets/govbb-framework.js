@@ -506,6 +506,22 @@
       .replace(/'/g, '&#39;');
   }
 
+  /* ── Edit-time API (used by govbb-inline-edit.js) ── */
+
+  /** Register or replace a page template at runtime. */
+  GovBB.addPage = function (id, htmlOrFn) {
+    _pages[id] = typeof htmlOrFn === 'function' ? htmlOrFn : function () { return htmlOrFn; };
+  };
+
+  /** Replace the entire flow array and re-clamp the current index. */
+  GovBB.setFlow = function (newFlow) {
+    _flow = newFlow.slice();
+    if (_current >= _flow.length) _current = Math.max(0, _flow.length - 1);
+  };
+
+  /** Returns the current list of registered page IDs. */
+  GovBB.getPageIds = function () { return Object.keys(_pages); };
+
   /* ── Global aliases ── */
   global.GovBB  = GovBB;
   global.next   = function () { GovBB.next(); };
