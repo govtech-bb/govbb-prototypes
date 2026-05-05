@@ -22,6 +22,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = 3001;
 const PDF_ROOT = path.join(__dirname, 'pdf forms');
 const PROTOTYPES_DIR = path.join(__dirname, 'prototypes');
+const PATCHES_DIR = path.join(PROTOTYPES_DIR, 'patches');
 const CLAUDE_MD = path.join(__dirname, 'CLAUDE.md');
 
 // Pick a short reference prototype to show Claude what the output format looks like
@@ -294,6 +295,31 @@ const server = http.createServer(async (req, res) => {
 
   if (url.pathname === '/api/generate' && req.method === 'POST') {
     return handleGenerate(req, res);
+  }
+
+  // ── /api/patches/:slug ────────────────────────────────────────────────────
+  const patchMatch = url.pathname.match(/^\/api\/patches\/([a-z0-9-]+)$/);
+  if (patchMatch) {
+    const slug = patchMatch[1];
+    const patchFile = path.join(PATCHES_DIR, slug + '.json');
+
+    if (req.method === 'GET') {
+      if (!fs.existsSync(patchFile)) return json(res, {});
+      try {
+        const data = JSON.parse(fs.readFileSync(patchFile, 'utf8'));
+        return json(res, data);
+      } catch {
+        return json(res, {});
+      }
+    }
+
+    if (req.method === 'POST') {
+      let body;
+      try { body = await readBody(req); } catch { return json(res, { error: 'Invalid JSON' }, 400); }
+      if (!fs.existsSync(PATCHES_DIR)) fs.mkdirSync(PATCHES_DIR, { recursive: true });
+      fs.writeFileSync(patchFile, JSON.stringify(body, null, 2), 'utf8');
+      return json(res, { ok: true });
+    }
   }
 
   json(res, { error: 'Not found' }, 404);

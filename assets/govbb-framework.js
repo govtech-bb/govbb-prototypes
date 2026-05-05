@@ -23,6 +23,7 @@
   var _getFlow   = null;
   var _appEl     = 'app';
   var _onRadio   = null;
+  var _patchSlug = '';
 
   /* ── CSS class constants ── */
   GovBB.BTN_CLS = 'relative inline-flex items-center justify-center gap-2 text-[20px] whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none bg-bb-teal-00 text-bb-white-00 hover:bg-[#1a777d] hover:shadow-[inset_0_0_0_4px_rgba(222,245,246,0.10)] active:bg-[#0a4549] active:shadow-[inset_0_0_0_3px_rgba(0,0,0,0.20)] px-xm py-s rounded-sm leading-[1.7] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-1 focus-visible:ring-bb-teal-100 focus-visible:rounded-sm';
@@ -40,8 +41,129 @@
     _appEl    = cfg.appElementId || 'app';
     _onRadio  = cfg.onRadioChange || null;
     _current  = 0;
-    GovBB.render();
+    _patchSlug = location.pathname.split('/').pop().replace(/\.html$/, '');
+
+    // Fetch saved patches from static file, populate localStorage, then render.
+    // Falls back to immediate render if the file doesn't exist or fetch fails.
+    fetch('./patches/' + _patchSlug + '.json')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (patches) {
+        if (patches && typeof patches === 'object') {
+          Object.keys(patches).forEach(function (k) {
+            try {
+              var v = patches[k];
+              localStorage.setItem(k, typeof v === 'string' ? v : JSON.stringify(v));
+            } catch (e) {}
+          });
+        }
+      })
+      .catch(function () {})
+      .then(function () {
+        _applyFlowPatches();
+        GovBB.render();
+      });
   };
+
+  /* ── Patch helpers ── */
+
+  /** Apply flow modifications (custom pages + reordered/deleted flow) from localStorage. */
+  function _applyFlowPatches() {
+    if (!_patchSlug) return;
+    var saved;
+    try { saved = JSON.parse(localStorage.getItem('ge:' + _patchSlug + ':__flow')); } catch (e) { return; }
+    if (!saved) return;
+    (saved.customPageIds || []).forEach(function (pid) {
+      var html;
+      try { html = JSON.parse(localStorage.getItem('ge:' + _patchSlug + ':__cp:' + pid)); } catch (e) {}
+      if (html && typeof html === 'string') {
+        _pages[pid] = (function (h) { return function () { return h; }; })(html);
+      }
+    });
+    if (saved.flow && saved.flow.length) {
+      _flow = saved.flow.slice();
+      if (_current >= _flow.length) _current = Math.max(0, _flow.length - 1);
+    }
+  }
+
+  /** Returns true if a child element is a continue/submit button row (not a field). */
+  function _isPatchBtnRow(el) {
+    return !!el.querySelector('a[onclick*="next"], button[onclick*="next()"]') && !el.querySelector('h2, ul');
+  }
+
+  /** Apply saved text and ordering patches to the freshly-rendered DOM. */
+  function _applyTextPatches(rootEl, pageId) {
+    if (!_patchSlug) return;
+    var saved;
+    try { saved = JSON.parse(localStorage.getItem('ge:' + _patchSlug + ':' + pageId)); } catch (e) { return; }
+    if (!saved) return;
+
+    var flow = _getFlow ? _getFlow() : _flow;
+    if (flow[0] === pageId) {
+      /* ── Start page ── */
+      var root = rootEl.querySelector('.space-y-8') || rootEl.firstElementChild;
+      if (!root) return;
+
+      if (saved.order && saved.order.length) {
+        var kids = Array.from(root.children);
+        saved.order.forEach(function (oi) { if (kids[oi]) root.appendChild(kids[oi]); });
+      }
+
+      if (saved.sections) {
+        var secs = Array.from(root.children);
+        saved.sections.forEach(function (d, si) {
+          var sec = secs[si];
+          if (!sec || !d) return;
+          if (d.h1) { var h1 = sec.querySelector('h1'); if (h1) h1.textContent = d.h1; }
+          if (d.h2) { var h2 = sec.querySelector('h2'); if (h2) h2.textContent = d.h2; }
+          if (d.paragraphs) {
+            var ps = Array.from(sec.querySelectorAll('p')).filter(function (p) { return !p.closest('ul'); });
+            d.paragraphs.forEach(function (t, i) { if (ps[i]) ps[i].textContent = t; });
+          }
+          if (d.items) {
+            var ul = sec.querySelector('ul');
+            if (ul) {
+              ul.innerHTML = '';
+              d.items.forEach(function (t) {
+                var li = document.createElement('li');
+                li.textContent = t;
+                ul.appendChild(li);
+              });
+            }
+          }
+        });
+      }
+    } else {
+      /* ── Question / check / declaration page ── */
+      if (saved.h1)     { var h1 = rootEl.querySelector('h1');             if (h1) h1.textContent = saved.h1; }
+      if (saved.caption){ var cp = rootEl.querySelector('p.border-bb-blue-40'); if (cp) cp.textContent = saved.caption; }
+      if (saved.h2s) {
+        var h2Nodes = rootEl.querySelectorAll('h2');
+        saved.h2s.forEach(function (t, i) { if (h2Nodes[i]) h2Nodes[i].textContent = t; });
+      }
+      var fr = rootEl.querySelector('.space-y-8');
+      if (!fr) return;
+
+      var allKids  = Array.from(fr.children);
+      var fieldKids = allKids.filter(function (c) { return !_isPatchBtnRow(c); });
+      var btnRows   = allKids.filter(function (c) { return _isPatchBtnRow(c); });
+
+      // Apply label / hint text by original (render-order) position
+      if (saved.fields) {
+        fieldKids.forEach(function (child, ci) {
+          var fd = saved.fields[String(ci)];
+          if (!fd) return;
+          if (fd.label) { var l = child.querySelector('label'); if (l) l.textContent = fd.label; }
+          if (fd.hint)  { var p = child.querySelector('p');     if (p) p.textContent = fd.hint; }
+        });
+      }
+
+      // Reorder fields then re-append button rows at the end
+      if (saved.fieldOrder && saved.fieldOrder.length) {
+        saved.fieldOrder.forEach(function (oi) { if (fieldKids[oi]) fr.appendChild(fieldKids[oi]); });
+        btnRows.forEach(function (b) { fr.appendChild(b); });
+      }
+    }
+  }
 
   /* ── Navigation ── */
   GovBB.render = function () {
@@ -56,6 +178,7 @@
     _bindRadios();
     _bindCheckboxes();
     _initSignaturePads();
+    _applyTextPatches(el, pageId);
     window.scrollTo(0, 0);
   };
 

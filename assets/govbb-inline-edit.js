@@ -78,10 +78,11 @@
   function _boot() {
     if (!global.GovBB) { setTimeout(_boot, 50); return; }
     var app = _$('app');
-    if (!app)          { setTimeout(_boot, 50); return; }
+    /* Wait until the framework has fetched patches and rendered the first page */
+    if (!app || !app.firstElementChild) { setTimeout(_boot, 50); return; }
 
-    /* Apply any saved flow modifications (new/deleted pages) */
-    _applyStoredFlow();
+    /* Flow mods (custom pages, flow order) are now applied by the framework
+       before the first render — no need to re-apply them here. */
 
     _injectBar();
     _injectStyles();
@@ -320,7 +321,8 @@
     var pid = _currentPageId();
     if (pid === 'confirmation') { _hideBar(); return; }
 
-    _applySavedData(app, pid);
+    /* Text/order patches are now applied by the framework's GovBB.render()
+       for all visitors. No need to re-apply them here. */
     _showBar(pid);
     _closePageManager();
 
@@ -660,7 +662,36 @@
     var pid = _currentPageId();
     if (GovBB.getCurrentIndex() === 0) _saveStartPage(app, pid);
     else                               _saveQuestionPage(app, pid);
-    _toast('Changes saved');
+    _serverSave();
+  }
+
+  /** POST all localStorage patches for this slug to the API server, which
+   *  writes prototypes/patches/{slug}.json to disk so changes are permanent. */
+  function _serverSave() {
+    var patches = {};
+    var prefix  = 'ge:' + _slug + ':';
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (k && k.indexOf(prefix) === 0) {
+          try { patches[k] = JSON.parse(localStorage.getItem(k)); }
+          catch (e) { patches[k] = localStorage.getItem(k); }
+        }
+      }
+    } catch (e) {}
+
+    fetch('http://localhost:3001/api/patches/' + _slug, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(patches)
+    })
+    .then(function (r) {
+      if (r.ok) _toast('Changes saved');
+      else      _toast('Saved locally — server returned an error');
+    })
+    .catch(function () {
+      _toast('Saved locally — start the API server to persist changes');
+    });
   }
 
   function _saveStartPage(app, pid) {
