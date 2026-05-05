@@ -614,8 +614,10 @@
       });
     }
     if (el.tagName === 'LABEL') {
-      el.addEventListener('click',     function(e) { e.preventDefault(); });
-      el.addEventListener('mousedown', function(e) { e.preventDefault(); el.focus(); });
+      /* Remove the `for` attribute so clicking the label doesn't jump
+         focus to the linked input — the browser does this natively even
+         with preventDefault, so removing `for` is the reliable fix. */
+      el.removeAttribute('for');
     }
   }
 
@@ -857,7 +859,14 @@
         'background:#00654a;color:#fff;padding:0.75rem 1.5rem;border-radius:0.375rem;' +
         'font-family:Figtree,sans-serif;font-size:1rem;font-weight:600;' +
         'z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,0.15);transition:opacity 0.4s;}' +
-      '.ge-toast-out{opacity:0;}';
+      '.ge-toast-out{opacity:0;}' +
+
+      /* Prevent inputs / selects / textareas stealing focus in edit mode */
+      '[data-ge] input,[data-ge] select,[data-ge] textarea,' +
+      '[data-ge] [role="radio"],[data-ge] [role="checkbox"]{' +
+        'pointer-events:none;user-select:none;}' +
+      '[data-ge] .input-wrap{pointer-events:none;}' +
+      '[data-ge] button[type="button"]:not(.ge-delete-btn):not(.ge-handle){pointer-events:none;}';
     document.head.appendChild(s);
   }
 
