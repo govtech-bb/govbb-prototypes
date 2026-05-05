@@ -16,6 +16,7 @@ import http from 'http';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
 import Anthropic from '@anthropic-ai/sdk';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -74,6 +75,50 @@ function listPdfs(dir) {
 /** Convert a PDF path to a relative label like "NISSS PDF forms / DP-10-Form.pdf" */
 function pdfLabel(fullPath) {
   return path.relative(PDF_ROOT, fullPath);
+}
+
+/** Git: stage the patch file, commit, push to both remotes. */
+function _autoCommitAndPush(slug, patchFile) {
+  const result = { committed: false, pushed: [], errors: [] };
+  const relPath = path.relative(__dirname, patchFile).replace(/\\/g, '/');
+
+  // Stage + commit (safe to fail if nothing changed)
+  try {
+    execSync(`git add "${relPath}"`, { cwd: __dirname, stdio: 'pipe' });
+    execSync(`git commit -m "Edit: save patches for ${slug}"`, { cwd: __dirname, stdio: 'pipe' });
+    result.committed = true;
+  } catch (e) {
+    const out = (e.stdout || Buffer.alloc(0)).toString();
+    if (!out.includes('nothing to commit')) {
+      result.errors.push('commit: ' + out.trim() || e.message);
+    }
+    // "nothing to commit" is fine — patches file unchanged, still push
+  }
+
+  // Push to govtech-bb (origin)
+  try {
+    execSync('git push origin HEAD:main', { cwd: __dirname, stdio: 'pipe' });
+    result.pushed.push('origin');
+  } catch (e) {
+    result.errors.push('push origin: ' + (e.stderr || Buffer.alloc(0)).toString().trim() || e.message);
+  }
+
+  // Push to personal — auto-merge if the remote is ahead
+  try {
+    execSync('git push personal HEAD:main', { cwd: __dirname, stdio: 'pipe' });
+    result.pushed.push('personal');
+  } catch {
+    try {
+      execSync('git fetch personal', { cwd: __dirname, stdio: 'pipe' });
+      execSync('git merge personal/main --no-edit', { cwd: __dirname, stdio: 'pipe' });
+      execSync('git push personal HEAD:main', { cwd: __dirname, stdio: 'pipe' });
+      result.pushed.push('personal');
+    } catch (e2) {
+      result.errors.push('push personal: ' + (e2.stderr || Buffer.alloc(0)).toString().trim() || e2.message);
+    }
+  }
+
+  return result;
 }
 
 /** Convert a form name to a safe kebab-case filename */
@@ -318,7 +363,8 @@ const server = http.createServer(async (req, res) => {
       try { body = await readBody(req); } catch { return json(res, { error: 'Invalid JSON' }, 400); }
       if (!fs.existsSync(PATCHES_DIR)) fs.mkdirSync(PATCHES_DIR, { recursive: true });
       fs.writeFileSync(patchFile, JSON.stringify(body, null, 2), 'utf8');
-      return json(res, { ok: true });
+      const git = _autoCommitAndPush(slug, patchFile);
+      return json(res, { ok: true, git });
     }
   }
 

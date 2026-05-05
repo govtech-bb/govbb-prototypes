@@ -685,12 +685,22 @@
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(patches)
     })
-    .then(function (r) {
-      if (r.ok) _toast('Changes saved');
-      else      _toast('Saved locally — server returned an error');
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      var git = data.git || {};
+      var pushed = git.pushed || [];
+      if (pushed.length >= 2) {
+        _toast('Saved and published to GitHub ✓');
+      } else if (pushed.length === 1) {
+        _toast('Saved and pushed to ' + pushed[0] + ' (other remote failed)');
+      } else if (data.ok) {
+        _toast('Saved to disk — could not push to GitHub');
+      } else {
+        _toast('Server error — changes saved locally only');
+      }
     })
     .catch(function () {
-      _toast('Saved locally — start the API server to persist changes');
+      _toast('Saved locally — start the API server to publish changes');
     });
   }
 
