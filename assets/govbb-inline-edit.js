@@ -726,8 +726,10 @@
      CANCEL (current page only)
      ───────────────────────────────────────────────────── */
   function _cancel() {
-    _del(_pageKey(_currentPageId()));
-    if (global.GovBB && GovBB.render) GovBB.render();
+    /* Exit edit mode: navigate to the same page without ?edit=1.
+       Unsaved changes on the current page are discarded;
+       previously saved changes on other pages are preserved. */
+    location.href = location.pathname;
   }
 
   /* ─────────────────────────────────────────────────────
@@ -859,14 +861,7 @@
         'background:#00654a;color:#fff;padding:0.75rem 1.5rem;border-radius:0.375rem;' +
         'font-family:Figtree,sans-serif;font-size:1rem;font-weight:600;' +
         'z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,0.15);transition:opacity 0.4s;}' +
-      '.ge-toast-out{opacity:0;}' +
-
-      /* Prevent inputs / selects / textareas stealing focus in edit mode */
-      '[data-ge] input,[data-ge] select,[data-ge] textarea,' +
-      '[data-ge] [role="radio"],[data-ge] [role="checkbox"]{' +
-        'pointer-events:none;user-select:none;}' +
-      '[data-ge] .input-wrap{pointer-events:none;}' +
-      '[data-ge] button[type="button"]:not(.ge-delete-btn):not(.ge-handle){pointer-events:none;}';
+      '.ge-toast-out{opacity:0;}';
     document.head.appendChild(s);
   }
 
