@@ -321,8 +321,11 @@
     var pid = _currentPageId();
     if (pid === 'confirmation') { _hideBar(); return; }
 
-    /* Text/order patches are now applied by the framework's GovBB.render()
-       for all visitors. No need to re-apply them here. */
+    /* Apply saved text + ordering for this page in edit mode.
+       (The framework also applies text-only patches for non-edit visitors,
+       but the full restore including field reordering must run here, before
+       _activateQuestionPage sets data-ge-orig on the reordered DOM.) */
+    _applySavedData(app, pid);
     _showBar(pid);
     _closePageManager();
 

@@ -90,7 +90,9 @@
     return !!el.querySelector('a[onclick*="next"], button[onclick*="next()"]') && !el.querySelector('h2, ul');
   }
 
-  /** Apply saved text and ordering patches to the freshly-rendered DOM. */
+  /** Apply saved text patches to the freshly-rendered DOM for all visitors.
+   *  Text-only — field/section reordering is handled by the edit script in
+   *  edit mode, and is not applied here to avoid double-apply conflicts. */
   function _applyTextPatches(rootEl, pageId) {
     if (!_patchSlug) return;
     var saved;
@@ -99,68 +101,52 @@
 
     var flow = _getFlow ? _getFlow() : _flow;
     if (flow[0] === pageId) {
-      /* ── Start page ── */
+      /* ── Start page: apply section text in saved order ── */
       var root = rootEl.querySelector('.space-y-8') || rootEl.firstElementChild;
-      if (!root) return;
-
+      if (!root || !saved.sections) return;
+      /* Reorder first so section indices match saved.sections */
       if (saved.order && saved.order.length) {
         var kids = Array.from(root.children);
         saved.order.forEach(function (oi) { if (kids[oi]) root.appendChild(kids[oi]); });
       }
-
-      if (saved.sections) {
-        var secs = Array.from(root.children);
-        saved.sections.forEach(function (d, si) {
-          var sec = secs[si];
-          if (!sec || !d) return;
-          if (d.h1) { var h1 = sec.querySelector('h1'); if (h1) h1.textContent = d.h1; }
-          if (d.h2) { var h2 = sec.querySelector('h2'); if (h2) h2.textContent = d.h2; }
-          if (d.paragraphs) {
-            var ps = Array.from(sec.querySelectorAll('p')).filter(function (p) { return !p.closest('ul'); });
-            d.paragraphs.forEach(function (t, i) { if (ps[i]) ps[i].textContent = t; });
+      var secs = Array.from(root.children);
+      saved.sections.forEach(function (d, si) {
+        var sec = secs[si];
+        if (!sec || !d) return;
+        if (d.h1) { var h1 = sec.querySelector('h1'); if (h1) h1.textContent = d.h1; }
+        if (d.h2) { var h2 = sec.querySelector('h2'); if (h2) h2.textContent = d.h2; }
+        if (d.paragraphs) {
+          var ps = Array.from(sec.querySelectorAll('p')).filter(function (p) { return !p.closest('ul'); });
+          d.paragraphs.forEach(function (t, i) { if (ps[i]) ps[i].textContent = t; });
+        }
+        if (d.items) {
+          var ul = sec.querySelector('ul');
+          if (ul) {
+            ul.innerHTML = '';
+            d.items.forEach(function (t) { var li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
           }
-          if (d.items) {
-            var ul = sec.querySelector('ul');
-            if (ul) {
-              ul.innerHTML = '';
-              d.items.forEach(function (t) {
-                var li = document.createElement('li');
-                li.textContent = t;
-                ul.appendChild(li);
-              });
-            }
-          }
-        });
-      }
+        }
+      });
     } else {
-      /* ── Question / check / declaration page ── */
-      if (saved.h1)     { var h1 = rootEl.querySelector('h1');             if (h1) h1.textContent = saved.h1; }
+      /* ── Question / check / declaration page: text only ── */
+      if (saved.h1)     { var h1 = rootEl.querySelector('h1');                  if (h1) h1.textContent = saved.h1; }
       if (saved.caption){ var cp = rootEl.querySelector('p.border-bb-blue-40'); if (cp) cp.textContent = saved.caption; }
       if (saved.h2s) {
         var h2Nodes = rootEl.querySelectorAll('h2');
         saved.h2s.forEach(function (t, i) { if (h2Nodes[i]) h2Nodes[i].textContent = t; });
       }
-      var fr = rootEl.querySelector('.space-y-8');
-      if (!fr) return;
-
-      var allKids  = Array.from(fr.children);
-      var fieldKids = allKids.filter(function (c) { return !_isPatchBtnRow(c); });
-      var btnRows   = allKids.filter(function (c) { return _isPatchBtnRow(c); });
-
-      // Apply label / hint text by original (render-order) position
+      /* Apply field label/hint by original render-order position.
+         No DOM reordering here — the edit script handles that in edit mode. */
       if (saved.fields) {
+        var fr = rootEl.querySelector('.space-y-8');
+        if (!fr) return;
+        var fieldKids = Array.from(fr.children).filter(function (c) { return !_isPatchBtnRow(c); });
         fieldKids.forEach(function (child, ci) {
           var fd = saved.fields[String(ci)];
           if (!fd) return;
           if (fd.label) { var l = child.querySelector('label'); if (l) l.textContent = fd.label; }
           if (fd.hint)  { var p = child.querySelector('p');     if (p) p.textContent = fd.hint; }
         });
-      }
-
-      // Reorder fields then re-append button rows at the end
-      if (saved.fieldOrder && saved.fieldOrder.length) {
-        saved.fieldOrder.forEach(function (oi) { if (fieldKids[oi]) fr.appendChild(fieldKids[oi]); });
-        btnRows.forEach(function (b) { fr.appendChild(b); });
       }
     }
   }
