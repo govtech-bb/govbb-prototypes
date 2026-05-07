@@ -122,11 +122,14 @@
     if (_$('ge-bar')) return;
     var bar = document.createElement('div');
     bar.id = 'ge-bar';
+    /* Fixed at the bottom — completely outside the body CSS grid so it never
+       disrupts the page layout. */
     bar.setAttribute('style',
-      'display:none;position:sticky;top:0;z-index:500;background:#00267f;color:#fff;' +
+      'display:none;position:fixed;bottom:0;left:0;right:0;z-index:500;' +
+      'background:#00267f;color:#fff;' +
       'padding:0.625rem 1.5rem;align-items:center;gap:0.75rem;' +
       'font-family:Figtree,sans-serif;font-size:0.9375rem;' +
-      'box-shadow:0 2px 8px rgba(0,0,0,0.2);flex-wrap:wrap;');
+      'box-shadow:0 -2px 12px rgba(0,0,0,0.25);flex-wrap:wrap;');
     bar.innerHTML =
       PENCIL_SVG +
       '<span id="ge-label" style="font-weight:600">Editing</span>' +
@@ -140,9 +143,8 @@
       '<button id="ge-save"   style="' + _btnCss('#1fbf84','#fff') + '">Save changes</button>' +
       '<button id="ge-cancel" style="' + _btnCss('transparent','#fff','2px solid rgba(255,255,255,0.5)') + '">Cancel</button>';
 
-    var alpha = document.querySelector('.bg-bb-blue-10');
-    if (alpha && alpha.nextSibling) alpha.parentNode.insertBefore(bar, alpha.nextSibling);
-    else document.body.insertBefore(bar, document.body.firstChild);
+    /* Append to body as last child — fixed positioning takes it out of flow */
+    document.body.appendChild(bar);
 
     _$('ge-save').addEventListener('click',      _save);
     _$('ge-cancel').addEventListener('click',    _cancel);
@@ -151,14 +153,20 @@
 
   function _showBar(pageId) {
     var b = _$('ge-bar');
-    if (b) b.style.display = 'flex';
+    if (!b) return;
+    b.style.display = 'flex';
     var l = _$('ge-label');
     if (l) l.textContent = 'Editing: ' + _pageName(pageId);
+    /* Push page content up so the fixed bar doesn't cover the bottom */
+    var app = _$('app');
+    if (app) app.style.paddingBottom = (b.offsetHeight + 16) + 'px';
   }
 
   function _hideBar() {
     var b = _$('ge-bar');
     if (b) b.style.display = 'none';
+    var app = _$('app');
+    if (app) app.style.paddingBottom = '';
     _closePageManager();
   }
 
@@ -180,10 +188,11 @@
 
     var panel = document.createElement('div');
     panel.id = 'ge-pm';
+    /* Open upward from the fixed bottom bar */
     panel.setAttribute('style',
-      'position:fixed;top:' + (bar.offsetTop + bar.offsetHeight) + 'px;right:1.5rem;' +
+      'position:fixed;bottom:' + (bar.offsetHeight + 8) + 'px;right:1.5rem;' +
       'width:280px;background:#fff;border:2px solid #00267f;border-radius:0.375rem;' +
-      'box-shadow:0 8px 24px rgba(0,0,0,0.15);z-index:600;font-family:Figtree,sans-serif;overflow:hidden;');
+      'box-shadow:0 -4px 24px rgba(0,0,0,0.15);z-index:600;font-family:Figtree,sans-serif;overflow:hidden;');
 
     var html =
       '<div style="background:#00267f;color:#fff;padding:0.625rem 1rem;font-weight:600;font-size:0.9rem">Pages in this form</div>' +
@@ -901,7 +910,7 @@
         'font-family:Figtree,sans-serif;font-size:0.875rem;font-weight:600;cursor:pointer;transition:background 0.1s;}' +
       '.ge-add-item:hover{background:#ace6e9;}' +
 
-      '.ge-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);' +
+      '.ge-toast{position:fixed;bottom:4.5rem;left:50%;transform:translateX(-50%);' +
         'background:#00654a;color:#fff;padding:0.75rem 1.5rem;border-radius:0.375rem;' +
         'font-family:Figtree,sans-serif;font-size:1rem;font-weight:600;' +
         'z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,0.15);transition:opacity 0.4s;}' +
