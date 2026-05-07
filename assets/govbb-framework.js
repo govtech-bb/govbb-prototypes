@@ -87,7 +87,15 @@
 
   /** Returns true if a child element is a continue/submit button row (not a field). */
   function _isPatchBtnRow(el) {
-    return !!el.querySelector('a[onclick*="next"], button[onclick*="next()"]') && !el.querySelector('h2, ul');
+    var cls = el.getAttribute('class') || '';
+    /* Standard GovBB button row: div with mt-8 + flex */
+    if (el.tagName === 'DIV' && cls.indexOf('mt-8') !== -1 && cls.indexOf('flex') !== -1) return true;
+    /* Wrapper div containing only nav buttons (no content elements) */
+    var hasNav = !!(el.querySelector(
+      '[onclick*="next()"], [onclick*="back()"], [onclick*="GovBB.nav"], [onclick*="GovBB.back"]'
+    ));
+    var hasContent = !!(el.querySelector('h2, ul, dl, p, label, input, select, textarea'));
+    return hasNav && !hasContent;
   }
 
   /** Apply saved text patches to the freshly-rendered DOM for all visitors.

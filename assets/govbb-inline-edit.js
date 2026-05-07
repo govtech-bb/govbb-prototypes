@@ -661,7 +661,16 @@
   }
 
   function _isButtonRow(el) {
-    return !!el.querySelector('a[onclick*="next"], button[onclick*="next()"]') && !el.querySelector('h2, ul');
+    var cls = el.getAttribute('class') || '';
+    /* Pattern 1: div with mt-8 + flex — the standard GovBB button row */
+    if (el.tagName === 'DIV' && cls.indexOf('mt-8') !== -1 && cls.indexOf('flex') !== -1) return true;
+    /* Pattern 2: wrapper div containing only navigation (e.g. eligibility-continue wrapper).
+       Must have a nav button inside and no content elements. */
+    var hasNav = !!(el.querySelector(
+      '[onclick*="next()"], [onclick*="back()"], [onclick*="GovBB.nav"], [onclick*="GovBB.back"]'
+    ));
+    var hasContent = !!(el.querySelector('h2, ul, dl, p, label, input, select, textarea'));
+    return hasNav && !hasContent;
   }
 
   function _getRoot(app) {
