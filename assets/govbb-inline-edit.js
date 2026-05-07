@@ -391,7 +391,13 @@
       _toast('Section removed');
     }));
 
-    el.querySelectorAll('h1, h2').forEach(_makeEditable);
+    /* If el itself is a heading (e.g. h1 is a direct child of the root),
+       make it editable directly; otherwise search inside for headings. */
+    if (['H1','H2'].indexOf(el.tagName) !== -1) {
+      _makeEditable(el);
+    } else {
+      el.querySelectorAll('h1, h2').forEach(_makeEditable);
+    }
     el.querySelectorAll('p').forEach(function(p) {
       if (!p.closest('ul')) _makeEditable(p);
     });
@@ -427,7 +433,7 @@
       if (!p.closest('.field-group')) _makeEditable(p);
     });
 
-    var fieldsRoot = app.querySelector('.space-y-8');
+    var fieldsRoot = app.querySelector('[class*="space-y-"]');
     if (!fieldsRoot) return;
 
     /* Field groups: labels, hints, drag, delete */
@@ -659,7 +665,7 @@
   }
 
   function _getRoot(app) {
-    return app.querySelector('.space-y-8') || app.firstElementChild;
+    return app.querySelector('[class*="space-y-"]') || app.firstElementChild;
   }
 
   function _htmlToElement(html) {
@@ -775,7 +781,7 @@
     if (cap)        d.caption = cap.textContent.trim();
     if (h2s.length) d.h2s    = h2s.map(function(h) { return h.textContent.trim(); });
 
-    var fr = app.querySelector('.space-y-8');
+    var fr = app.querySelector('[class*="space-y-"]');
     if (fr) {
       /* Save fields as an ordered array. Each entry has label/hint text and,
          for dynamically added fields, the full clean HTML needed to recreate
@@ -856,7 +862,7 @@
       var h2s = app.querySelectorAll('h2');
       saved.h2s.forEach(function(t, i) { if (h2s[i]) h2s[i].textContent = t; });
     }
-    var fr = app.querySelector('.space-y-8');
+    var fr = app.querySelector('[class*="space-y-"]');
     if (!fr || !saved.fields) return;
 
     /* New array format (version 2): rebuild the field list in saved display

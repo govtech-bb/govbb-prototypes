@@ -102,7 +102,7 @@
     var flow = _getFlow ? _getFlow() : _flow;
     if (flow[0] === pageId) {
       /* ── Start page: apply section text in saved order ── */
-      var root = rootEl.querySelector('.space-y-8') || rootEl.firstElementChild;
+      var root = rootEl.querySelector('[class*="space-y-"]') || rootEl.firstElementChild;
       if (!root || !saved.sections) return;
       /* Reorder first so section indices match saved.sections */
       if (saved.order && saved.order.length) {
@@ -137,7 +137,7 @@
       }
       /* Apply field label/hint and inject any dynamically added fields. */
       if (saved.fields) {
-        var fr = rootEl.querySelector('.space-y-8');
+        var fr = rootEl.querySelector('[class*="space-y-"]');
         if (!fr) return;
 
         if (Array.isArray(saved.fields)) {
