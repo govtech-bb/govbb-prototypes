@@ -135,18 +135,38 @@
         var h2Nodes = rootEl.querySelectorAll('h2');
         saved.h2s.forEach(function (t, i) { if (h2Nodes[i]) h2Nodes[i].textContent = t; });
       }
-      /* Apply field label/hint by original render-order position.
-         No DOM reordering here — the edit script handles that in edit mode. */
+      /* Apply field label/hint and inject any dynamically added fields. */
       if (saved.fields) {
         var fr = rootEl.querySelector('.space-y-8');
         if (!fr) return;
-        var fieldKids = Array.from(fr.children).filter(function (c) { return !_isPatchBtnRow(c); });
-        fieldKids.forEach(function (child, ci) {
-          var fd = saved.fields[String(ci)];
-          if (!fd) return;
-          if (fd.label) { var l = child.querySelector('label'); if (l) l.textContent = fd.label; }
-          if (fd.hint)  { var p = child.querySelector('p');     if (p) p.textContent = fd.hint; }
-        });
+
+        if (Array.isArray(saved.fields)) {
+          /* Version-2 array format: rebuild field list in saved display order,
+             re-injecting new fields from their saved HTML. */
+          var _mkEl = function (html) { var d = document.createElement('div'); d.innerHTML = html; return d.firstElementChild || d; };
+          var _btnRowsFw  = Array.from(fr.children).filter(function (c) { return _isPatchBtnRow(c); });
+          var _origKidsFw = Array.from(fr.children).filter(function (c) { return !_isPatchBtnRow(c); });
+          var _origIdxFw  = 0;
+          Array.from(fr.children).forEach(function (c) { fr.removeChild(c); });
+          saved.fields.forEach(function (fd) {
+            var el = fd.html ? _mkEl(fd.html) : _origKidsFw[_origIdxFw++];
+            if (!el) return;
+            if (fd.label) { var l = el.querySelector('label'); if (l) l.textContent = fd.label; }
+            if (fd.hint)  { var p = el.querySelector('p');     if (p) p.textContent = fd.hint; }
+            fr.appendChild(el);
+          });
+          while (_origIdxFw < _origKidsFw.length) { fr.appendChild(_origKidsFw[_origIdxFw++]); }
+          _btnRowsFw.forEach(function (b) { fr.appendChild(b); });
+        } else {
+          /* Legacy object format: apply text by DOM position. */
+          var fieldKids = Array.from(fr.children).filter(function (c) { return !_isPatchBtnRow(c); });
+          fieldKids.forEach(function (child, ci) {
+            var fd = saved.fields[String(ci)];
+            if (!fd) return;
+            if (fd.label) { var l = child.querySelector('label'); if (l) l.textContent = fd.label; }
+            if (fd.hint)  { var p = child.querySelector('p');     if (p) p.textContent = fd.hint; }
+          });
+        }
       }
     }
   }

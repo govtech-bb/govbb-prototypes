@@ -455,6 +455,8 @@
       ], function(html) {
         var continueRow = Array.from(fieldsRoot.children).find(_isButtonRow);
         var el = _htmlToElement(html);
+        /* Mark as dynamically added so save captures its full HTML */
+        el.setAttribute('data-ge-new', '1');
         if (continueRow) fieldsRoot.insertBefore(el, continueRow);
         else fieldsRoot.appendChild(el);
         el.setAttribute('data-ge-orig', fieldsRoot.children.length - 1);
@@ -747,30 +749,50 @@
     _store(_pageKey(pid), { version: 1, order: order, sections: sections });
   }
 
-  function _saveQuestionPage(app, pid) {
-    var d = { version: 1 };
-    var h1 = app.querySelector('h1');
-    if (h1) d.h1 = h1.textContent.trim();
-    var cap = app.querySelector('p.border-bb-blue-40');
-    if (cap) d.caption = cap.textContent.trim();
-    var h2s = Array.from(app.querySelectorAll('h2'));
-    if (h2s.length) d.h2s = h2s.map(function(h) { return h.textContent.trim(); });
+  /** Strip edit chrome from a field element and return clean outerHTML. */
+  function _cleanFieldHtml(el) {
+    var clone = el.cloneNode(true);
+    clone.querySelectorAll('.ge-handle, .ge-delete-btn').forEach(function(n) { n.remove(); });
+    clone.removeAttribute('data-ge');
+    clone.removeAttribute('data-ge-orig');
+    clone.removeAttribute('data-ge-new');
+    clone.removeAttribute('draggable');
+    clone.style.position = '';
+    clone.style.opacity  = '';
+    clone.querySelectorAll('[contenteditable]').forEach(function(n) {
+      n.removeAttribute('contenteditable');
+      n.classList.remove('ge-editable');
+    });
+    return clone.outerHTML;
+  }
 
-    var fieldsRoot = app.querySelector('.space-y-8');
-    if (fieldsRoot) {
-      var fieldOrder = [], fields = {};
-      Array.from(fieldsRoot.children).forEach(function(child) {
-        var oi = child.getAttribute('data-ge-orig');
-        if (oi === null || _isButtonRow(child)) return;
-        fieldOrder.push(parseInt(oi, 10));
-        var lbl = child.querySelector('label'), hint = child.querySelector('p');
-        var fd = {};
+  function _saveQuestionPage(app, pid) {
+    var d = { version: 2 };
+    var h1  = app.querySelector('h1');
+    var cap = app.querySelector('p.border-bb-blue-40');
+    var h2s = Array.from(app.querySelectorAll('h2'));
+    if (h1)         d.h1      = h1.textContent.trim();
+    if (cap)        d.caption = cap.textContent.trim();
+    if (h2s.length) d.h2s    = h2s.map(function(h) { return h.textContent.trim(); });
+
+    var fr = app.querySelector('.space-y-8');
+    if (fr) {
+      /* Save fields as an ordered array. Each entry has label/hint text and,
+         for dynamically added fields, the full clean HTML needed to recreate
+         the element on restore. */
+      var fields = [];
+      Array.from(fr.children).forEach(function(child) {
+        if (_isButtonRow(child) || child.classList.contains('ge-add-field')) return;
+        var lbl  = child.querySelector('label');
+        var hint = child.querySelector('p:not(.border-bb-blue-40)');
+        var fd   = {};
         if (lbl)  fd.label = lbl.textContent.trim();
         if (hint) fd.hint  = hint.textContent.trim();
-        fields[oi] = fd;
+        /* New field: save HTML so it can be re-inserted on restore */
+        if (child.getAttribute('data-ge-new') === '1') fd.html = _cleanFieldHtml(child);
+        fields.push(fd);
       });
-      d.fieldOrder = fieldOrder;
-      d.fields     = fields;
+      d.fields = fields;
     }
     _store(_pageKey(pid), d);
   }
@@ -837,14 +859,45 @@
     var fr = app.querySelector('.space-y-8');
     if (!fr || !saved.fields) return;
 
+    /* New array format (version 2): rebuild the field list in saved display
+       order, re-injecting any dynamically added fields from their saved HTML. */
+    if (Array.isArray(saved.fields)) {
+      var btnRows   = Array.from(fr.children).filter(_isButtonRow);
+      var origKids  = Array.from(fr.children).filter(function(c) { return !_isButtonRow(c); });
+      var origIdx   = 0;
+
+      /* Remove everything; we'll re-append in the correct order */
+      Array.from(fr.children).forEach(function(c) { fr.removeChild(c); });
+
+      saved.fields.forEach(function(fd) {
+        var el;
+        if (fd.html) {
+          /* Dynamically added field: recreate from saved clean HTML */
+          el = _htmlToElement(fd.html);
+          el.setAttribute('data-ge-new', '1');
+        } else {
+          el = origKids[origIdx++];
+          if (!el) return;
+        }
+        if (fd.label) { var l = el.querySelector('label'); if (l) l.textContent = fd.label; }
+        if (fd.hint)  { var p = el.querySelector('p');     if (p) p.textContent = fd.hint; }
+        fr.appendChild(el);
+      });
+
+      /* Remaining original kids that weren't in the saved list (shouldn't happen, safety) */
+      while (origIdx < origKids.length) { fr.appendChild(origKids[origIdx++]); }
+      btnRows.forEach(function(b) { fr.appendChild(b); });
+      return;
+    }
+
+    /* Legacy object format: apply text where data-ge-orig matches, reorder by index */
     Array.from(fr.children).forEach(function(child) {
       var oi = child.getAttribute('data-ge-orig');
-      var fd = saved.fields && saved.fields[oi];
+      var fd = saved.fields[oi];
       if (!fd) return;
       if (fd.label) { var l = child.querySelector('label'); if (l) l.textContent = fd.label; }
-      if (fd.hint)  { var p = child.querySelector('p'); if (p) p.textContent = fd.hint; }
+      if (fd.hint)  { var p = child.querySelector('p');     if (p) p.textContent = fd.hint; }
     });
-
     if (saved.fieldOrder && saved.fieldOrder.length) {
       var orig = Array.from(fr.children);
       saved.fieldOrder.forEach(function(oi) { if (orig[oi]) fr.appendChild(orig[oi]); });
