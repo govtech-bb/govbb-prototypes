@@ -168,6 +168,33 @@ function formatDate(prefix) {
   return [d, m, y].filter(Boolean).join(' / ');
 }
 
+const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+function monthName(m) {
+  const n = parseInt(m, 10);
+  return (n >= 1 && n <= 12) ? MONTH_NAMES[n - 1] : (m || '');
+}
+
+function applicantFullName() {
+  return [GovBB.D['first-name'], GovBB.D['middle-name'], GovBB.D['last-name']].filter(Boolean).join(' ');
+}
+
+/* Overseas notarial certificate, auto-filled from the Notary Public details.
+   Mirrors the "OVERSEAS REGISTRATION ONLY" notarial certificate in the PDF. */
+function overseasNotarialStatement() {
+  const D = GovBB.D;
+  const notary       = D['notary-name']      || '__________';
+  const jurisdiction = D['jurisdiction']     || '__________';
+  const country      = D['notary-country']   || '__________';
+  const applicant    = applicantFullName()   || '__________';
+  const day   = D['notarial-date-day']   || '____';
+  const month = D['notarial-date-month'] ? monthName(D['notarial-date-month']) : '__________';
+  const year  = D['notarial-date-year']  || '____';
+  return `I, ${notary}, Notary Public in and for the Country/State/Province/County (${jurisdiction}) of ${country}, `
+    + `do hereby CERTIFY that on the day of the date hereof there personally came and appeared before me the within named `
+    + `${applicant}, the executing party to the foregoing documents, who did in my presence duly sign, seal and deliver the same `
+    + `as and for his or her free and voluntary act and deed. Given under my hand and seal this ${day} day of ${month} ${year}.`;
+}
+
 function summarySection(title, rows) {
   const visibleRows = rows.filter(Boolean);
   if (!visibleRows.length) return '';
@@ -289,7 +316,8 @@ const PAGES = {
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Notary Public details</h1>
       <div class="space-y-8">
         ${GovBB.textField('notary-name', 'Notary Public name')}
-        ${GovBB.textField('jurisdiction', 'Jurisdiction')}
+        ${GovBB.textField('jurisdiction', 'Jurisdiction', { hint: 'The Country, State, Province or County the Notary Public works in' })}
+        ${GovBB.textField('notary-country', 'Country')}
         ${GovBB.dateField('notarial-date', 'Date of notarisation', 'For example, 27 03 2026')}
         ${navButtons('Continue')}
       </div>
@@ -301,13 +329,19 @@ const PAGES = {
       <h1 class="font-bold text-[3.5rem] leading-[1.15] mb-8">Declaration</h1>
       <div class="space-y-8">
         <div class="space-y-2">
-          <p class="text-[1.25rem]"><span class="font-bold">Applicant's name:</span> ${[GovBB.D['first-name'], GovBB.D['middle-name'], GovBB.D['last-name']].filter(Boolean).join(' ') || '—'}</p>
+          <p class="text-[1.25rem]"><span class="font-bold">Applicant's name:</span> ${applicantFullName() || '—'}</p>
           <p class="text-[1.25rem]"><span class="font-bold">Date:</span> ${(function(){ var d=new Date(); return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear(); })()}</p>
         </div>
         <p class="text-[1.25rem]">
           I confirm my information is true and correct. I understand false details may lead to legal action.
         </p>
         ${GovBB.checkboxItem('consent-declaration', 'I hereby make an application for the National Insurance Online Social Security Service and declare that the information given in this form is true to the best of my knowledge and belief. I also agree to my username and password being sent electronically to my above listed email address.')}
+        ${GovBB.D['residency'] === 'Overseas' ? `
+        <div class="space-y-4 border-t border-bb-grey-00 pt-8">
+          <h2 class="font-bold text-[1.5rem]">Notarial certificate</h2>
+          <p class="text-[1.25rem] text-bb-mid-grey-00">This must be confirmed by the Notary Public. It uses the details you gave on the Notary Public page.</p>
+          ${GovBB.checkboxItem('consent-notarial', overseasNotarialStatement())}
+        </div>` : ''}
         ${navButtons('Submit application')}
       </div>
     </form>`,
@@ -365,6 +399,7 @@ const PAGES = {
     const notarialRows = isOverSeas ? [
       row('Notary Public name', D['notary-name'], 'overseas-notarial'),
       row('Jurisdiction', D['jurisdiction'], 'overseas-notarial'),
+      row('Country', D['notary-country'], 'overseas-notarial'),
       row('Date of notarisation', formatDate('notarial-date'), 'overseas-notarial')
     ] : [];
 
@@ -423,12 +458,12 @@ function validate(pageId) {
     }
   }
   if (pageId === 'overseas-notarial') {
-    if (!D['notary-name']) errors.push({ id: 'notary-name', msg: 'Notary Public name - Enter the notary name' });
-    if (!D['jurisdiction']) errors.push({ id: 'jurisdiction', msg: 'Jurisdiction - Enter the jurisdiction' });
+    // notary-name, jurisdiction and notary-country are validated by the schema.
     if (!D['notarial-date-day'] || !D['notarial-date-month'] || !D['notarial-date-year']) errors.push({ id: 'notarial-date-day', msg: 'Date of notarisation - Enter the notarisation date' });
   }
   if (pageId === 'declaration') {
     if (!D['consent-declaration']) errors.push({ id: 'consent-declaration', msg: 'Declaration - Confirm your declaration is true' });
+    if (D['residency'] === 'Overseas' && !D['consent-notarial']) errors.push({ id: 'consent-notarial', msg: 'Notarial certificate - Confirm the notarial certificate is correct' });
   }
   return errors;
 }

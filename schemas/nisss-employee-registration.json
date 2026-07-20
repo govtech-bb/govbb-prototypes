@@ -127,22 +127,30 @@
         {
           "id": "notary-name",
           "type": "text",
-          "label": "Full name of Notary Public",
+          "label": "Notary Public name",
           "required": true,
           "validation": { "maxLength": 200 }
         },
         {
-          "id": "notary-address",
-          "type": "textarea",
-          "label": "Notary Public's address",
+          "id": "jurisdiction",
+          "type": "text",
+          "label": "Jurisdiction",
           "required": true,
-          "rows": 4
+          "hint": "The Country, State, Province or County the Notary Public works in"
         },
         {
-          "id": "notary-email",
-          "type": "email",
-          "label": "Notary Public's email address",
-          "required": false
+          "id": "notary-country",
+          "type": "text",
+          "label": "Country",
+          "required": true
+        },
+        {
+          "id": "notarial-date",
+          "type": "date",
+          "label": "Date of notarisation",
+          "required": false,
+          "hint": "For example, 27 03 2026",
+          "_note": "Effectively required, but validated in the prototype's validate(). Left non-required here because the schema date-required check reads a single key, not day/month/year, and would always fail."
         }
       ]
     },
@@ -152,18 +160,20 @@
       "title": "Declaration",
       "caption": true,
       "body": "I declare that the information I have given in this form is correct and complete to the best of my knowledge and belief. I understand that giving false information may result in prosecution.",
+      "_note": "Checkbox required is enforced in the prototype's validate(); it is left non-required here because the schema treats an untouched checkbox (undefined) as empty and would block submission.",
       "fields": [
         {
           "id": "consent-declaration",
           "type": "checkbox",
-          "label": "I confirm this declaration is true",
-          "required": true
+          "label": "I hereby make an application for the National Insurance Online Social Security Service and declare that the information given in this form is true to the best of my knowledge and belief. I also agree to my username and password being sent electronically to my above listed email address.",
+          "required": false
         },
         {
-          "id": "consent-data",
+          "id": "consent-notarial",
           "type": "checkbox",
-          "label": "I agree that the NIS may use my information to administer my account",
-          "required": true
+          "label": "Notarial certificate (overseas applicants) — confirmed by the Notary Public using the notary details given.",
+          "required": false,
+          "condition": { "field": "residency", "operator": "equals", "value": "Overseas" }
         }
       ]
     },
@@ -191,7 +201,7 @@
         {
           "heading": "Notary Public",
           "condition": { "field": "residency", "operator": "equals", "value": "Overseas" },
-          "fields": ["notary-name", "notary-address", "notary-email"]
+          "fields": ["notary-name", "jurisdiction", "notary-country", "notarial-date"]
         }
       ],
       "submitButton": "Submit application"
