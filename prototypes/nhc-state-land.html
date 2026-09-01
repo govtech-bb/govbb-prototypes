@@ -573,11 +573,48 @@ function validate(pageId) {
   if (pageId === 'land-use') {
     if (!D['land-location']) errors.push({ id: 'land-location', msg: 'Location of the land – Describe the location of the land' });
     if (!D['proposed-activities']) errors.push({ id: 'proposed-activities', msg: 'Planned activities – Describe what you plan to do on the land' });
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Build a real Date from the three parts. Returns null if the parts do not
+    // make a real calendar date — this catches roll-over such as 31 02 2026,
+    // which the Date constructor would silently turn into 03 03 2026.
+    const readDate = (prefix) => {
+      const day = parseInt(D[prefix + '-day'], 10);
+      const month = parseInt(D[prefix + '-month'], 10);
+      const year = parseInt(D[prefix + '-year'], 10);
+      if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
+      const d = new Date(year, month - 1, day);
+      if (
+        isNaN(d.getTime()) ||
+        d.getDate() !== day ||
+        d.getMonth() !== month - 1 ||
+        d.getFullYear() !== year
+      ) return null;
+      return d;
+    };
+
+    let startDate = null;
     if (!D['start-date-day'] || !D['start-date-month'] || !D['start-date-year']) {
       errors.push({ id: 'start-date-day', msg: 'Start date – Enter the start date' });
+    } else {
+      startDate = readDate('start-date');
+      if (!startDate) {
+        errors.push({ id: 'start-date-day', msg: 'Start date – Enter a real date, for example 01 06 2026' });
+      } else if (startDate < today) {
+        errors.push({ id: 'start-date-day', msg: 'Start date – The start date must be today or in the future' });
+      }
     }
+
     if (!D['end-date-day'] || !D['end-date-month'] || !D['end-date-year']) {
       errors.push({ id: 'end-date-day', msg: 'End date – Enter the end date' });
+    } else {
+      const endDate = readDate('end-date');
+      if (!endDate) {
+        errors.push({ id: 'end-date-day', msg: 'End date – Enter a real date, for example 31 12 2026' });
+      } else if (startDate && endDate < startDate) {
+        errors.push({ id: 'end-date-day', msg: 'End date – The end date cannot be before the start date' });
+      }
     }
   }
 

@@ -436,7 +436,10 @@
     err.id = 'err-' + id;
     err.textContent = msg;
     var container = input.closest('.field-group') || wrap.parentElement || input.parentElement;
-    if (container) container.insertBefore(err, wrap || input);
+    // Anchor must be a direct child of the container (date parts nest two levels deep)
+    var anchor = wrap || input;
+    while (anchor && anchor.parentElement !== container) anchor = anchor.parentElement;
+    if (container) container.insertBefore(err, anchor || container.firstChild);
     input.setAttribute('aria-invalid', 'true');
     input.setAttribute('aria-describedby', 'err-' + id);
   };
